@@ -1,0 +1,10 @@
+build.xml
+### NetBeans ###
+nbproject/private/
+nbproject/
+build/
+nbbuild/
+dist/
+nbdist/
+.nb-gradle/
+mysql-connector-java-5.1.39-bin.jar
