@@ -14,16 +14,20 @@ import java.sql.SQLException;
  * @author Kato
  */
 public class ConnectionFactory {
-    public Connection getConnection() {
+    public Connection getConnection(){
         try {
             //?autoReconnect=true&useSSL=false
-            String db       = "jdbc:mysql://localhost/contactDB";
+            Class.forName("com.mysql.jdbc.Driver");
+            String db       = "jdbc:mysql://localhost/coavalieitor_db?autoReconnect=true&useSSL=false";
 	    String user     = "root";
-	    String password = "";
+	    String password = "peer";
 	    Connection con = (Connection)DriverManager.getConnection(db,user,password);
             return con; 
 	}catch(SQLException e) {
             throw new RuntimeException(e);
 	}
+        catch(ClassNotFoundException e){
+            throw new RuntimeException(e);
+        }
     }
 }

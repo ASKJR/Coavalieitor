@@ -5,6 +5,8 @@
  */
 package Servlet;
 
+import Beans.Professor;
+import Dao.ProfessorDao;
 import java.io.IOException;
 import java.io.PrintWriter;
 import javax.servlet.ServletException;
@@ -30,13 +32,25 @@ public class ProcessProfessor extends HttpServlet {
      */
     protected void processRequest(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
-        response.setContentType("text/html;charset=UTF-8");
+        response.setContentType("text/html;charset=UTF-8");        
+        request.setCharacterEncoding("UTF-8");
+
         try (PrintWriter out = response.getWriter()) {
             /* TODO output your page here. You may use following sample code. */
             //pegando parâmetro por POST
             String nome = request.getParameter("nome");
-            out.print("Nome: " + nome);  
+            //Adicionando professor no BD
+            out.print("Nome: " + nome + "<br><br>");
+            Professor prof = new Professor();
+            prof.setNome(nome);
+            this.store(prof);           
+            out.print("Professor adicionado com sucesso...");
+            out.print("<a href=" + "./cadastroProfessor.jsp>" + "Voltar</a>");
         }
+    }
+    private void store(Professor professor){  
+        ProfessorDao dao = new ProfessorDao();
+        dao.insert(professor);
     }
     // <editor-fold defaultstate="collapsed" desc="HttpServlet methods. Click on the + sign on the left to edit the code.">
     /**

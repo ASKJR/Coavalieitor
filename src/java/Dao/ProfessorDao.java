@@ -29,6 +29,7 @@ public class ProfessorDao {
             con = new ConnectionFactory().getConnection();
             stmt = con.prepareStatement(INSERT);	
             stmt.setString(1,professor.getNome());
+            stmt.execute();
         }catch(SQLException e) {
             throw new RuntimeException(e);
         }finally{
