@@ -1,12 +1,8 @@
 # Coavalieitor
-
--<h3><b>Coavalieitor é um software que tem por objetivo automatizar a metodologia de Peer Assessment/Peer Grading.</b></h3>		
- -<br>		
- -<br>
-
+##<b>Coavalieitor é um software que tem por objetivo automatizar a metodologia de Peer Assessment/Peer Grading.</b>		
+<br>		
+<br>
 ![alt tag] (https://github.com/ASKJR/Coavalieitor/blob/master/screenshot/random/ufpr_logo.jpg) <br>
-
-
 Trabalho de conclusão do curso de Tecnologia em Análise e Desenvolvimento de Sistemas do Setor de Educação Profissional e Tecnológica da Universidade Federal do Paraná.
 
 Alunos     : 
