@@ -1,0 +1,6 @@
+*.class
+*.war
+*.ear
+/nbproject/private/
+/build
+build.xml
