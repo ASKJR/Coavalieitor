@@ -58,7 +58,7 @@ public class ProfessorDao {
                  try { if (con  != null) con.close();  } catch (Exception e) {};
         }
     }
-    public List<Professor> getAllContacts() {
+    public List<Professor> getAllProfessores() {
         try {
             con  = new ConnectionFactory().getConnection();
             stmt = con.prepareStatement(SELECT);

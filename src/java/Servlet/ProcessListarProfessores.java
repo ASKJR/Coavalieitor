@@ -9,6 +9,8 @@ import Beans.Professor;
 import Dao.ProfessorDao;
 import java.io.IOException;
 import java.io.PrintWriter;
+import java.util.List;
+import javax.servlet.RequestDispatcher;
 import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
@@ -19,8 +21,9 @@ import javax.servlet.http.HttpServletResponse;
  *
  * @author Kato
  */
-@WebServlet(name = "ProcessProfessor", urlPatterns = {"/ProcessProfessor"})
-public class ProcessProfessor extends HttpServlet {
+@WebServlet(name = "ProcessListarProfessores", urlPatterns = {"/ProcessListarProfessores"})
+public class ProcessListarProfessores extends HttpServlet {
+
     /**
      * Processes requests for both HTTP <code>GET</code> and <code>POST</code>
      * methods.
@@ -32,26 +35,23 @@ public class ProcessProfessor extends HttpServlet {
      */
     protected void processRequest(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
-        response.setContentType("text/html;charset=UTF-8");        
-        request.setCharacterEncoding("UTF-8");
-
+        response.setContentType("text/html;charset=UTF-8");
         try (PrintWriter out = response.getWriter()) {
-            /* TODO output your page here. You may use following sample code. */
-            //pegando parâmetro por POST
-            String nome = request.getParameter("nome");
-            //Adicionando professor no BD
-            out.print("Nome: " + nome + "<br><br>");
-            Professor prof = new Professor();
-            prof.setNome(nome);
-            this.store(prof);           
-            out.print("Professor adicionado com sucesso...");
-            out.print("<a href=" + "ProcessListarProfessores>" + "Voltar</a>");
+            ProfessorDao dao = new ProfessorDao();
+            Professor prof   = new Professor();
+            //CHECK DELETE
+            if(request.getParameter("delete")!=null){
+                prof.setId(Integer.parseInt(request.getParameter("delete")));
+                dao.delete(prof);
+            }
+            
+            List<Professor> professores = dao.getAllProfessores();     
+            RequestDispatcher rd=request.getRequestDispatcher("listarProfessores.jsp");  
+            request.setAttribute("professores",professores);
+            rd.forward(request, response);  
         }
     }
-    private void store(Professor professor){  
-        ProfessorDao dao = new ProfessorDao();
-        dao.insert(professor);
-    }
+
     // <editor-fold defaultstate="collapsed" desc="HttpServlet methods. Click on the + sign on the left to edit the code.">
     /**
      * Handles the HTTP <code>GET</code> method.
@@ -90,4 +90,5 @@ public class ProcessProfessor extends HttpServlet {
     public String getServletInfo() {
         return "Short description";
     }// </editor-fold>
+
 }
