@@ -3,12 +3,13 @@
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
-package Servlet;
+package Controller;
 
 import Beans.Professor;
 import Dao.ProfessorDao;
 import java.io.IOException;
 import java.io.PrintWriter;
+import java.util.List;
 import javax.servlet.RequestDispatcher;
 import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
@@ -20,8 +21,8 @@ import javax.servlet.http.HttpServletResponse;
  *
  * @author Kato
  */
-@WebServlet(name = "ProcessAtualizarProfessor", urlPatterns = {"/ProcessAtualizarProfessor"})
-public class ProcessAtualizarProfessor extends HttpServlet {
+@WebServlet(name = "ProfessorController", urlPatterns = {"/ProfessorController"})
+public class ProfessorController extends HttpServlet {
 
     /**
      * Processes requests for both HTTP <code>GET</code> and <code>POST</code>
@@ -35,19 +36,34 @@ public class ProcessAtualizarProfessor extends HttpServlet {
     protected void processRequest(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
         response.setContentType("text/html;charset=UTF-8");
-        try (PrintWriter out  = response.getWriter()) {
-            String updateName = request.getParameter("nome");
-            String updateId   = request.getParameter("prof_id");
-            //out.print(updateName + " " + updateId);
-            Professor professor = new Professor();
-            ProfessorDao dao    = new ProfessorDao();
-            professor.setId(Integer.parseInt(updateId));
-            professor.setNome(updateName);
-            dao.update(professor);
+        try (PrintWriter out = response.getWriter()) {
+            ProfessorDao dao = new ProfessorDao();
+            Professor prof   = new Professor();
             
-            RequestDispatcher rd=request.getRequestDispatcher("ProcessListarProfessores");  
+            //CHECK INSERT
+            if(request.getParameter("insert")!=null){
+                String insertNome = request.getParameter("nome");
+                prof.setNome(insertNome);
+                dao.insert(prof);
+            }
+            //CHECK DELETE
+            if(request.getParameter("delete")!=null){
+                prof.setId(Integer.parseInt(request.getParameter("delete")));
+                dao.delete(prof);
+            }
+            //CHECK UPDATE
+            if(request.getParameter("update")!=null){
+                String updateName = request.getParameter("nome");
+                String updateId   = request.getParameter("update");
+                prof.setId(Integer.parseInt(updateId));
+                prof.setNome(updateName);
+                dao.update(prof);
+            }
+            //DISPLAY ALL PROFESSORS
+            List<Professor> professores = dao.getAllProfessores();     
+            RequestDispatcher rd=request.getRequestDispatcher("listarProfessores.jsp");  
+            request.setAttribute("professores",professores);
             rd.forward(request, response);  
-            
         }
     }
 

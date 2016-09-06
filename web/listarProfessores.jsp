@@ -17,7 +17,7 @@
 <div class="container">
 <nav class="navbar navbar-inverse">
     <div class="navbar-header">
-        <a class="navbar-brand" href="ProcessListarProfessores">Professor index</a>
+        <a class="navbar-brand" href="ProfessorController">Professor index</a>
     </div>
     <ul class="nav navbar-nav">
         <li><a href="cadastrarProfessor.jsp">Cadastrar um professor</a>
@@ -38,8 +38,8 @@
             <td>${professor.id}</td>
             <td>${professor.nome}</td>
             <td>
-                <a class="btn btn-small btn-info" href="atualizarProfessor.jsp?atualizar=${professor.id}&nome=${professor.nome}">Edit</a>
-                <a class="btn btn-small btn-danger" href="ProcessListarProfessores?delete=${professor.id}">Delete</a>
+                <a class="btn btn-small btn-info" href="cadastrarProfessor.jsp?update=${professor.id}&nome=${professor.nome}">Edit</a>
+                <a class="btn btn-small btn-danger" href="ProfessorController?delete=${professor.id}">Delete</a>
             </td>
         </tr>
         </c:forEach>
