@@ -44,7 +44,7 @@ public class LoginController extends HttpServlet {
                 ProfessorDao dao = new ProfessorDao();
                 Professor prof   = new Professor();
                 List<Professor> professores = dao.getAllProfessores();     
-                RequestDispatcher rd=request.getRequestDispatcher("listarProfessores.jsp");  
+                RequestDispatcher rd=request.getRequestDispatcher("View/Professor/listarProfessores.jsp");  
                 request.setAttribute("professores",professores);
                 rd.forward(request, response);  
             }
