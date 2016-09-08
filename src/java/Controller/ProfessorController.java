@@ -61,7 +61,7 @@ public class ProfessorController extends HttpServlet {
             }
             //DISPLAY ALL PROFESSORS
             List<Professor> professores = dao.getAllProfessores();     
-            RequestDispatcher rd=request.getRequestDispatcher("listarProfessores.jsp");  
+            RequestDispatcher rd=request.getRequestDispatcher("View/Professor/listarProfessores.jsp");  
             request.setAttribute("professores",professores);
             rd.forward(request, response);  
         }
