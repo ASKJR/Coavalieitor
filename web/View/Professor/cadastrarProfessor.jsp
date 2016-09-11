@@ -4,6 +4,7 @@
     Author     : Kato
 --%>
 <%@include file="../../include/header.jsp" %>
+<%@include file="../../include/sidebar_left.jsp" %>
 <form class="form-inline"  method="POST" action="${pageContext.request.contextPath}/ProfessorController">
   <c:set var="btnLbl" value="Cadastrar"/>
   <c:set var="type" value="insert"/>

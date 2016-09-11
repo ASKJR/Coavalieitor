@@ -12,7 +12,7 @@
             <li><a href="javascript:;">Aluno</a></li>
             <li><a href="javascript:;">Avaliação</a></li>
             <li class="nav-divider"></li>
-            <li><a href="LoginController?action=deslogar"><i class="glyphicon glyphicon-off"></i> Logout </a></li>
+            <li><a href="${pageContext.request.contextPath}/LoginController?action=deslogar"><i class="glyphicon glyphicon-off"></i> Logout </a></li>
         </ul>
     </nav>
 </div>
