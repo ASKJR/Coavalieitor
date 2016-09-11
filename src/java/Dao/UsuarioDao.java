@@ -19,9 +19,9 @@ import java.util.List;
  */
 public class UsuarioDao {
     /*SQL*/
-    private final static String INSERT = "INSERT INTO usuario (email, senha) VALUES (?, ?)";
-    private final static String DELETE = "DELETE FROM usuario WHERE id_prof=?";
-    private final static String UPDATE = "UPDATE usuario SET email=?, senha=? WHERE id_user=?";
+    private final static String INSERT = "INSERT INTO usuario (email, senha) VALUES (?,MD5(?))";
+    private final static String DELETE = "DELETE FROM usuario WHERE id_usuario=?";
+    private final static String UPDATE = "UPDATE usuario SET email=?, senha=MD5(?) WHERE id_usuario=?";
     private final static String SELECT = "SELECT * FROM usuario";
     
     /*DB variables*/
@@ -70,7 +70,7 @@ public class UsuarioDao {
 
             while (rs.next()) {
                 Usuario usuario = new Usuario();
-                usuario.setId(rs.getInt("id_user"));
+                usuario.setId(rs.getInt("id_usuario"));
                 usuario.setEmail(rs.getString("email"));
                 usuarios.add(usuario);
             }
