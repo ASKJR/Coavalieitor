@@ -20,7 +20,7 @@ public class ConnectionFactory {
             Class.forName("com.mysql.jdbc.Driver");
             String db       = "jdbc:mysql://localhost/coavalieitor_db?autoReconnect=true&useSSL=false";
 	    String user     = "root";
-	    String password = "peer";
+	    String password = "1234";
 	    Connection con = (Connection)DriverManager.getConnection(db,user,password);
             return con; 
 	}catch(SQLException e) {

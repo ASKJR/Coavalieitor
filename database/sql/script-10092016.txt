@@ -1,0 +1,16 @@
+-- Cria a tabela usuário
+
+
+-- -----------------------------------------------------
+-- Table `coavalieitor_db`.`usuario`
+-- -----------------------------------------------------
+DROP TABLE IF EXISTS `coavalieitor_db`.`usuario` ;
+
+CREATE TABLE IF NOT EXISTS `coavalieitor_db`.`usuario` (
+  `id_user` INT NOT NULL AUTO_INCREMENT,
+  `email` VARCHAR(255) NOT NULL,
+  `senha` VARCHAR(255) NOT NULL,
+  PRIMARY KEY (`id_user`))
+ENGINE = InnoDB;
+
+

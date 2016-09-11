@@ -5,8 +5,8 @@
  */
 package Controller;
 
-import Beans.Professor;
-import Dao.ProfessorDao;
+import Beans.Usuario;
+import Dao.UsuarioDao;
 import java.io.IOException;
 import java.io.PrintWriter;
 import java.util.List;
@@ -21,8 +21,8 @@ import javax.servlet.http.HttpServletResponse;
  *
  * @author Welyngton
  */
-@WebServlet(name = "LoginController", urlPatterns = {"/LoginController"})
-public class LoginController extends HttpServlet {
+@WebServlet(name = "UsuarioController", urlPatterns = {"/UsuarioController"})
+public class UsuarioController extends HttpServlet {
 
     /**
      * Processes requests for both HTTP <code>GET</code> and <code>POST</code>
@@ -34,23 +34,37 @@ public class LoginController extends HttpServlet {
      * @throws IOException if an I/O error occurs
      */
     protected void processRequest(HttpServletRequest request, HttpServletResponse response)
-        throws ServletException, IOException {
+            throws ServletException, IOException {
         response.setContentType("text/html;charset=UTF-8");
-        //CHECK INSERT
-        if(request.getParameter("logar")!=null){
-            String loginCheck = request.getParameter("login");
-            //DISPLAY ALL PROFESSORS
-            try (PrintWriter out = response.getWriter()) {
-                ProfessorDao dao = new ProfessorDao();
-                Professor prof   = new Professor();
-                List<Professor> professores = dao.getAllProfessores();     
-                RequestDispatcher rd=request.getRequestDispatcher("View/Professor/listarProfessores.jsp");  
-                request.setAttribute("professores",professores);
-                rd.forward(request, response);  
+        try (PrintWriter out = response.getWriter()) {
+            UsuarioDao dao = new UsuarioDao();
+            Usuario user   = new Usuario();
+            
+            //CHECK INSERT
+            if(request.getParameter("insert")!=null){
+                String insertEmail = request.getParameter("email");
+                String insertSenha = request.getParameter("senha");
+                user.setEmail(insertEmail);
+                user.setSenha(insertSenha);
+                dao.insert(user);
             }
-        }
-        else {
-            RequestDispatcher rd=request.getRequestDispatcher("login.jsp");  
+            //CHECK DELETE
+            if(request.getParameter("delete")!=null){
+                user.setId(Integer.parseInt(request.getParameter("delete")));
+                dao.delete(user);
+            }
+            //CHECK UPDATE
+            if(request.getParameter("update")!=null){
+                String updateEmail = request.getParameter("nome");
+                String updateSenha = request.getParameter("senha");
+                String updateId   = request.getParameter("update");
+                user.setId(Integer.parseInt(updateId));
+                user.setEmail(updateEmail);
+                user.setSenha(updateSenha);
+                dao.update(user);
+            }
+            //por enquanto o usuário é redirecionado para o cadastro de professor
+            RequestDispatcher rd=request.getRequestDispatcher("View/Professor/cadastrarProfessor.jsp");  
             rd.forward(request, response);  
         }
     }
