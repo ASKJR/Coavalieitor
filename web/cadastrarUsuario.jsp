@@ -10,6 +10,7 @@
         <c:set var="type" value="insert"/>
         <h2 class="form-signin-heading">Coavalieitor</h2>
         <h4>Inscreva-se já:</h4>
+        <%@include file="include/mensagem.jsp"%>
         <label class="radio-inline">
           <input type="radio" name="userType">Sou Professor
         </label>

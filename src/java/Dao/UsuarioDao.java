@@ -23,6 +23,7 @@ public class UsuarioDao {
     private final static String DELETE = "DELETE FROM usuario WHERE id_usuario=?";
     private final static String UPDATE = "UPDATE usuario SET email=?, senha=MD5(?) WHERE id_usuario=?";
     private final static String SELECT = "SELECT * FROM usuario";
+    private final static String SELECT_EMAIL = "SELECT email FROM usuario WHERE email=?"; 
     
     /*DB variables*/
     private Connection con         = null;
@@ -97,4 +98,20 @@ public class UsuarioDao {
         }
     }
     
+    public boolean emailExists(String email){
+        try {
+            con  = new ConnectionFactory().getConnection();
+            stmt = con.prepareStatement(SELECT_EMAIL);
+            stmt.setString(1,email);
+            rs = stmt.executeQuery();
+            
+            return rs.next();
+        } catch (SQLException e) {
+            throw new RuntimeException(e);
+        }finally{
+            try { if (rs   != null) stmt.close();   } catch (Exception e) {};
+            try { if (stmt != null) stmt.close();   } catch (Exception e) {};
+            try { if (con  != null) con.close();    } catch (Exception e) {};
+        }
+    }
 }

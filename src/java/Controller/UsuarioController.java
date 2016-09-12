@@ -15,6 +15,7 @@ import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
+import javax.servlet.http.HttpSession;
 
 /**
  *
@@ -45,7 +46,21 @@ public class UsuarioController extends HttpServlet {
                 String insertSenha = request.getParameter("senha");
                 user.setEmail(insertEmail);
                 user.setSenha(insertSenha);
-                dao.insert(user);
+                //Antes de inserir um usuário no banco. checar se o e-mail já existe no BD.
+                if(!dao.emailExists(insertEmail)){
+                    dao.insert(user);
+                    //Inserir referencia na tabela de professor || ou  Aluno. dependendo do radio
+                    RequestDispatcher rd=request.getRequestDispatcher("View/Professor/cadastrarProfessor.jsp");  
+                    rd.forward(request, response);  
+                }
+                else{
+                    System.out.println("EMAIL EXISTENTE NO SISTEMA!!!");
+                    HttpSession session = request.getSession();
+                    session.setAttribute("mensagemErro", "E-mail já cadastrado no sistema.");
+
+                    RequestDispatcher rd=request.getRequestDispatcher("cadastrarUsuario.jsp");  
+                    rd.forward(request, response);
+                }
             }
             //CHECK DELETE
             if(request.getParameter("delete")!=null){
@@ -63,8 +78,7 @@ public class UsuarioController extends HttpServlet {
                 dao.update(user);
             }
             //por enquanto o usuário é redirecionado para o cadastro de professor
-            RequestDispatcher rd=request.getRequestDispatcher("View/Professor/cadastrarProfessor.jsp");  
-            rd.forward(request, response);  
+            
         }
     }
 
