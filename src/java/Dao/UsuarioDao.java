@@ -20,8 +20,8 @@ import java.util.List;
 public class UsuarioDao {
     /*SQL*/
     private final static String INSERT = "INSERT INTO usuario (email, senha) VALUES (?,MD5(?))";
-    private final static String DELETE = "DELETE FROM usuario WHERE id_usuario=?";
-    private final static String UPDATE = "UPDATE usuario SET email=?, senha=MD5(?) WHERE id_usuario=?";
+    private final static String DELETE = "DELETE FROM usuario WHERE id=?";
+    private final static String UPDATE = "UPDATE usuario SET email=?, senha=MD5(?) WHERE id=?";
     private final static String SELECT = "SELECT * FROM usuario";
     private final static String SELECT_EMAIL = "SELECT email FROM usuario WHERE email=?"; 
     
@@ -71,7 +71,7 @@ public class UsuarioDao {
 
             while (rs.next()) {
                 Usuario usuario = new Usuario();
-                usuario.setId(rs.getInt("id_usuario"));
+                usuario.setId(rs.getInt("id"));
                 usuario.setEmail(rs.getString("email"));
                 usuarios.add(usuario);
             }
