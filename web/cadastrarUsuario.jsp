@@ -12,10 +12,10 @@
         <h4>Inscreva-se já:</h4>
         <%@include file="include/mensagem.jsp"%>
         <label class="radio-inline">
-          <input type="radio" name="userType">Sou Professor
+          <input type="radio" name="userType" value="professor">Sou Professor
         </label>
         <label class="radio-inline">
-          <input type="radio"  name="userType">Sou Estudante
+          <input type="radio"  name="userType" value="estudante">Sou Estudante
         </label>        
         <input type="email" class="form-control" value="${param.email}" name="email" placeholder="Email" required="" autofocus="" />
         <input type="password" class="form-control" value="${param.senha}" name="senha" placeholder="Senha" required=""/>      

@@ -19,10 +19,11 @@ import java.util.List;
  */
 public class ProfessorDao {
     /*SQL*/
-    private final static String INSERT = "INSERT INTO professor (nome) VALUES (?)";
+    private final static String INSERT = "INSERT INTO professor (usuario_id) VALUES (?)";
     private final static String DELETE = "DELETE FROM professor WHERE id_prof=?";
     private final static String UPDATE = "UPDATE professor SET nome=? WHERE id_prof=?";
     private final static String SELECT = "SELECT * FROM professor";
+    private final static String SELECT_ID = "SELECT * FROM professor WHERE usuario_id=?";
     
     /*DB variables*/
     private Connection con         = null;
@@ -35,7 +36,7 @@ public class ProfessorDao {
         try{
             con = new ConnectionFactory().getConnection();
             stmt = con.prepareStatement(INSERT);	
-            stmt.setString(1,professor.getNome());
+            stmt.setInt(1,professor.getId());
             stmt.execute();
         }catch(SQLException e) {
             throw new RuntimeException(e);
@@ -48,7 +49,7 @@ public class ProfessorDao {
         try{
                 con  = new ConnectionFactory().getConnection();
                 stmt = con.prepareStatement(UPDATE);	
-                stmt.setString(1,professor.getNome());
+               // stmt.setString(1,professor.getNome());
                 stmt.setLong(2,professor.getId());
                 stmt.execute();
         }catch(SQLException e){
@@ -56,6 +57,31 @@ public class ProfessorDao {
         }finally{
                  try { if (stmt != null) stmt.close(); } catch (Exception e) {};
                  try { if (con  != null) con.close();  } catch (Exception e) {};
+        }
+    }
+    public Professor getProfessorById(int id){
+        try {
+            con  = new ConnectionFactory().getConnection();
+            stmt = con.prepareStatement(SELECT_ID);
+            stmt.setLong(1,id);
+            rs = stmt.executeQuery();
+
+            if(rs.next()) {
+                Professor professor = new Professor();
+                professor.setId(rs.getInt("usuario_id"));
+                return professor;
+
+            }
+            else{
+                return null;
+            }
+            
+        } catch (SQLException e) {
+            throw new RuntimeException(e);
+        }finally{
+            try { if (rs   != null) stmt.close();   } catch (Exception e) {};
+            try { if (stmt != null) stmt.close();   } catch (Exception e) {};
+            try { if (con  != null) con.close();    } catch (Exception e) {};
         }
     }
     public List<Professor> getAllProfessores() {
@@ -69,7 +95,7 @@ public class ProfessorDao {
             while (rs.next()) {
                 Professor professor = new Professor();
                 professor.setId(rs.getInt("id_prof"));
-                professor.setNome(rs.getString("nome"));
+                //professor.setNome(rs.getString("nome"));
                 professores.add(professor);
             }
             return professores;

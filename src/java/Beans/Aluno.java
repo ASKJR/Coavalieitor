@@ -7,17 +7,21 @@ package Beans;
 
 import java.io.Serializable;
 
-
 /**
  *
  * @author Kato
  */
-public class Professor implements Serializable{
+public class Aluno implements Serializable{
     private int id;
+    public Aluno(){
+    }
+
     public int getId() {
         return id;
     }
+
     public void setId(int id) {
         this.id = id;
     }
+    
 }

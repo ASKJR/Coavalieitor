@@ -5,17 +5,18 @@
  */
 package Controller;
 
-import Beans.Professor;
+import Beans.Usuario;
 import Dao.ProfessorDao;
+import Dao.UsuarioDao;
 import java.io.IOException;
 import java.io.PrintWriter;
-import java.util.List;
 import javax.servlet.RequestDispatcher;
 import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
+import javax.servlet.http.HttpSession;
 
 /**
  *
@@ -36,24 +37,53 @@ public class LoginController extends HttpServlet {
     protected void processRequest(HttpServletRequest request, HttpServletResponse response)
         throws ServletException, IOException {
         response.setContentType("text/html;charset=UTF-8");
-        //CHECK INSERT
-        if(request.getParameter("logar")!=null){
-            String loginCheck = request.getParameter("login");
-            //DISPLAY ALL PROFESSORS
-            try (PrintWriter out = response.getWriter()) {
-                ProfessorDao dao = new ProfessorDao();
-                Professor prof   = new Professor();
-                List<Professor> professores = dao.getAllProfessores();     
-                RequestDispatcher rd=request.getRequestDispatcher("View/Professor/listarProfessores.jsp");  
-                request.setAttribute("professores",professores);
-                rd.forward(request, response);  
+        try (PrintWriter out = response.getWriter()) {
+            if(request.getParameter("redirect")!=null){
+                RequestDispatcher rd=request.getRequestDispatcher("login.jsp");  
+                rd.forward(request, response);
             }
-        }
-        else {
-            RequestDispatcher rd=request.getRequestDispatcher("login.jsp");  
-            rd.forward(request, response);  
+            String loginEmail = request.getParameter("email");
+            String loginSenha = request.getParameter("senha");
+            if(loginEmail!=null && loginSenha!=null){
+                Usuario user = new Usuario();
+                UsuarioDao usuarioDao = new UsuarioDao();
+                ProfessorDao professorDao = new ProfessorDao();
+                user.setEmail(loginEmail);
+                user.setSenha(loginSenha);
+                int userId = usuarioDao.login(user);
+                //Login validado
+                System.out.println(userId);
+                if(userId!=-1){
+                    //Busca por professor pelo ID,se encotrar o usuário é professor
+                    if(professorDao.getProfessorById(userId)!=null){
+                        System.out.println("Professor");
+                        //ARRUMAR: REDIRECIONAR PARA MAIN DO PROFESSOR
+                        RequestDispatcher rd=request.getRequestDispatcher("View/Professor/cadastrarProfessor.jsp");  
+                        rd.forward(request, response);  
+                    }
+                    //Senão encontrar o usuário é aluno
+                    else{
+                        System.out.println("Aluno");
+                        //ARRUMAR:REDIRECIONAR PARA MAIN DO ALUNO
+                        RequestDispatcher rd=request.getRequestDispatcher("View/Professor/cadastrarProfessor.jsp");  
+                        rd.forward(request, response);  
+                    }
+                }
+                //mostrar mensagem de erro
+                else{
+                    HttpSession session = request.getSession();
+                    session.setAttribute("mensagemErro", "Login inválido");
+                    RequestDispatcher rd=request.getRequestDispatcher("login.jsp");  
+                    rd.forward(request, response);
+                }
+            }
+               
         }
     }
+         
+         
+    
+
 
     // <editor-fold defaultstate="collapsed" desc="HttpServlet methods. Click on the + sign on the left to edit the code.">
     /**

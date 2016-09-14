@@ -5,7 +5,11 @@
  */
 package Controller;
 
+import Beans.Aluno;
+import Beans.Professor;
 import Beans.Usuario;
+import Dao.AlunoDao;
+import Dao.ProfessorDao;
 import Dao.UsuarioDao;
 import java.io.IOException;
 import java.io.PrintWriter;
@@ -37,19 +41,34 @@ public class UsuarioController extends HttpServlet {
             throws ServletException, IOException {
         response.setContentType("text/html;charset=UTF-8");
         try (PrintWriter out = response.getWriter()) {
-            UsuarioDao dao = new UsuarioDao();
+            UsuarioDao usuarioDao = new UsuarioDao();
             Usuario user   = new Usuario();
             
             //CHECK INSERT
             if(request.getParameter("insert")!=null){
                 String insertEmail = request.getParameter("email");
                 String insertSenha = request.getParameter("senha");
+                String userType    = request.getParameter("userType");
                 user.setEmail(insertEmail);
                 user.setSenha(insertSenha);
+                
                 //Antes de inserir um usuário no banco. checar se o e-mail já existe no BD.
-                if(!dao.emailExists(insertEmail)){
-                    dao.insert(user);
-                    //Inserir referencia na tabela de professor || ou  Aluno. dependendo do radio
+                if(!usuarioDao.emailExists(insertEmail)){
+                    int id = usuarioDao.insert(user);
+                    //Se o usuário for professor inserir referência na tabela de professor
+                    if(userType.equals("professor")){
+                        ProfessorDao profDao  = new ProfessorDao();
+                        Professor prof = new Professor();
+                        prof.setId(id);
+                        profDao.insert(prof);
+                    }
+                    //Caso contrário o usuário é estudante
+                    else{
+                        AlunoDao alunoDao = new AlunoDao();
+                        Aluno aluno = new Aluno();
+                        aluno.setId(id);
+                        alunoDao.insert(aluno);
+                    }
                     RequestDispatcher rd=request.getRequestDispatcher("View/Professor/cadastrarProfessor.jsp");  
                     rd.forward(request, response);  
                 }
@@ -62,24 +81,8 @@ public class UsuarioController extends HttpServlet {
                     rd.forward(request, response);
                 }
             }
-            //CHECK DELETE
-            if(request.getParameter("delete")!=null){
-                user.setId(Integer.parseInt(request.getParameter("delete")));
-                dao.delete(user);
-            }
-            //CHECK UPDATE
-            if(request.getParameter("update")!=null){
-                String updateEmail = request.getParameter("nome");
-                String updateSenha = request.getParameter("senha");
-                String updateId   = request.getParameter("update");
-                user.setId(Integer.parseInt(updateId));
-                user.setEmail(updateEmail);
-                user.setSenha(updateSenha);
-                dao.update(user);
-            }
             //por enquanto o usuário é redirecionado para o cadastro de professor
-            
-        }
+        }   
     }
 
     // <editor-fold defaultstate="collapsed" desc="HttpServlet methods. Click on the + sign on the left to edit the code.">

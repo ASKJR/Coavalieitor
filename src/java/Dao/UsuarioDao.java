@@ -10,6 +10,7 @@ import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
+import java.sql.Statement;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -24,6 +25,7 @@ public class UsuarioDao {
     private final static String UPDATE = "UPDATE usuario SET email=?, senha=MD5(?) WHERE id=?";
     private final static String SELECT = "SELECT * FROM usuario";
     private final static String SELECT_EMAIL = "SELECT email FROM usuario WHERE email=?"; 
+    private final static String SELECT_LOGIN = "SELECT * FROM usuario WHERE email=? AND senha=MD5(?)";
     
     /*DB variables*/
     private Connection con         = null;
@@ -32,13 +34,18 @@ public class UsuarioDao {
 
     public UsuarioDao() {
     }
-    public void insert(Usuario usuario) {
+    //Além de inserir um usuário no BD,retorna o ID recém inserido para inserir
+    //registros nas tabela de professor, ou aluno
+    public int insert(Usuario usuario) {
         try{
             con = new ConnectionFactory().getConnection();
-            stmt = con.prepareStatement(INSERT);	
+            stmt = con.prepareStatement(INSERT,Statement.RETURN_GENERATED_KEYS);	
             stmt.setString(1,usuario.getEmail());
             stmt.setString(2,usuario.getSenha());  //Criptografar          
             stmt.execute();
+            rs = stmt.getGeneratedKeys();
+            rs.next();
+            return rs.getInt(1);
         }catch(SQLException e) {
             throw new RuntimeException(e);
         }finally{
@@ -106,6 +113,27 @@ public class UsuarioDao {
             rs = stmt.executeQuery();
             
             return rs.next();
+        } catch (SQLException e) {
+            throw new RuntimeException(e);
+        }finally{
+            try { if (rs   != null) stmt.close();   } catch (Exception e) {};
+            try { if (stmt != null) stmt.close();   } catch (Exception e) {};
+            try { if (con  != null) con.close();    } catch (Exception e) {};
+        }
+    }
+    //retorna o id do usuario,caso exista no banco de dados.
+    //caso contrário retorna -1
+    public int login(Usuario usuario){
+        try {
+            con  = new ConnectionFactory().getConnection();
+            stmt = con.prepareStatement(SELECT_LOGIN);
+            stmt.setString(1,usuario.getEmail());
+            stmt.setString(2,usuario.getSenha());
+            rs = stmt.executeQuery();    
+            if(rs.next()){
+               return rs.getInt("id");
+            }
+            return -1;
         } catch (SQLException e) {
             throw new RuntimeException(e);
         }finally{

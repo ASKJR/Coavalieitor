@@ -43,7 +43,7 @@ public class ProfessorController extends HttpServlet {
             //CHECK INSERT
             if(request.getParameter("insert")!=null){
                 String insertNome = request.getParameter("nome");
-                prof.setNome(insertNome);
+               // prof.setNome(insertNome);
                 dao.insert(prof);
             }
             //CHECK DELETE
@@ -56,7 +56,7 @@ public class ProfessorController extends HttpServlet {
                 String updateName = request.getParameter("nome");
                 String updateId   = request.getParameter("update");
                 prof.setId(Integer.parseInt(updateId));
-                prof.setNome(updateName);
+                //prof.setNome(updateName);
                 dao.update(prof);
             }
             //DISPLAY ALL PROFESSORS
