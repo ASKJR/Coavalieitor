@@ -7,7 +7,10 @@
 <%@include file="include/header.jsp" %>
   <div class="wrapper">
     <form class="form-signin" action="${pageContext.request.contextPath}/UsuarioController" method="POST">       
-        <h2 class="form-signin-heading">Coavalieitor</h2>
+        <!--Testando possíveis logos-->
+        <!--<h2 class="form-signin-heading">Coavalieitor</h2>-->
+        <!--<img src="resource/img/logo.png" alt="Mountain View" style="width:314px;height:174px;">-->
+        <img src="resource/img/logo2.png" alt="Mountain View" style="width:314px;height:135px;">
         <h4>Inscreva-se já:</h4>
         <%@include file="include/mensagem.jsp"%>
         <label class="radio-inline">
