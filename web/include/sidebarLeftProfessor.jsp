@@ -7,10 +7,10 @@
 <div class="col-sm-2">
     <nav class="nav-sidebar">
         <ul class="nav">
-            <li><a href="javascript:;">Dashboard</a></li>
-            <li><a href="ProfessorController">Professor</a></li>
-            <li><a href="javascript:;">Aluno</a></li>
-            <li><a href="javascript:;">Avaliação</a></li>
+            <li><a href="#">Dashboard</a></li>
+            <li><a href="#">Professor</a></li>
+            <li><a href="#">Aluno</a></li>
+            <li><a href="#">Avaliação</a></li>
             <li class="nav-divider"></li>
             <li><a href="${pageContext.request.contextPath}/LoginController?redirect=true"><i class="glyphicon glyphicon-off"></i> Logout </a></li>
         </ul>

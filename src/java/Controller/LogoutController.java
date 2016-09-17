@@ -5,9 +5,6 @@
  */
 package Controller;
 
-import Beans.Usuario;
-import Dao.ProfessorDao;
-import Dao.UsuarioDao;
 import java.io.IOException;
 import java.io.PrintWriter;
 import javax.servlet.RequestDispatcher;
@@ -20,10 +17,10 @@ import javax.servlet.http.HttpSession;
 
 /**
  *
- * @author Welyngton
+ * @author Kato
  */
-@WebServlet(name = "LoginController", urlPatterns = {"/LoginController"})
-public class LoginController extends HttpServlet {
+@WebServlet(name = "LogoutController", urlPatterns = {"/LogoutController"})
+public class LogoutController extends HttpServlet {
 
     /**
      * Processes requests for both HTTP <code>GET</code> and <code>POST</code>
@@ -35,42 +32,17 @@ public class LoginController extends HttpServlet {
      * @throws IOException if an I/O error occurs
      */
     protected void processRequest(HttpServletRequest request, HttpServletResponse response)
-        throws ServletException, IOException {
+            throws ServletException, IOException {
         response.setContentType("text/html;charset=UTF-8");
         try (PrintWriter out = response.getWriter()) {
-            String loginEmail = request.getParameter("email");
-            String loginSenha = request.getParameter("senha");
-            if(loginEmail!=null && loginSenha!=null){
-                Usuario user = new Usuario();
-                UsuarioDao usuarioDao = new UsuarioDao();
-                ProfessorDao professorDao = new ProfessorDao();
-                user.setEmail(loginEmail);
-                user.setSenha(loginSenha);
-                int userId = usuarioDao.login(user);
-                //Login validado
-                System.out.println(userId);
-                if(userId!=-1){
-                    //Busca por professor pelo ID,se encotrar o usuário é professor
-                    if(professorDao.getProfessorById(userId)!=null){
-                        RequestDispatcher rd=request.getRequestDispatcher("View/Professor/indexProfessor.jsp");  
-                        rd.forward(request, response);  
-                    }
-                    //Senão encontrar o usuário é aluno
-                    else{
-                        RequestDispatcher rd=request.getRequestDispatcher("View/Aluno/indexAluno.jsp");  
-                        rd.forward(request, response);  
-                    }
-                }
-                //mostrar mensagem de erro
-                else{
-                    HttpSession session = request.getSession();
-                    session.setAttribute("mensagemErro", "Login inválido");
-                    RequestDispatcher rd=request.getRequestDispatcher("login.jsp");  
-                    rd.forward(request, response);
-                }
-            }
+            HttpSession session = request.getSession();
+            //Limpar sessão e redirecionar para tela de login;
+            session.invalidate();
+            RequestDispatcher rd=request.getRequestDispatcher("login.jsp");  
+            rd.forward(request, response);  
         }
     }
+
     // <editor-fold defaultstate="collapsed" desc="HttpServlet methods. Click on the + sign on the left to edit the code.">
     /**
      * Handles the HTTP <code>GET</code> method.
@@ -109,4 +81,5 @@ public class LoginController extends HttpServlet {
     public String getServletInfo() {
         return "Short description";
     }// </editor-fold>
+
 }

@@ -43,3 +43,11 @@ body {
   border-top-left-radius: 0;
   border-top-right-radius: 0;
 }
+
+.page404{
+    text-align: center; 
+    margin-left: auto; 
+    margin-right: auto; 
+    margin-bottom: auto; 
+    margin-top: auto;
+}

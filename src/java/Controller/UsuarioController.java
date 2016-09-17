@@ -43,15 +43,13 @@ public class UsuarioController extends HttpServlet {
         try (PrintWriter out = response.getWriter()) {
             UsuarioDao usuarioDao = new UsuarioDao();
             Usuario user   = new Usuario();
-            
-            //CHECK INSERT
-            if(request.getParameter("insert")!=null){
-                String insertEmail = request.getParameter("email");
-                String insertSenha = request.getParameter("senha");
-                String userType    = request.getParameter("userType");
+            String insertEmail = request.getParameter("email");
+            String insertSenha = request.getParameter("senha");
+            String userType    = request.getParameter("userType");
+            if(insertEmail !=null && insertSenha !=null && userType!=null){
                 user.setEmail(insertEmail);
                 user.setSenha(insertSenha);
-                
+
                 //Antes de inserir um usuário no banco. checar se o e-mail já existe no BD.
                 if(!usuarioDao.emailExists(insertEmail)){
                     int id = usuarioDao.insert(user);
@@ -61,6 +59,8 @@ public class UsuarioController extends HttpServlet {
                         Professor prof = new Professor();
                         prof.setId(id);
                         profDao.insert(prof);
+                        RequestDispatcher rd=request.getRequestDispatcher("View/Professor/indexProfessor.jsp");  
+                        rd.forward(request, response);
                     }
                     //Caso contrário o usuário é estudante
                     else{
@@ -68,15 +68,13 @@ public class UsuarioController extends HttpServlet {
                         Aluno aluno = new Aluno();
                         aluno.setId(id);
                         alunoDao.insert(aluno);
-                    }
-                    RequestDispatcher rd=request.getRequestDispatcher("View/Professor/cadastrarProfessor.jsp");  
-                    rd.forward(request, response);  
+                        RequestDispatcher rd=request.getRequestDispatcher("View/Aluno/indexAluno.jsp");  
+                        rd.forward(request, response);
+                    }  
                 }
                 else{
-                    System.out.println("EMAIL EXISTENTE NO SISTEMA!!!");
                     HttpSession session = request.getSession();
                     session.setAttribute("mensagemErro", "E-mail já cadastrado no sistema.");
-
                     RequestDispatcher rd=request.getRequestDispatcher("cadastrarUsuario.jsp");  
                     rd.forward(request, response);
                 }
