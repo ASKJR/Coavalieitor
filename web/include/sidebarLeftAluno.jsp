@@ -7,6 +7,7 @@
 <div class="col-sm-2">
     <nav class="nav-sidebar">
         <ul class="nav">
+            <li><a href="View/Aluno/meuCadastro.jsp">Meus dados</a></li>
             <li><a href="#">Turmas</a></li>
             <li><a href="#">Avaliações</a></li>
             <li><a href="#">Correções</a></li>

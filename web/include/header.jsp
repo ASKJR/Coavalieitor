@@ -4,6 +4,6 @@
     Author     : Kato
 --%>
 <%@ include file="config.jsp" %>
-<body>
-    <header>    
-    </header>
+<body class="body-before-login">
+    <header> 
+   </header>

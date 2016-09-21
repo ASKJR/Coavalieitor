@@ -1,4 +1,4 @@
-body {
+.body-before-login {
   background: #eee !important;
 }
 
@@ -50,4 +50,8 @@ body {
     margin-right: auto; 
     margin-bottom: auto; 
     margin-top: auto;
+}
+.main .row{
+    padding: 0px;
+    margin: 0px;
 }
