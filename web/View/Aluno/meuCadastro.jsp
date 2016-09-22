@@ -19,7 +19,7 @@
   <input id="textinput" name="textinput" type="text" placeholder="Nome completo" class="form-control input-md">
     
   </div>
-</div>
+</div><br>
 
 <!-- Text input-->
 <div class="form-group">
@@ -28,7 +28,7 @@
   <input id="email" name="email" type="text" placeholder="email@domain.com" class="form-control input-md" required="">
     
   </div>
-</div>
+</div><br>
 
 <!-- Text input-->
 <div class="form-group">
@@ -37,7 +37,7 @@
   <input id="telefone" name="telefone" type="text" placeholder="(99) 9999-9999" class="form-control input-md" required="">
     
   </div>
-</div>
+</div><br>
 
 <!-- Text input-->
 <div class="form-group">
@@ -46,7 +46,7 @@
   <input id="calendario" name="nascimento" type="text" placeholder="dd/mm/aaaa" class="form-control input-md">
     
   </div>
-</div>
+</div><br>
 
 <!-- Multiple Radios (inline) -->
 <div class="form-group">
@@ -61,7 +61,7 @@
       Feminino
     </label>
   </div>
-</div>
+</div><br>
 
 <!-- Button -->
 <div class="form-group">

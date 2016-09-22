@@ -5,4 +5,4 @@
 --%>
 <%@include file="../../include/headerAluno.jsp" %>
 <%@include file="../../include/sidebarLeftAluno.jsp" %>
-<%@include file="../../include/footer.jsp" %>
+<%@include file="../../include/footerAluno.jsp" %>

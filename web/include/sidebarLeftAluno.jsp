@@ -2,17 +2,14 @@
     Document   : sidebarLeftAluno
     Created on : 17/09/2016, 09:38:56
     Author     : Kato
---%>
-
-<div class="col-sm-2">
-    <nav class="nav-sidebar">
-        <ul class="nav">
-            <li><a href="View/Aluno/meuCadastro.jsp">Meus dados</a></li>
-            <li><a href="#">Turmas</a></li>
-            <li><a href="#">Avaliações</a></li>
-            <li><a href="#">Correções</a></li>
-            <li class="nav-divider"></li>
-            <li><a href="${pageContext.request.contextPath}/LogoutController"><i class="glyphicon glyphicon-off"></i> Logout </a></li>
-        </ul>
-    </nav>
-</div>
+--%>        
+<div class="container-fluid" id="main">
+    <div class="row row-offcanvas row-offcanvas-left">
+        <div class="col-md-3 col-lg-2 sidebar-offcanvas" id="sidebar" role="navigation">
+            <ul class="nav nav-pills nav-stacked">
+                <li class="nav-item"><a class="nav-link" href="View/Aluno/meuCadastro.jsp">Meus dados</a></li>
+                <li class="nav-item"><a class="nav-link" href="#">Turmas</a></li>
+                <li class="nav-item"><a class="nav-link" href="#">Avaliações</a></li>
+                <li class="nav-item"><a class="nav-link" href="#">Correções</a></li>
+            </ul>
+        </div>

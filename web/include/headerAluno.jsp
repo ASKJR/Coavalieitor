@@ -4,20 +4,14 @@
     Author     : Kato
 --%>
 <%@ include file="config.jsp" %>
-<body>
-    <header>
-                <nav class="navbar navbar-inverse">
-            <div class="container-fluid">
-                <div class="navbar-header">
-                    <a class="navbar-brand" href="#">Coavalieitor</a>
-                </div>
-                    <ul class="nav navbar-nav">
-                    <li class="active"><a href="#">Home</a></li>
-                    <li><a href="#">Page 1</a></li>
-                    <li><a href="#">Page 2</a></li> 
-                    <li><a href="#">Page 3</a></li> 
-                </ul>
-            </div>
-        </nav>
-   </header>
-    
+<body class="body-after-login">
+<nav class="navbar navbar-fixed-top navbar-dark bg-primary">
+    <a class="navbar-brand" href="#">Coavalieitor - Aluno</a>
+    <div class="collapse navbar-toggleable-xs" id="collapsingNavbar">
+        <ul class="nav navbar-nav pull-right">
+            <li class="nav-item">
+                <a class="nav-link" href="${pageContext.request.contextPath}/LogoutController">Logout</a>
+            </li>
+        </ul>
+    </div>
+</nav>

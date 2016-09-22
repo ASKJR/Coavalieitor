@@ -3,16 +3,13 @@
     Created on : 10/09/2016, 18:10:19
     Author     : Welyngton
 --%>
-
-<div class="col-sm-2">
-    <nav class="nav-sidebar">
-        <ul class="nav">
-            <li><a href="#">Dashboard</a></li>
-            <li><a href="#">Professor</a></li>
-            <li><a href="#">Aluno</a></li>
-            <li><a href="#">Avaliação</a></li>
-            <li class="nav-divider"></li>
-            <li><a href="${pageContext.request.contextPath}/LogoutController"><i class="glyphicon glyphicon-off"></i> Logout </a></li>
-        </ul>
-    </nav>
-</div>
+<div class="container-fluid" id="main">
+    <div class="row row-offcanvas row-offcanvas-left">
+        <div class="col-md-3 col-lg-2 sidebar-offcanvas" id="sidebar" role="navigation">
+            <ul class="nav nav-pills nav-stacked">
+                <li class="nav-item"><a class="nav-link" href="#">Instituições</a></li>
+                <li class="nav-item"><a class="nav-link" href="#">Cursos</a></li>
+                <li class="nav-item"><a class="nav-link" href="#">Disciplinas</a></li>
+                <li class="nav-item"><a class="nav-link" href="#">Turmas</a></li>
+            </ul>
+        </div>

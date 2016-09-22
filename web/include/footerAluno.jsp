@@ -3,8 +3,10 @@
     Created on : 21/09/2016, 01:07:38
     Author     : Kato
 --%>
-   <footer>
-    
+         </div>
+    </div>
+    <footer class="container-fluid">
+        <p class="text-right small">©2015 TCC-TADS-UFPR</p>
     </footer>
      <!-- jQuery (necessary for Bootstrap's JavaScript plugins) -->
     <!--<script src="https://ajax.googleapis.com/ajax/libs/jquery/1.12.4/jquery.min.js"></script>--> 
