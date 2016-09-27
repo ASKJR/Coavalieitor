@@ -9,7 +9,7 @@
             <ul class="nav nav-pills nav-stacked">
                  <li class="nav-item"><a class="nav-link" href="#">Dashboard</a></li>
                 <li class="nav-item"><a class="nav-link" href="${pageContext.request.contextPath}/View/Professor/instituicao.jsp">Instituições</a></li>
-                <li class="nav-item"><a class="nav-link" href="#">Cursos</a></li>
+                <li class="nav-item"><a class="nav-link" href="${pageContext.request.contextPath}/View/Professor/curso.jsp">Cursos</a></li>
                 <li class="nav-item"><a class="nav-link" href="#">Disciplinas</a></li>
                 <li class="nav-item"><a class="nav-link" href="#">Turmas</a></li>
                 <li class="nav-item"><a class="nav-link" href="#">Relatórios</a></li>

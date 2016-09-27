@@ -1,6 +1,6 @@
 <%-- 
-    Document   : instituicao
-    Created on : 21/09/2016, 20:05:20
+    Document   : curso
+    Created on : 26/09/2016, 22:49:19
     Author     : Kato
 --%>
 <%@include file="../../include/headerProfessor.jsp" %>
@@ -9,13 +9,24 @@
     <form class="form-horizontal">
         <fieldset>
         <!-- Form Name -->
-        <h2>Instituição</h2>
+        <h2>Curso</h2>
         <hr>
         <!-- Text input-->
         <div class="form-group">
             <label class="col-md-3 control-label" for="textinput"><b>Nome da instituição:</b></label>  
             <div class="col-md-6">
-                <input id="textinput" name="textinput" type="text" placeholder="Instituição" class="form-control input-md" required>
+                <select class="form-control" id="sel1">
+                    <option>UFPR</option>
+                    <option>POSITIVO</option>
+                    <option>TUITI</option>
+                    <option>PUCPR</option>
+                </select>
+            </div>
+        </div><br><br>
+        <div class="form-group">
+            <label class="col-md-3 control-label" for="textinput"><b>Nome do curso:</b></label>  
+            <div class="col-md-6">
+                <input id="textinput" name="textinput" type="text" placeholder="Digite o nome do curso" class="form-control input-md" required>
             </div>
         </div><br><br>
         <!-- Button -->
@@ -40,7 +51,7 @@
             </thead>
             <tr>
                 <td>1</td>
-                <td>Universidade Federal do Paraná</td>
+                <td>Tecnologia em Negócios Imobiliários</td>
                 <td> 
                     <button id="" name="" class="btn btn-danger">Deletar</button>
                     &nbsp
@@ -49,7 +60,7 @@
             <tr>
             <tr>
                 <td>1</td>
-                <td>Pontifícia Universidade Católica do Paraná</td>
+                <td>Tecnologia em Análise e Desenvolvimento de Sistemas</td>
                 <td> 
                     <button id="" name="" class="btn btn-danger">Deletar</button>
                     &nbsp
@@ -59,7 +70,4 @@
         </table>
     </div>
 </div>
-
-
 <%@include file="../../include/footerProfessor.jsp" %>
-
