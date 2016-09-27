@@ -1,10 +1,11 @@
 <%-- 
     Document   : meuCadastro
-    Created on : 20/09/2016, 23:23:21
+    Created on : 26/09/2016, 20:02:16
     Author     : Kato
 --%>
-<%@include file="../../include/headerAluno.jsp" %>
-<%@include file="../../include/sidebarLeftAluno.jsp" %>
+
+<%@include file="../../include/headerProfessor.jsp" %>
+<%@include file="../../include/sidebarLeftProfessor.jsp" %>
 <div class="col-md-9 col-lg-10 main">
     <h2>Configurações da conta</h2>
     <hr>
@@ -107,4 +108,4 @@
         </fieldset>
     </form>
 </div>
-<%@include file="../../include/footerAluno.jsp" %>
+<%@include file="../../include/footerProfessor.jsp" %>
