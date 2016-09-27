@@ -10,7 +10,7 @@
                  <li class="nav-item"><a class="nav-link" href="#">Dashboard</a></li>
                 <li class="nav-item"><a class="nav-link" href="${pageContext.request.contextPath}/View/Professor/instituicao.jsp">Instituições</a></li>
                 <li class="nav-item"><a class="nav-link" href="${pageContext.request.contextPath}/View/Professor/curso.jsp">Cursos</a></li>
-                <li class="nav-item"><a class="nav-link" href="#">Disciplinas</a></li>
+                <li class="nav-item"><a class="nav-link" href="${pageContext.request.contextPath}/View/Professor/disciplina.jsp">Disciplinas</a></li>
                 <li class="nav-item"><a class="nav-link" href="#">Turmas</a></li>
                 <li class="nav-item"><a class="nav-link" href="#">Relatórios</a></li>
             </ul>
