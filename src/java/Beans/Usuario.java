@@ -6,6 +6,7 @@
 package Beans;
 
 import java.io.Serializable;
+import java.sql.Date;
 
 
 /**
@@ -16,6 +17,10 @@ public class Usuario implements Serializable{
     private int id;
     private String email;
     private String senha;
+    private String nome;
+    private String telefone;
+    private Date nascimento;
+    private String sexo;
     
     public Usuario(){
     }
@@ -39,4 +44,37 @@ public class Usuario implements Serializable{
     public void setSenha(String senha) {
         this.senha = senha;
     }
+
+    public String getNome() {
+        return nome;
+    }
+
+    public void setNome(String nome) {
+        this.nome = nome;
+    }
+
+    public String getTelefone() {
+        return telefone;
+    }
+
+    public void setTelefone(String telefone) {
+        this.telefone = telefone;
+    }
+
+    public Date getNascimento() {
+        return nascimento;
+    }
+
+    public void setNascimento(Date nascimento) {
+        this.nascimento = nascimento;
+    }
+
+    public String getSexo() {
+        return sexo;
+    }
+
+    public void setSexo(String sexo) {
+        this.sexo = sexo;
+    }
+    
 }

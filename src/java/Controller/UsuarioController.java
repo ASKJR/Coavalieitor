@@ -43,12 +43,14 @@ public class UsuarioController extends HttpServlet {
         try (PrintWriter out = response.getWriter()) {
             UsuarioDao usuarioDao = new UsuarioDao();
             Usuario user   = new Usuario();
+            String insertNome  = request.getParameter("nome");
             String insertEmail = request.getParameter("email");
             String insertSenha = request.getParameter("senha");
             String userType    = request.getParameter("userType");
-            if(insertEmail !=null && insertSenha !=null && userType!=null){
+            if(insertEmail !=null && insertSenha !=null && userType!=null && insertNome!=null){
                 user.setEmail(insertEmail);
                 user.setSenha(insertSenha);
+                user.setNome(insertNome);
 
                 //Antes de inserir um usuário no banco. checar se o e-mail já existe no BD.
                 if(!usuarioDao.emailExists(insertEmail)){
@@ -79,7 +81,6 @@ public class UsuarioController extends HttpServlet {
                     rd.forward(request, response);
                 }
             }
-            //por enquanto o usuário é redirecionado para o cadastro de professor
         }   
     }
 

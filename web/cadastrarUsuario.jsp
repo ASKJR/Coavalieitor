@@ -20,6 +20,7 @@
           <input type="radio"  name="userType" value="estudante" required>Sou Estudante
         </label>
         <br><br>
+        <input type="text" class="form-control" name="nome" placeholder="Nome" required autofocus="" />
         <input type="email" class="form-control" name="email" placeholder="Email" required="" autofocus="" />
         <input type="password" class="form-control" name="senha" placeholder="Senha" required=""/>      
         <button  class="btn btn-lg btn-primary btn-block" type="submit">Cadastrar</button><br>

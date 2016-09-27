@@ -20,7 +20,7 @@ import java.util.List;
  */
 public class UsuarioDao {
     /*SQL*/
-    private final static String INSERT = "INSERT INTO usuario (email, senha) VALUES (?,MD5(?))";
+    private final static String INSERT = "INSERT INTO usuario (email, senha,nome) VALUES (?,MD5(?),?)";
     private final static String DELETE = "DELETE FROM usuario WHERE id=?";
     private final static String UPDATE = "UPDATE usuario SET email=?, senha=MD5(?) WHERE id=?";
     private final static String SELECT = "SELECT * FROM usuario";
@@ -41,7 +41,8 @@ public class UsuarioDao {
             con = new ConnectionFactory().getConnection();
             stmt = con.prepareStatement(INSERT,Statement.RETURN_GENERATED_KEYS);	
             stmt.setString(1,usuario.getEmail());
-            stmt.setString(2,usuario.getSenha());  //Criptografar          
+            stmt.setString(2,usuario.getSenha());  //Criptografar 
+            stmt.setString(3,usuario.getNome());
             stmt.execute();
             rs = stmt.getGeneratedKeys();
             rs.next();
