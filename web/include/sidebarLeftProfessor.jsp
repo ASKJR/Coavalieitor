@@ -12,5 +12,6 @@
                 <li class="nav-item"><a class="nav-link" href="#">Cursos</a></li>
                 <li class="nav-item"><a class="nav-link" href="#">Disciplinas</a></li>
                 <li class="nav-item"><a class="nav-link" href="#">Turmas</a></li>
+                <li class="nav-item"><a class="nav-link" href="#">Relatórios</a></li>
             </ul>
         </div>
