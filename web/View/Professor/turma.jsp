@@ -75,18 +75,7 @@
             </thead>
             <tr>
                 <td>1</td>
-                <td>Turma Noturna</td>
-                <td> 
-                    <button id="" name="" class="btn btn-danger">Deletar</button>
-                    &nbsp
-                    <button id="" name="" class="btn btn-info">Editar</button>
-                    &nbsp
-                    <button id="" name="" class="btn btn-success">Alunos</button>
-                </td>
-            <tr>
-            <tr>
-                <td>1</td>
-                <td>Turma Vespertina</td>
+                <td><a href="turmaAvaliacoes.jsp"> Turma Noturna</a></td>
                 <td> 
                     <button id="" name="" class="btn btn-danger">Deletar</button>
                     &nbsp
