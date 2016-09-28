@@ -7,11 +7,11 @@
     <div class="row row-offcanvas row-offcanvas-left">
         <div class="col-md-3 col-lg-2 sidebar-offcanvas" id="sidebar" role="navigation">
             <ul class="nav nav-pills nav-stacked">
-                 <li class="nav-item"><a class="nav-link" href="#">Dashboard</a></li>
+                <li class="nav-item"><a class="nav-link" href="#">Dashboard</a></li>
                 <li class="nav-item"><a class="nav-link" href="${pageContext.request.contextPath}/View/Professor/instituicao.jsp">Instituições</a></li>
                 <li class="nav-item"><a class="nav-link" href="${pageContext.request.contextPath}/View/Professor/curso.jsp">Cursos</a></li>
                 <li class="nav-item"><a class="nav-link" href="${pageContext.request.contextPath}/View/Professor/disciplina.jsp">Disciplinas</a></li>
-                <li class="nav-item"><a class="nav-link" href="#">Turmas</a></li>
+                <li class="nav-item"><a class="nav-link" href="${pageContext.request.contextPath}/View/Professor/turma.jsp">Turmas</a></li>
                 <li class="nav-item"><a class="nav-link" href="#">Relatórios</a></li>
             </ul>
         </div>
