@@ -29,7 +29,7 @@
                 </div>
                 <div class="form-group ">
                     <label class="control-label " for="name"><b>Período de correções:</b> </label>
-                    <input class="form-control" id="name" name="name" type="text"/>
+                    <input class="form-control" id="name" name="daterange" type="text"/>
                 </div>
                 <div class="form-group ">
                     <label class="control-label " for="name"><b>Número de correções por estudante:</b> </label>

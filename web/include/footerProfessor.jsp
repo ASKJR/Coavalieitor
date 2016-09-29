@@ -18,17 +18,6 @@
     <script src="${pageContext.request.contextPath}/resource/js/calendario.js"></script>
     <script type="text/javascript" src="//cdn.jsdelivr.net/momentjs/latest/moment.min.js"></script>
     <script type="text/javascript" src="//cdn.jsdelivr.net/bootstrap.daterangepicker/2/daterangepicker.js"></script>
-    <script>
-        $(function() {
-    $('input[name="daterange"]').daterangepicker({
-        timePicker: true,
-        timePickerIncrement: 30,
-        timePicker24Hour: true,
-        locale: {
-            format: 'DD/MM/YYYY hh:mm'
-        }
-    });
-});
-    </script>
+    <script src="${pageContext.request.contextPath}/resource/js/daterange.js"> </script>
     </body>
 </html>

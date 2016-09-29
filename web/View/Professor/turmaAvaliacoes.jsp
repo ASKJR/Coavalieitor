@@ -7,9 +7,9 @@
 <%@include file="../../include/headerProfessor.jsp" %>
 <%@include file="../../include/sidebarLeftProfessor.jsp" %>
 <div class="col-md-9 col-lg-10 main">
-    <h2>Turma Exemplo - Avaliações</h2>
+    <h2>Turma Noturna - Avaliações</h2>
     <hr>
-    <button id="" name="" class="btn btn-info"> + Nova avaliação</button>
+    <a href="avaliacao.jsp" class="btn btn-info">+ Nova avaliação</a>
     <br><br>
     <div class="table-responsive">
         <table class="table table-striped">
@@ -30,7 +30,7 @@
                      &nbsp
                     <button id="" name="" class="btn btn-info">Listar correções</button>
                                      &nbsp
-                    <button id="" name="" class="btn btn-info">Avaliar</button>
+                    <a href="feedback.jsp" class="btn btn-info">Avaliar</a>
                 </td>
             <tr>
         </table>
