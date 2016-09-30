@@ -28,7 +28,9 @@
                     &nbsp
                     <button id="" name="" class="btn btn-info">Editar</button>
                      &nbsp
-                    <button id="" name="" class="btn btn-info">Listar correções</button>
+                    <a href="listarSubmissoes.jsp" class="btn btn-info">Listar submissões</a>
+                     &nbsp
+                    <a href="listarCorrecoes.jsp" class="btn btn-info">Listar correções</a>
                                      &nbsp
                     <a href="feedback.jsp" class="btn btn-info">Avaliar</a>
                 </td>

@@ -1,17 +1,16 @@
 <%-- 
-    Document   : turma
-    Created on : 27/09/2016, 20:10:36
+    Document   : novaTurma
+    Created on : 29/09/2016, 21:28:10
     Author     : Kato
 --%>
+
 <%@include file="../../include/headerProfessor.jsp" %>
 <%@include file="../../include/sidebarLeftProfessor.jsp" %>
 <div class="col-md-9 col-lg-10 main">
     <form class="form-horizontal">
         <fieldset>
         <!-- Form Name -->
-        <h2>Turma</h2>
-        <hr>
-        <a href="novaTurma.jsp" class="btn btn-info"> + Nova Turma </a><br>
+        <h2>Inserir Turma</h2>
         <hr>
         <!-- Text input-->
         <div class="form-group">
@@ -48,39 +47,31 @@
                 </select>
             </div>
         </div><br><br>
+        
+        <div class="form-group">
+            <label class="col-md-3 control-label" for="nomeTurma"><b>Nome da turma:</b></label>  
+            <div class="col-md-6">
+                <input id="textinput" name="inputTurma" type="text" placeholder="Digite o nome da turma" class="form-control input-md" required>
+            </div>
+        </div><br><br>
+        
+        <div class="form-group">
+            <label class="col-md-3 control-label" for="nomeTurma"><b>Senha da turma:</b></label>  
+            <div class="col-md-6">
+                <input id="textinput" name="inputTurma" type="password" placeholder="Digite uma senha para que alunos consigam acessar essa turma" class="form-control input-md" required>
+            </div>
+        </div><br><br>
+        
+        
+        
         <!-- Button -->
         <div class="form-group">
             <label class="col-md-3 control-label" for=""></label>
             <div class="col-md-6">
-                <button id="" name="" class="btn btn-primary">Listar</button>
+                <button id="" name="" class="btn btn-primary">Inserir turma</button>
             </div>
         </div>
         </fieldset>
     </form>
-    <hr>
-    <br>
-    <div class="table-responsive">
-        <table class="table table-striped">
-            <thead class="thead-inverse">
-                <tr>
-                    <th>#ID</th>
-                    <th>Nome</th>
-                    <th>Ações</th>
-                </tr>
-            </thead>
-            <tr>
-                <td>1</td>
-                <td><a href="turmaAvaliacoes.jsp"> Turma Noturna</a></td>
-                <td> 
-                    <button id="" name="" class="btn btn-danger">Deletar</button>
-                    &nbsp
-                    <button id="" name="" class="btn btn-info">Editar</button>
-                    &nbsp
-                    <button id="" name="" class="btn btn-success">Alunos</button>
-                </td>
-            <tr>
-        </table>
-    </div>
 </div>
 <%@include file="../../include/footerProfessor.jsp" %>
-

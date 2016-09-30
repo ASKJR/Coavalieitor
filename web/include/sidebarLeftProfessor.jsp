@@ -12,6 +12,6 @@
                 <li class="nav-item"><a class="nav-link" href="${pageContext.request.contextPath}/View/Professor/curso.jsp">Cursos</a></li>
                 <li class="nav-item"><a class="nav-link" href="${pageContext.request.contextPath}/View/Professor/disciplina.jsp">Disciplinas</a></li>
                 <li class="nav-item"><a class="nav-link" href="${pageContext.request.contextPath}/View/Professor/turma.jsp">Turmas</a></li>
-                <li class="nav-item"><a class="nav-link" href="#">Relatórios</a></li>
+                <li class="nav-item"><a class="nav-link" href="${pageContext.request.contextPath}/View/Professor/relatorios.jsp">Relatórios</a></li>
             </ul>
         </div>

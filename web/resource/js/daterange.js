@@ -4,6 +4,50 @@
  * and open the template in the editor.
  */
 $(function() {
+    $('input[name="rangedateonly"]').daterangepicker({
+        autoUpdateInput: false,
+        locale: {
+            format: 'DD/MM/YYYY',
+            "applyLabel": "Aplicar",
+            "cancelLabel": "Cancelar",
+            "daysOfWeek": [
+                "Do",
+                "Se",
+                "Te",
+                "Qu",
+                "Qu",
+                "Se",
+                "Sa"
+            ],
+            "monthNames": [
+                "Janeiro",
+                "Fevereiro",
+                "Março",
+                "Abril",
+                "Maio",
+                "Junho",
+                "Julho",
+                "Agosto",
+                "Setembro",
+                "Outubro",
+                "Novembro",
+                "Dezembro"
+            ]
+        }
+    });
+    
+    $('input[name="rangedateonly"]').on('apply.daterangepicker', function(ev, picker) {
+      $(this).val(picker.startDate.format('DD/MM/YYYY') + ' - ' + picker.endDate.format('DD/MM/YYYY'));
+    });
+
+    $('input[name="rangedateonly"]').on('cancel.daterangepicker', function(ev, picker) {
+      $(this).val('');
+    });
+    
+    
+    
+    
+    
     $('input[name="daterange"]').daterangepicker({
         timePicker: true,
         autoUpdateInput: false,
