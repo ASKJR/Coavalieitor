@@ -76,7 +76,7 @@
                     &nbsp
                     <button id="" name="" class="btn btn-info">Editar</button>
                     &nbsp
-                    <button id="" name="" class="btn btn-success">Alunos</button>
+                    <a href="listarAlunosTurma.jsp" class="btn btn-success">Alunos</a>
                 </td>
             <tr>
         </table>
