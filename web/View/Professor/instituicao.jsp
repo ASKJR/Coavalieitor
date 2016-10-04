@@ -6,7 +6,8 @@
 <%@include file="../../include/headerProfessor.jsp" %>
 <%@include file="../../include/sidebarLeftProfessor.jsp" %>
 <div class="col-md-9 col-lg-10 main">
-    <form class="form-horizontal">
+    <form class="form-horizontal" method="post" action="${pageContext.request.contextPath}/InstituicaoController">
+        <input type="hidden" name="insert" value="insert">
         <fieldset>
         <!-- Form Name -->
         <h2>Instituição</h2>
@@ -15,7 +16,7 @@
         <div class="form-group">
             <label class="col-md-3 control-label" for="textinput"><b>Nome da instituição:</b></label>  
             <div class="col-md-6">
-                <input id="textinput" name="textinput" type="text" placeholder="Instituição" class="form-control input-md" required>
+                <input id="textinput" name="nome" type="text" placeholder="Instituição" class="form-control input-md" required>
             </div>
         </div><br><br>
         <!-- Button -->
@@ -38,24 +39,17 @@
                     <th>Ações</th>
                 </tr>
             </thead>
-            <tr>
-                <td>1</td>
-                <td>Universidade Federal do Paraná</td>
-                <td> 
-                    <button id="" name="" class="btn btn-danger">Deletar</button>
+            <c:forEach items="${instituicoes}" var="instituicao"> 
+                <tr>
+                    <td>${instituicao.id}</td>
+                    <td>${instituicao.nome}</td>
+                    <td>
+                        <a class="btn btn-danger" href="${pageContext.request.contextPath}/InstituicaoController?delete=${instituicao.id}">Deletar</a>
                     &nbsp
                     <button id="" name="" class="btn btn-info">Editar</button>
-                </td>
-            <tr>
-            <tr>
-                <td>1</td>
-                <td>Pontifícia Universidade Católica do Paraná</td>
-                <td> 
-                    <button id="" name="" class="btn btn-danger">Deletar</button>
-                    &nbsp
-                    <button id="" name="" class="btn btn-info">Editar</button>
-                </td>
-            <tr>
+                    </td>
+                </tr>
+            </c:forEach>
         </table>
     </div>
 </div>
