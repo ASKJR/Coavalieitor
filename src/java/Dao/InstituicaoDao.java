@@ -22,8 +22,9 @@ public class InstituicaoDao {
     /*SQL*/
     private final static String INSERT = "INSERT INTO instituicao (nome) VALUES (?)";
     private final static String DELETE = "DELETE FROM instituicao WHERE id=?";
-    private final static String UPDATE = "UPDATE usuario SET nome=? WHERE id=?";
+    private final static String UPDATE = "UPDATE instituicao SET nome=? WHERE id=?";
     private final static String SELECT = "SELECT * FROM instituicao";
+    private final static String SELECT_BY_ID = "SELECT * FROM instituicao WHERE id=?";
     /*DB variables*/
     private Connection con         = null;
     private ResultSet rs           = null;
@@ -52,7 +53,7 @@ public class InstituicaoDao {
             con  = new ConnectionFactory().getConnection();
             stmt = con.prepareStatement(UPDATE);	
             stmt.setString(1,instituicao.getNome());
-            stmt.setInt(1,instituicao.getId());              
+            stmt.setInt(2,instituicao.getId());              
             stmt.execute();
         }catch(SQLException e){
                  throw new RuntimeException(e);
@@ -90,6 +91,26 @@ public class InstituicaoDao {
             }
             return instituicoes;
         } catch (SQLException e) {
+            throw new RuntimeException(e);
+        }finally{
+            try { if (rs   != null) stmt.close();   } catch (Exception e) {};
+            try { if (stmt != null) stmt.close();   } catch (Exception e) {};
+            try { if (con  != null) con.close();    } catch (Exception e) {};
+        }
+    }
+    public Instituicao getInstituicaoById(int id){
+        Instituicao returnInstituicao = new Instituicao();
+        try{
+            con  = new ConnectionFactory().getConnection();
+            stmt = con.prepareStatement(SELECT_BY_ID);
+            stmt.setInt(1,id);
+            rs = stmt.executeQuery();
+            if(rs.next()){
+                returnInstituicao.setId(rs.getInt("id"));
+                returnInstituicao.setNome(rs.getString("nome"));
+            }
+            return returnInstituicao;   
+        }catch (SQLException e) {
             throw new RuntimeException(e);
         }finally{
             try { if (rs   != null) stmt.close();   } catch (Exception e) {};

@@ -1,15 +1,8 @@
-/*
- * To change this license header, choose License Headers in Project Properties.
- * To change this template file, choose Tools | Templates
- * and open the template in the editor.
- */
 package Controller;
 
 import Beans.Instituicao;
 import Dao.InstituicaoDao;
 import java.io.IOException;
-import java.io.PrintWriter;
-import java.util.List;
 import javax.servlet.RequestDispatcher;
 import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
@@ -23,76 +16,69 @@ import javax.servlet.http.HttpServletResponse;
  */
 @WebServlet(name = "InstituicaoController", urlPatterns = {"/InstituicaoController"})
 public class InstituicaoController extends HttpServlet {
-
-    /**
-     * Processes requests for both HTTP <code>GET</code> and <code>POST</code>
-     * methods.
-     *
-     * @param request servlet request
-     * @param response servlet response
-     * @throws ServletException if a servlet-specific error occurs
-     * @throws IOException if an I/O error occurs
-     */
-    protected void processRequest(HttpServletRequest request, HttpServletResponse response)
-            throws ServletException, IOException {
-        response.setContentType("text/html;charset=UTF-8");
-        try (PrintWriter out = response.getWriter()) {
-            String insert = request.getParameter("insert");
-            String instituicaoNome = request.getParameter("nome");
-            InstituicaoDao dao      = new InstituicaoDao();
-            Instituicao instituicao = new Instituicao();
-            List<Instituicao> instituicoes = dao.getAllInstituicoes();
-            if(insert!=null && instituicaoNome!=null){
-                instituicao.setNome(instituicaoNome);
-                dao.insert(instituicao);
-            }
-            if(request.getParameter("delete")!=null){
-                instituicao.setId(Integer.parseInt(request.getParameter("delete")));
-                dao.delete(instituicao);
-            }
-            RequestDispatcher rd=request.getRequestDispatcher("View/Professor/instituicao.jsp");  
-            request.setAttribute("instituicoes",instituicoes);
-            rd.forward(request, response);
-        }
+    
+    private static String INSERT_OR_EDIT = "View/Professor/addEditInstituicoes.jsp";
+    private static String LIST_INST = "View/Professor/listarInstituicoes.jsp";
+    private InstituicaoDao dao;
+    private Instituicao inst;
+    
+    public InstituicaoController(){
+        super();
+        dao = new InstituicaoDao();
+        inst = new Instituicao();
     }
-
-    // <editor-fold defaultstate="collapsed" desc="HttpServlet methods. Click on the + sign on the left to edit the code.">
-    /**
-     * Handles the HTTP <code>GET</code> method.
-     *
-     * @param request servlet request
-     * @param response servlet response
-     * @throws ServletException if a servlet-specific error occurs
-     * @throws IOException if an I/O error occurs
-     */
     @Override
     protected void doGet(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
-        processRequest(request, response);
+        
+        String forward;
+        String action = request.getParameter("action");
+
+        if (action.equalsIgnoreCase("delete")){
+            int instituicaoId = Integer.parseInt(request.getParameter("id"));
+            inst.setId(instituicaoId);
+            dao.delete(inst);
+            forward = LIST_INST;
+            request.setAttribute("instituicoes", dao.getAllInstituicoes());
+            
+        } else if (action.equalsIgnoreCase("edit")){
+            int instituicaoId = Integer.parseInt(request.getParameter("id"));
+            inst = dao.getInstituicaoById(instituicaoId);
+            request.setAttribute("instituicao",inst);
+            forward = INSERT_OR_EDIT;
+            
+        } else if (action.equalsIgnoreCase("listarInstituicoes")){
+            request.setAttribute("instituicoes", dao.getAllInstituicoes());
+             forward = LIST_INST;
+             
+        } else {
+            forward = INSERT_OR_EDIT;
+        }
+
+        RequestDispatcher view = request.getRequestDispatcher(forward);
+        view.forward(request, response);
     }
 
-    /**
-     * Handles the HTTP <code>POST</code> method.
-     *
-     * @param request servlet request
-     * @param response servlet response
-     * @throws ServletException if a servlet-specific error occurs
-     * @throws IOException if an I/O error occurs
-     */
     @Override
     protected void doPost(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
-        processRequest(request, response);
+        
+        inst.setNome(request.getParameter("nome"));
+        String instituicaoid = request.getParameter("id");
+        
+        if(instituicaoid == null || instituicaoid.isEmpty()){
+            dao.insert(inst);
+        }
+        else{
+            inst.setId(Integer.parseInt(instituicaoid));
+            dao.update(inst);
+        }
+        RequestDispatcher view = request.getRequestDispatcher(LIST_INST);
+        request.setAttribute("instituicoes", dao.getAllInstituicoes());
+        view.forward(request, response);
     }
-
-    /**
-     * Returns a short description of the servlet.
-     *
-     * @return a String containing servlet description
-     */
     @Override
     public String getServletInfo() {
         return "Short description";
     }// </editor-fold>
-
 }
