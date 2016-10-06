@@ -6,34 +6,31 @@
 <%@include file="../../include/headerProfessor.jsp" %>
 <%@include file="../../include/sidebarLeftProfessor.jsp" %>
 <div class="col-md-9 col-lg-10 main">
-    <form class="form-horizontal">
+    <br>
+    <h2>Cursos</h2>
+    <hr>
+    <a href="${pageContext.request.contextPath}/CursoController?action=inserir" class="btn btn-success">+ Adicionar</a>
+    <hr>
+    <form class="form-horizontal" method="POST" action="${pageContext.request.contextPath}/CursoController">
+        <input type="hidden" name="listarCursoPorInst" value="true">
         <fieldset>
         <!-- Form Name -->
-        <h2>Curso</h2>
-        <hr>
         <!-- Text input-->
         <div class="form-group">
             <label class="col-md-3 control-label" for="textinput"><b>Nome da instituição:</b></label>  
             <div class="col-md-6">
-                <select class="form-control" id="sel1">
-                    <option>UFPR</option>
-                    <option>POSITIVO</option>
-                    <option>TUITI</option>
-                    <option>PUCPR</option>
+                <select class="form-control" name="selectInstituicao" id="sel1">
+                    <c:forEach items="${instituicoes}" var="instituicao"> 
+                        <option value="${instituicao.id}" ${selected == instituicao.id ? 'selected' : ' '}>${instituicao.nome}</option>
+                    </c:forEach>
                 </select>
-            </div>
-        </div><br><br>
-        <div class="form-group">
-            <label class="col-md-3 control-label" for="textinput"><b>Nome do curso:</b></label>  
-            <div class="col-md-6">
-                <input id="textinput" name="textinput" type="text" placeholder="Digite o nome do curso" class="form-control input-md" required>
             </div>
         </div><br><br>
         <!-- Button -->
         <div class="form-group">
             <label class="col-md-3 control-label" for=""></label>
             <div class="col-md-6">
-                <button id="" name="" class="btn btn-primary">Salvar</button>
+                <button id="" name="" class="btn btn-primary">Listar cursos</button>
             </div>
         </div>
         </fieldset>
@@ -49,7 +46,15 @@
                     <th>Ações</th>
                 </tr>
             </thead>
-            <tr>
+            <c:forEach items="${cursos}" var="curso">
+                <tr>
+                    <td>${curso.id}</td>
+                    <td>${curso.nome}</td>
+                    <td></td>
+                </tr>
+            </c:forEach>
+
+            <!--<tr>
                 <td>1</td>
                 <td>Tecnologia em Negócios Imobiliários</td>
                 <td> 
@@ -66,7 +71,7 @@
                     &nbsp
                     <button id="" name="" class="btn btn-info">Editar</button>
                 </td>
-            <tr>
+            <tr>-->
         </table>
     </div>
 </div>
