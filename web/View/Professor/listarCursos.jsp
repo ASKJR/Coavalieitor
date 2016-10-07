@@ -11,8 +11,8 @@
     <hr>
     <a href="${pageContext.request.contextPath}/CursoController?action=inserir" class="btn btn-success">+ Adicionar</a>
     <hr>
-    <form class="form-horizontal" method="POST" action="${pageContext.request.contextPath}/CursoController">
-        <input type="hidden" name="listarCursoPorInst" value="true">
+    <form class="form-horizontal" method="GET" action="${pageContext.request.contextPath}/CursoController">
+        <input type="hidden" name="action" value="listarCursoPorInst">
         <fieldset>
         <!-- Form Name -->
         <!-- Text input-->
@@ -21,7 +21,7 @@
             <div class="col-md-6">
                 <select class="form-control" name="selectInstituicao" id="sel1">
                     <c:forEach items="${instituicoes}" var="instituicao"> 
-                        <option value="${instituicao.id}" ${selected == instituicao.id ? 'selected' : ' '}>${instituicao.nome}</option>
+                        <option value="${instituicao.id}" ${selected == instituicao.id ? 'selected' : ''}>${instituicao.nome}</option>
                     </c:forEach>
                 </select>
             </div>
@@ -46,32 +46,23 @@
                     <th>Ações</th>
                 </tr>
             </thead>
-            <c:forEach items="${cursos}" var="curso">
-                <tr>
-                    <td>${curso.id}</td>
-                    <td>${curso.nome}</td>
-                    <td></td>
-                </tr>
-            </c:forEach>
-
-            <!--<tr>
-                <td>1</td>
-                <td>Tecnologia em Negócios Imobiliários</td>
-                <td> 
-                    <button id="" name="" class="btn btn-danger">Deletar</button>
-                    &nbsp
-                    <button id="" name="" class="btn btn-info">Editar</button>
-                </td>
-            <tr>
-            <tr>
-                <td>1</td>
-                <td>Tecnologia em Análise e Desenvolvimento de Sistemas</td>
-                <td> 
-                    <button id="" name="" class="btn btn-danger">Deletar</button>
-                    &nbsp
-                    <button id="" name="" class="btn btn-info">Editar</button>
-                </td>
-            <tr>-->
+            <c:choose>
+                <c:when test="${!empty cursos}">
+                    <c:forEach items="${cursos}" var="curso">
+                        <tr>
+                            <td>${curso.id}</td>
+                            <td>${curso.nome}</td>
+                            <td>
+                                <a class="btn btn-info" href="${pageContext.request.contextPath}/CursoController?action=edit&idCurso=${curso.id}&idInstituicao=${curso.instituicao.id}">Editar</a>&nbsp
+                                <a class="btn btn-danger" href="${pageContext.request.contextPath}/CursoController?action=delete&idCurso=${curso.id}&idInstituicao=${curso.instituicao.id}">Deletar</a>
+                            </td>
+                        </tr>
+                    </c:forEach>
+                </c:when>
+                <c:otherwise>
+                    <tr><td colspan="3" align="center"><b>Nenhum registro encontrado, ou o botão listar cursos não foi pressionado.</b></td></tr>
+                </c:otherwise>
+            </c:choose>        
         </table>
     </div>
 </div>

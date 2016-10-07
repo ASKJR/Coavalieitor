@@ -26,6 +26,7 @@ public class CursoDao {
     //private final static String SELECT = "SELECT * FROM instituicao";
     private final static String SELECT_BY_ID = "SELECT * FROM curso WHERE id=?";
     private final static String SELECT_COURSE_BY_INST = "SELECT * FROM curso WHERE instituicao_id=?";
+    private final static String ORDER_BY = " ORDER BY nome";
     /*DB variables*/
     private Connection con         = null;
     private ResultSet rs           = null;
@@ -79,7 +80,7 @@ public class CursoDao {
     public List<Curso> getAllCursosByInsituicao(int idInstituicao) {
         try {
             con  = new ConnectionFactory().getConnection();
-            stmt = con.prepareStatement(SELECT_COURSE_BY_INST);
+            stmt = con.prepareStatement(SELECT_COURSE_BY_INST + ORDER_BY);
             stmt.setInt(1, idInstituicao);
             List<Curso> cursos = new ArrayList<>();
 

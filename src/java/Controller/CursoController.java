@@ -44,19 +44,31 @@ public class CursoController extends HttpServlet {
         String action = request.getParameter("action");
         
         if (action.equalsIgnoreCase("delete")){
-            int cursoId = Integer.parseInt(request.getParameter("id"));
+            int cursoId = Integer.parseInt(request.getParameter("idCurso"));
             curso.setId(cursoId);
             dao.delete(curso);
-            forward = LIST;
-            //request.setAttribute("instituicoes", dao.getAllInstituicoes());
-            
+            request.setAttribute("instituicoes", daoInstituicao.getAllInstituicoes());
+            request.setAttribute("selected",request.getParameter("idInstituicao"));
+            request.setAttribute("cursos", dao.getAllCursosByInsituicao(Integer.parseInt(request.getParameter("idInstituicao"))));
+            forward = LIST;   
         } else if (action.equalsIgnoreCase("edit")){
-            int cursoId = Integer.parseInt(request.getParameter("id"));
+            request.setAttribute("instituicoes", daoInstituicao.getAllInstituicoes());
+            int cursoId = Integer.parseInt(request.getParameter("idCurso"));
+            
+            request.setAttribute("action","edit");
+            
+            request.setAttribute("selected",request.getParameter("idInstituicao"));
             curso = dao.getCursoById(cursoId);
             request.setAttribute("curso",curso);
             forward = INSERT_OR_EDIT;
             
-        } else if (action.equalsIgnoreCase("pesquisarCursos")){
+        }   else if(action.equalsIgnoreCase("listarCursoPorInst")){
+            request.setAttribute("selected",request.getParameter("selectInstituicao"));
+            request.setAttribute("instituicoes", daoInstituicao.getAllInstituicoes());
+            request.setAttribute("cursos", dao.getAllCursosByInsituicao(Integer.parseInt(request.getParameter("selectInstituicao"))));
+            forward = LIST;
+            
+        }   else if (action.equalsIgnoreCase("pesquisarCursos")){
             request.setAttribute("instituicoes", daoInstituicao.getAllInstituicoes());
             forward = LIST;
              
@@ -65,7 +77,6 @@ public class CursoController extends HttpServlet {
             request.setAttribute("instituicoes", daoInstituicao.getAllInstituicoes());
             forward = INSERT_OR_EDIT;
         }
-
         RequestDispatcher view = request.getRequestDispatcher(forward);
         view.forward(request, response);
         
@@ -74,26 +85,22 @@ public class CursoController extends HttpServlet {
     @Override
     protected void doPost(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
-        //vem do select nesse formato id_nomeDaInstituicao
-        int idInstituicao = Integer.parseInt(request.getParameter("selectInstituicao"));
         String nomeCurso  = request.getParameter("nomeCurso");
-        System.out.println(idInstituicao);
-        curso.setNome(nomeCurso);
+        int idInstituicao = Integer.parseInt(request.getParameter("selectInstituicao"));   
         curso.getInstituicao().setId(idInstituicao);
+        curso.setNome(nomeCurso);
    
-        String update = "oi";
-        String listarCursoPorInst = request.getParameter("listarCursoPorInst");
-        if(update==null||update.isEmpty()){
+        String update = request.getParameter("action");
+        if(update.equals("")){
             dao.insert(curso);
-        }
-        else if(listarCursoPorInst!=null ||!listarCursoPorInst.isEmpty()){
-            request.setAttribute("selected",idInstituicao);
-            request.setAttribute("cursos", dao.getAllCursosByInsituicao(idInstituicao));
         }
         else{
             dao.update(curso);
         }
         RequestDispatcher view = request.getRequestDispatcher(LIST);
+         
+        request.setAttribute("selected",idInstituicao);
+        request.setAttribute("cursos", dao.getAllCursosByInsituicao(idInstituicao));
         request.setAttribute("instituicoes", daoInstituicao.getAllInstituicoes());
         view.forward(request, response);
     }
