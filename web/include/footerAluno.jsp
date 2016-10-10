@@ -16,5 +16,7 @@
     <script src="${pageContext.request.contextPath}/resource/js/bootstrap-datepicker.min.js"></script>
     <script src="${pageContext.request.contextPath}/resource/js/bootstrap-datepicker.pt-BR.min.js"></script>
     <script src="${pageContext.request.contextPath}/resource/js/calendario.js"></script>
+    <script src="${pageContext.request.contextPath}/resource/js/jquery.validationEngine-pt_BR.js" type="text/javascript" charset="utf-8"></script>
+    <script src="${pageContext.request.contextPath}/resource/js/jquery.validationEngine.js" type="text/javascript" charset="utf-8"></script>
     </body>
 </html>

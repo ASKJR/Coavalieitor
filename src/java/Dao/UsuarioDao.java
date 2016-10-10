@@ -22,9 +22,12 @@ public class UsuarioDao {
     /*SQL*/
     private final static String INSERT = "INSERT INTO usuario (email, senha,nome) VALUES (?,MD5(?),?)";
     private final static String DELETE = "DELETE FROM usuario WHERE id=?";
-    private final static String UPDATE = "UPDATE usuario SET email=?, senha=MD5(?) WHERE id=?";
+    private final static String UPDATE_USER_INFO = "UPDATE usuario SET nome=?, telefone=?, nascimento=?, sexo=? WHERE id=?";
+    private final static String UPDATE_USER_SENHA = "UPDATE usuario SET senha=MD5(?) WHERE id=?";
     private final static String SELECT = "SELECT * FROM usuario";
-    private final static String SELECT_EMAIL = "SELECT email FROM usuario WHERE email=?"; 
+    private final static String SELECT_BY_ID = "SELECT * FROM usuario WHERE id=?";
+    private final static String SELECT_EMAIL = "SELECT email FROM usuario WHERE email=?";
+    private final static String SELECT_SENHA = "SELECT senha FROM usuario WHERE id=? AND senha=MD5(?)";
     private final static String SELECT_LOGIN = "SELECT * FROM usuario WHERE email=? AND senha=MD5(?)";
     
     /*DB variables*/
@@ -56,12 +59,14 @@ public class UsuarioDao {
     }
     public void update(Usuario usuario){
         try{
-                con  = new ConnectionFactory().getConnection();
-                stmt = con.prepareStatement(UPDATE);	
-                stmt.setString(1,usuario.getEmail());
-                stmt.setString(2,usuario.getSenha());  //Criptografar              
-                stmt.setLong(3,usuario.getId());
-                stmt.execute();
+            con  = new ConnectionFactory().getConnection();
+            stmt = con.prepareStatement(UPDATE_USER_INFO);	
+            stmt.setString(1,usuario.getNome());
+            stmt.setString(2,usuario.getTelefone());
+            stmt.setDate(3,usuario.getNascimento());              
+            stmt.setString(4,usuario.getSexo());
+            stmt.setLong(5,usuario.getId());
+            stmt.execute();
         }catch(SQLException e){
                  throw new RuntimeException(e);
         }finally{
@@ -69,6 +74,24 @@ public class UsuarioDao {
                  try { if (con  != null) con.close();  } catch (Exception e) {};
         }
     }
+    
+    public void updateSenha(Usuario usuario){
+        try{
+            con  = new ConnectionFactory().getConnection();
+            stmt = con.prepareStatement(UPDATE_USER_SENHA);	
+            stmt.setString(1,usuario.getSenha());
+            stmt.setLong(2,usuario.getId());
+            stmt.execute();
+        }catch(SQLException e){
+                 throw new RuntimeException(e);
+        }finally{
+                 try { if (stmt != null) stmt.close(); } catch (Exception e) {};
+                 try { if (con  != null) con.close();  } catch (Exception e) {};
+        }
+    }
+    
+    
+    
     public List<Usuario> getAllUsuarios() {
         try {
             con  = new ConnectionFactory().getConnection();
@@ -122,6 +145,23 @@ public class UsuarioDao {
             try { if (con  != null) con.close();    } catch (Exception e) {};
         }
     }
+    public boolean senhaConfere(Usuario usuario){
+        try {
+            con  = new ConnectionFactory().getConnection();
+            stmt = con.prepareStatement(SELECT_SENHA);
+            stmt.setInt(1,usuario.getId());
+            stmt.setString(2,usuario.getSenha());
+            rs = stmt.executeQuery();
+            return rs.next();
+        } catch (SQLException e) {
+            throw new RuntimeException(e);
+        }finally{
+            try { if (rs   != null) stmt.close();   } catch (Exception e) {};
+            try { if (stmt != null) stmt.close();   } catch (Exception e) {};
+            try { if (con  != null) con.close();    } catch (Exception e) {};
+        }
+    }
+    
     //retorna o id do usuario,caso exista no banco de dados.
     //caso contrário retorna -1
     public int login(Usuario usuario){
@@ -136,6 +176,32 @@ public class UsuarioDao {
             }
             return -1;
         } catch (SQLException e) {
+            throw new RuntimeException(e);
+        }finally{
+            try { if (rs   != null) stmt.close();   } catch (Exception e) {};
+            try { if (stmt != null) stmt.close();   } catch (Exception e) {};
+            try { if (con  != null) con.close();    } catch (Exception e) {};
+        }
+    }
+    
+     public Usuario getUsuarioById(int id){
+        Usuario returnUsuario = new Usuario();
+        try{
+            con  = new ConnectionFactory().getConnection();
+            stmt = con.prepareStatement(SELECT_BY_ID);
+            stmt.setInt(1,id);
+            rs = stmt.executeQuery();
+            if(rs.next()){
+                returnUsuario.setId(rs.getInt("id"));
+                returnUsuario.setEmail(rs.getString("email"));
+                returnUsuario.setSenha(rs.getString("senha"));
+                returnUsuario.setNome(rs.getString("nome"));
+                returnUsuario.setTelefone(rs.getString("telefone"));
+                returnUsuario.setNascimento(rs.getDate("nascimento"));
+                returnUsuario.setSexo(rs.getString("sexo"));
+            }
+            return returnUsuario;   
+        }catch (SQLException e) {
             throw new RuntimeException(e);
         }finally{
             try { if (rs   != null) stmt.close();   } catch (Exception e) {};

@@ -48,15 +48,22 @@ public class LoginController extends HttpServlet {
                 user.setSenha(loginSenha);
                 int userId = usuarioDao.login(user);
                 //Login validado
-                System.out.println(userId);
                 if(userId!=-1){
+                    
+                    //settando o usuário na sessão
+                    HttpSession session = request.getSession();
+                    Usuario usuarioLogado = usuarioDao.getUsuarioById(userId);
+                    session.setAttribute("usuarioLogado",usuarioLogado);
+                    
                     //Busca por professor pelo ID,se encotrar o usuário é professor
                     if(professorDao.getProfessorById(userId)!=null){
+                        session.setAttribute("tipoUsuario","professor");
                         RequestDispatcher rd=request.getRequestDispatcher("View/Professor/indexProfessor.jsp");  
                         rd.forward(request, response);  
                     }
                     //Senão encontrar o usuário é aluno
                     else{
+                        session.setAttribute("tipoUsuario","aluno");
                         RequestDispatcher rd=request.getRequestDispatcher("View/Aluno/indexAluno.jsp");  
                         rd.forward(request, response);  
                     }

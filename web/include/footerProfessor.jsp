@@ -19,5 +19,7 @@
     <script type="text/javascript" src="//cdn.jsdelivr.net/momentjs/latest/moment.min.js"></script>
     <script type="text/javascript" src="//cdn.jsdelivr.net/bootstrap.daterangepicker/2/daterangepicker.js"></script>
     <script src="${pageContext.request.contextPath}/resource/js/daterange.js"> </script>
+    <script src="${pageContext.request.contextPath}/resource/js/jquery.validationEngine-pt_BR.js" type="text/javascript" charset="utf-8"></script>
+    <script src="${pageContext.request.contextPath}/resource/js/jquery.validationEngine.js" type="text/javascript" charset="utf-8"></script>
     </body>
 </html>

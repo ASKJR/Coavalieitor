@@ -3,102 +3,85 @@
     Created on : 26/09/2016, 20:02:16
     Author     : Kato
 --%>
-
 <%@include file="../../include/headerProfessor.jsp" %>
 <%@include file="../../include/sidebarLeftProfessor.jsp" %>
 <div class="col-md-9 col-lg-10 main">
     <h2>Configurações da conta</h2>
     <hr>
-    <form class="form-horizontal">
+    <%@include file="../../include/mensagem.jsp"%>
+    <form class="form-horizontal" method="POST" action="${pageContext.request.contextPath}/CadastroController">
+        <input type="hidden" name="action" value="atualizarUser">
+        <input type="hidden" name="idUser" value="${sessionScope.usuarioLogado.id}">
         <fieldset>
-        <!-- Form Name -->
         <legend>Informações básicas</legend>
-
-        <!-- Text input-->
         <div class="form-group">
-            <label class="col-md-2 control-label" for="textinput"><b>Nome:</b></label>  
+            <label class="col-md-2 control-label" for="labelNome"><b>Nome:</b></label>  
         <div class="col-md-6">
-            <input id="textinput" name="textinput" type="text" placeholder="Nome completo" class="form-control input-md">
+            <input name="nome" type="text" value="<c:out value="${sessionScope.usuarioLogado.nome}" />" placeholder="Nome completo" class="form-control input-md" required>
         </div>
         </div><br>
-
-        <!-- Text input-->
         <div class="form-group">
-            <label class="col-md-2 control-label" for="email"><b>E-mail:</b></label>  
+            <label class="col-md-2 control-label" for="labelEmail"><b>E-mail:</b></label>  
             <div class="col-md-6">
-                <input id="email" name="email" type="text" placeholder="email@domain.com" class="form-control input-md" required="">
+                <input name="email" type="email" readonly value="<c:out value="${sessionScope.usuarioLogado.email}" />" placeholder="email@domain.com" class="form-control input-md">
             </div>
         </div><br>
-
-        <!-- Text input-->
         <div class="form-group">
-            <label class="col-md-2 control-label" for="telefone"><b>Telefone:</b></label>  
+            <label class="col-md-2 control-label" for="labeltelefone"><b>Telefone:</b></label>  
             <div class="col-md-6">
-                <input id="telefone" name="telefone" type="text" placeholder="(99) 9999-9999" class="form-control input-md" required="">
+                <input id="telefone" name="telefone" type="text" value="<c:out value="${sessionScope.usuarioLogado.telefone}" />" placeholder="(99) 9999-9999" class="form-control input-md" required>
             </div>
         </div><br>
-
-        <!-- Text input-->
         <div class="form-group">
-            <label class="col-md-2 control-label" for="nascimento"><b>Nascimento:</b></label>  
+            <label class="col-md-2 control-label" for="labelNascimento"><b>Nascimento:</b></label>  
             <div class="col-md-6">
-                <input id="calendario" name="nascimento" type="text" placeholder="dd/mm/aaaa" class="form-control input-md">
+                <input id="calendario" name="nascimento" type="text" value="<fmt:formatDate pattern='dd/MM/yyyy' value='${sessionScope.usuarioLogado.nascimento}'/>" placeholder="dd/mm/aaaa" class="form-control input-md" required>
             </div>
         </div><br>
-
-        <!-- Multiple Radios (inline) -->
         <div class="form-group">
-            <label class="col-md-2 control-label" for="sexo"><b>Sexo:</b></label>
+            <label class="col-md-2 control-label" for="labelSexo"><b>Sexo:</b></label>
             <div class="col-md-6"> 
-                <label class="radio-inline" for="sexo-0">
-                <input type="radio" name="sexo" id="sexo-0" value="m">
+                <label class="radio-inline" for="lblMasculino">
+                    <input type="radio" name="sexo" id="sexo-0" value="M" ${sessionScope.usuarioLogado.sexo == 'M'?'checked':''} required>
                     Masculino
                 </label> 
-                <label class="radio-inline" for="sexo-1">
-                <input type="radio" name="sexo" id="sexo-1" value="f">
+                <label class="radio-inline" for="lblFeminino">
+                <input type="radio" name="sexo" id="sexo-1" value="F" ${sessionScope.usuarioLogado.sexo == 'F'?'checked':''}>
                     Feminino
                 </label>
             </div>
         </div><br>
-        <!-- Button -->
         <div class="form-group">
             <label class="col-md-2 control-label" for=""></label>
             <div class="col-md-6">
                 <button id="" name="" class="btn btn-primary">Alterar</button>
             </div>
         </div>
-
         </fieldset>
     </form>
     <hr>
-    
-    <form class="form-horizontal">
+    <form id="trocarSenha" class="form-horizontal" method="POST" action="${pageContext.request.contextPath}/CadastroController">
+        <input type="hidden" name="idUser" value="${sessionScope.usuarioLogado.id}">
         <fieldset>
-        <!-- Form Name -->
         <legend>Trocar senha</legend>
-        <!-- Text input-->
         <div class="form-group">
-            <label class="col-md-2 control-label" for="currentSenha"><b>Senha atual:</b></label>  
+            <label class="col-md-2 control-label" for="labelcurrentSenha"><b>Senha atual:</b></label>  
             <div class="col-md-6">
-                <input id="email" name="currentSenha" type="text" class="form-control input-md" required="">
+                <input type="password" id="password" name="currentPassword"  class="validate[required] form-control input-md"/>
             </div>
         </div><br>
-
-        <!-- Text input-->
         <div class="form-group">
-            <label class="col-md-2 control-label" for="newSenha"><b>Nova senha:</b></label>  
+            <label class="col-md-2 control-label" for="labelnewPassword"><b>Nova senha:</b></label>  
             <div class="col-md-6">
-                <input id="telefone" name="newSenha" type="text" class="form-control input-md" required="">
+                <input id="newPassword" type="password" name="newPassword"  class="validate[required,minSize[6],maxSize[50]] form-control input-md"/>
             </div>
         </div><br>
-        <!-- Text input-->
         <div class="form-group">
-            <label class="col-md-2 control-label" for="repeatSenha"><b>Repetir senha:</b></label>  
+            <label class="col-md-2 control-label" for="labelrepeatSenha"><b>Repetir senha:</b></label>  
             <div class="col-md-6">
-                <input id="telefone" name="repeatSenha" type="text" class="form-control input-md" required="">
+                <input id="repeatSenha" name="repeatPassword" type="password" class="validate[required,equals[newPassword]] form-control input-md" />
             </div>
         </div><br><br>
-        <!-- Button -->
         <div class="form-group">
             <label class="col-md-2 control-label" for=""></label>
             <div class="col-md-6">
@@ -109,3 +92,8 @@
     </form>
 </div>
 <%@include file="../../include/footerProfessor.jsp" %>
+<script>
+$(document).ready(function(){
+    $("#trocarSenha").validationEngine();
+   });
+</script>

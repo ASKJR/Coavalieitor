@@ -41,12 +41,16 @@ public class UsuarioController extends HttpServlet {
             throws ServletException, IOException {
         response.setContentType("text/html;charset=UTF-8");
         try (PrintWriter out = response.getWriter()) {
+            
             UsuarioDao usuarioDao = new UsuarioDao();
             Usuario user   = new Usuario();
+            HttpSession session = request.getSession();
+            
             String insertNome  = request.getParameter("nome");
             String insertEmail = request.getParameter("email");
             String insertSenha = request.getParameter("senha");
             String userType    = request.getParameter("userType");
+            
             if(insertEmail !=null && insertSenha !=null && userType!=null && insertNome!=null){
                 user.setEmail(insertEmail);
                 user.setSenha(insertSenha);
@@ -55,12 +59,16 @@ public class UsuarioController extends HttpServlet {
                 //Antes de inserir um usuário no banco. checar se o e-mail já existe no BD.
                 if(!usuarioDao.emailExists(insertEmail)){
                     int id = usuarioDao.insert(user);
+                    
+                    user.setId(id);
+                    session.setAttribute("usuarioLogado",user);
                     //Se o usuário for professor inserir referência na tabela de professor
                     if(userType.equals("professor")){
                         ProfessorDao profDao  = new ProfessorDao();
                         Professor prof = new Professor();
                         prof.setId(id);
                         profDao.insert(prof);
+                        session.setAttribute("tipoUsuario","professor");
                         RequestDispatcher rd=request.getRequestDispatcher("View/Professor/indexProfessor.jsp");  
                         rd.forward(request, response);
                     }
@@ -70,12 +78,12 @@ public class UsuarioController extends HttpServlet {
                         Aluno aluno = new Aluno();
                         aluno.setId(id);
                         alunoDao.insert(aluno);
+                        session.setAttribute("tipoUsuario","aluno");
                         RequestDispatcher rd=request.getRequestDispatcher("View/Aluno/indexAluno.jsp");  
                         rd.forward(request, response);
                     }  
                 }
                 else{
-                    HttpSession session = request.getSession();
                     session.setAttribute("mensagemErro", "E-mail já cadastrado no sistema.");
                     RequestDispatcher rd=request.getRequestDispatcher("cadastrarUsuario.jsp");  
                     rd.forward(request, response);

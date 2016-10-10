@@ -11,3 +11,12 @@
        <c:remove var="mensagemErro" scope="session" />
     </div>
 </c:if>
+       
+
+<c:if test="${sessionScope.mensagemSucesso != null}">
+    <div class="alert alert-success">
+       <button class="close" data-dismiss="alert" type="button">×</button>
+                ${sessionScope.mensagemSucesso}
+       <c:remove var="mensagemSucesso" scope="session" />
+    </div>
+</c:if>
