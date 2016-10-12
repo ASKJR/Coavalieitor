@@ -100,7 +100,7 @@ $(document).ready(function() {
                 pegadados = dados.split(":");
                 limparselect();
                 if(dados === '')
-                    $('#selectCurso').append('<option>Instituição sem nenhum curso.</option>');
+                    $('#selectCurso').append("<option value='0'>Instituição sem nenhum curso.</option>");
                 else{
                     for(var i = 0; i < pegadados.length - 1; i++){
                         var codigoCurso = pegadados[i].split("-")[0]; 

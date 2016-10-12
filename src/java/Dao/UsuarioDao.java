@@ -24,6 +24,7 @@ public class UsuarioDao {
     private final static String DELETE = "DELETE FROM usuario WHERE id=?";
     private final static String UPDATE_USER_INFO = "UPDATE usuario SET nome=?, telefone=?, nascimento=?, sexo=? WHERE id=?";
     private final static String UPDATE_USER_SENHA = "UPDATE usuario SET senha=MD5(?) WHERE id=?";
+    private final static String UPDATE_USER_SENHA_BY_EMAIL = "UPDATE usuario SET senha=MD5(?) WHERE email=?";
     private final static String SELECT = "SELECT * FROM usuario";
     private final static String SELECT_BY_ID = "SELECT * FROM usuario WHERE id=?";
     private final static String SELECT_EMAIL = "SELECT email FROM usuario WHERE email=?";
@@ -81,6 +82,22 @@ public class UsuarioDao {
             stmt = con.prepareStatement(UPDATE_USER_SENHA);	
             stmt.setString(1,usuario.getSenha());
             stmt.setLong(2,usuario.getId());
+            stmt.execute();
+        }catch(SQLException e){
+                 throw new RuntimeException(e);
+        }finally{
+                 try { if (stmt != null) stmt.close(); } catch (Exception e) {};
+                 try { if (con  != null) con.close();  } catch (Exception e) {};
+        }
+    }
+    
+    
+    public void updateSenhaByEmail(String senhaTemp,String email){
+        try{
+            con  = new ConnectionFactory().getConnection();
+            stmt = con.prepareStatement(UPDATE_USER_SENHA_BY_EMAIL);	
+            stmt.setString(1,senhaTemp);
+            stmt.setString(2,email);
             stmt.execute();
         }catch(SQLException e){
                  throw new RuntimeException(e);
