@@ -1,22 +1,20 @@
 <%-- 
-    Document   : turma
-    Created on : 27/09/2016, 20:10:36
+    Document   : addTurma
+    Created on : 12/10/2016, 12:55:00
     Author     : Kato
 --%>
 <%@include file="../../include/headerProfessor.jsp" %>
 <%@include file="../../include/sidebarLeftProfessor.jsp" %>
 <div class="col-md-9 col-lg-10 main">
     <br>
-    <h2>Turmas</h2>
+    <h2>Nova Turma:</h2>
     <hr>
-    <form class="form-horizontal">
+    <form class="form-horizontal" method="POST" action="${pageContext.request.contextPath}/TurmaController">
+        <input type="hidden" name="action" value="inserir">
         <fieldset>
-        <!-- Form Name -->
-        <a href="${pageContext.request.contextPath}/TurmaController?action=inserir" class="btn btn-success"> + Adicionar </a><br>
-        <hr>
         <!-- Text input-->
         <div class="form-group">
-            <label class="col-md-3 control-label" for="labelInstituicao"><b>Nome da instituição:</b></label>  
+            <label class="col-md-3 control-label" for="nomeInstituicao"><b>Nome da instituição:</b></label>  
             <div class="col-md-6">
                 <select class="form-control" name="selectInstituicao" id="selectInstituicao" required>
                     <option value="0"></option>
@@ -29,14 +27,13 @@
         
         <!-- Text input-->
         <div class="form-group">
-            <label class="col-md-3 control-label" for="labelCurso"><b>Nome do curso:</b></label>  
+            <label class="col-md-3 control-label" for="nomeCurso"><b>Nome do curso:</b></label>  
             <div class="col-md-6">
                 <select class="form-control" name="selectCurso" id="selectCurso" required>
                     <option></option>
                 </select>
             </div>
         </div><br><br>
-        
         
         <!-- Text input-->
         <div class="form-group">
@@ -47,39 +44,28 @@
                 </select>
             </div>
         </div><br><br>
+        <div class="form-group">
+            <label class="col-md-3 control-label" for="labelTurma"><b>Nome da turma:</b></label>  
+            <div class="col-md-6">
+                <input id="textinput" name="nomeTurma" type="text" placeholder="Digite o nome da turma" class="form-control input-md" required>
+            </div>
+        </div><br><br>
+         <div class="form-group">
+            <label class="col-md-3 control-label" for="labelChave"><b>Chave de acesso:</b></label>  
+            <div class="col-md-6">
+                <input id="nomeChave" name="nomeChave" type="text" placeholder="Digite a chave de acesso" class="form-control input-md" required>
+            </div>
+        </div><br><br>
         <!-- Button -->
         <div class="form-group">
             <label class="col-md-3 control-label" for=""></label>
             <div class="col-md-6">
-                <button id="" name="" class="btn btn-primary">Listar</button>
+                <button id="" name="" class="btn btn-primary">Salvar</button>
             </div>
         </div>
         </fieldset>
     </form>
     <hr>
-    <br>
-    <div class="table-responsive">
-        <table class="table table-striped">
-            <thead class="thead-inverse">
-                <tr>
-                    <th>#ID</th>
-                    <th>Nome</th>
-                    <th>Ações</th>
-                </tr>
-            </thead>
-            <tr>
-                <td>1</td>
-                <td><a href="${pageContext.request.contextPath}/View/Professor/turmaAvaliacoes.jsp"> Turma Noturna</a></td>
-                <td> 
-                    <button id="" name="" class="btn btn-danger">Deletar</button>
-                    &nbsp
-                    <a href="${pageContext.request.contextPath}/View/Professor/editTurma.jsp" id="" name="" class="btn btn-info">Editar</a>
-                    &nbsp
-                    <a href="${pageContext.request.contextPath}/View/Professor/listarAlunosTurma.jsp" class="btn btn-success">Alunos</a>
-                </td>
-            <tr>
-        </table>
-    </div>
 </div>
 <%@include file="../../include/footerProfessor.jsp" %>
 <script>
