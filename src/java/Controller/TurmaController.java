@@ -5,7 +5,6 @@
  */
 package Controller;
 
-import Beans.Disciplina;
 import Beans.Turma;
 import Beans.Usuario;
 import Dao.CursoDao;
@@ -55,16 +54,54 @@ public class TurmaController extends HttpServlet {
     @Override
     protected void doGet(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
-        
+        HttpSession session = request.getSession();
         String forward;
         String action = request.getParameter("action");
+        //Pega dados de professor na sessão
+        Usuario professor;
+        professor = (Usuario) session.getAttribute("usuarioLogado");
+        int idProfessor = professor.getId();
         
         if(action.equalsIgnoreCase("delete")){
+            int idInstituicao   = Integer.parseInt(request.getParameter("idInstituicao"));
+            int idCurso         = Integer.parseInt(request.getParameter("idCurso"));
+            int idDisciplina    = Integer.parseInt(request.getParameter("idDisciplina"));
+            int idTurma = Integer.parseInt(request.getParameter("idTurma"));
+            turma.setId(idTurma);
+            daoTurma.delete(turma);
+            
+            
+            //Parametros para view
+            request.setAttribute("instituicao",daoInstituicao.getInstituicaoById(idInstituicao));
+            request.setAttribute("curso",daoCurso.getCursoById(idCurso));
+            request.setAttribute("disciplina",daoDisciplina.getDisciplinaById(idDisciplina));
+            request.setAttribute("turmas",daoTurma.getAllTurmas(idDisciplina, idProfessor));
             forward = LIST;
         } else if (action.equalsIgnoreCase("edit")) {
+            int idInstituicao   = Integer.parseInt(request.getParameter("idInstituicao"));
+            int idCurso         = Integer.parseInt(request.getParameter("idCurso"));
+            int idDisciplina    = Integer.parseInt(request.getParameter("idDisciplina"));
+            int idTurma         = Integer.parseInt(request.getParameter("idTurma"));
+            
+            //Parametros para view
+            request.setAttribute("instituicao",daoInstituicao.getInstituicaoById(idInstituicao));
+            request.setAttribute("curso",daoCurso.getCursoById(idCurso));
+            request.setAttribute("disciplina",daoDisciplina.getDisciplinaById(idDisciplina));  
+            request.setAttribute("turma", daoTurma.getTurmaById(idTurma));
             forward = EDIT;
         } else if (action.equalsIgnoreCase("listarTurmasPorProfessor")) {
+            
+            int idInstituicao = Integer.parseInt(request.getParameter("selectInstituicao"));
+            int idCurso       = Integer.parseInt(request.getParameter("selectCurso"));
+            int idDisciplina  = Integer.parseInt(request.getParameter("selectDisciplina"));
+            
+            //Parametros para view
+            request.setAttribute("instituicao",daoInstituicao.getInstituicaoById(idInstituicao));
+            request.setAttribute("curso",daoCurso.getCursoById(idCurso));
+            request.setAttribute("disciplina",daoDisciplina.getDisciplinaById(idDisciplina));  
+            request.setAttribute("turmas",daoTurma.getAllTurmas(idDisciplina, idProfessor));
             forward = LIST;
+            
         } else if (action.equalsIgnoreCase("pesquisarTurmas")) {
             request.setAttribute("instituicoes", daoInstituicao.getAllInstituicoes());
             forward = LIST;
@@ -72,7 +109,8 @@ public class TurmaController extends HttpServlet {
             //Adicionar turma
             request.setAttribute("instituicoes", daoInstituicao.getAllInstituicoes());
             forward = INSERT;
-        }    
+        }
+        request.setAttribute("instituicoes", daoInstituicao.getAllInstituicoes());
         RequestDispatcher view = request.getRequestDispatcher(forward);
         view.forward(request, response);
         
@@ -85,22 +123,58 @@ public class TurmaController extends HttpServlet {
         String nomeChave = request.getParameter("nomeChave");
         String action = (request.getParameter("action") == null ? "update" : "inserir") ;
         HttpSession session = request.getSession();
+        RequestDispatcher view;
         
         if(nomeTurma!=null && nomeChave!=null){           
             //setando o nome da turma que vem do formulário
             turma.setNome(nomeTurma);
+            turma.setPalavra_chave(nomeChave);
             if (action.equalsIgnoreCase("inserir")) {
-                String idDisciplina = request.getParameter("selectDisciplina");
+                
                 Usuario user    = (Usuario) session.getAttribute("usuarioLogado");
-                turma.setPalavra_chave(nomeChave);
+                String instituicao = request.getParameter("selectInstituicao");
+                String curso       = request.getParameter("selectCurso"); 
+                String disciplina  = request.getParameter("selectDisciplina");
+                
+                int idInstituicao   = Integer.parseInt(instituicao);
+                int idCurso         = Integer.parseInt(curso);
+                int idDisciplina    = Integer.parseInt(disciplina);
+                
+                
+           
                 turma.getProfessor().setId(user.getId());
-                turma.getDisciplina().setId(Integer.parseInt(idDisciplina));
+                turma.getDisciplina().setId(idDisciplina);
                 daoTurma.insert(turma);
+                
+                //Parametros para view
+                request.setAttribute("instituicao",daoInstituicao.getInstituicaoById(idInstituicao));
+                request.setAttribute("curso",daoCurso.getCursoById(idCurso));
+                request.setAttribute("disciplina",daoDisciplina.getDisciplinaById(idDisciplina));  
+                request.setAttribute("turmas",daoTurma.getAllTurmas(idDisciplina,user.getId()));
+                session.setAttribute("mensagemSucesso", "Turma adicionada com sucesso.");
+          
+                view = request.getRequestDispatcher(LIST);
             }
             else{
                 //Editar turma
+                //Pegando o id dos hiddens fields
+                int idInstituicao   = Integer.parseInt(request.getParameter("idInstituicao"));
+                int idCurso         = Integer.parseInt(request.getParameter("idCurso"));
+                int idDisciplina    = Integer.parseInt(request.getParameter("idDisciplina"));
+                int idTurma         = Integer.parseInt(request.getParameter("idTurma"));
+                turma.setId(idTurma);
+                daoTurma.update(turma);
+                
+               
+                //Parametros para view
+                request.setAttribute("instituicao",daoInstituicao.getInstituicaoById(idInstituicao));
+                request.setAttribute("curso",daoCurso.getCursoById(idCurso));
+                request.setAttribute("disciplina",daoDisciplina.getDisciplinaById(idDisciplina));  
+               
+                request.setAttribute("turma", daoTurma.getTurmaById(idTurma));
+                session.setAttribute("mensagemSucesso", "Alterações atualizadas com sucesso.");
+                view = request.getRequestDispatcher(EDIT);
             }
-            RequestDispatcher view = request.getRequestDispatcher(LIST);
             request.setAttribute("instituicoes", daoInstituicao.getAllInstituicoes());
             view.forward(request, response);
         }

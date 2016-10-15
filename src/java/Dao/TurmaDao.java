@@ -20,7 +20,7 @@ public class TurmaDao {
     /*SQL*/
     private final static String INSERT = "INSERT INTO turma (nome,palavra_chave,disciplina_id,professor_usuario_id) VALUES (?,?,?,?)";
     private final static String DELETE = "DELETE FROM turma WHERE id=?";
-    private final static String UPDATE = "UPDATE turma SET nome=? WHERE id=?";
+    private final static String UPDATE = "UPDATE turma SET nome=?, palavra_chave=? WHERE id=?";
     //private final static String SELECT = "SELECT * FROM instituicao";
     private final static String SELECT_BY_ID = "SELECT * FROM turma WHERE id=?";
     
@@ -62,7 +62,8 @@ public class TurmaDao {
             con  = new ConnectionFactory().getConnection();
             stmt = con.prepareStatement(UPDATE);	
             stmt.setString(1,turma.getNome());
-            stmt.setInt(2,turma.getId());              
+            stmt.setString(2,turma.getPalavra_chave());
+            stmt.setInt(3,turma.getId());              
             stmt.execute();
         }catch(SQLException e){
                  throw new RuntimeException(e);
@@ -92,15 +93,14 @@ public class TurmaDao {
             stmt.setInt(1, disciplina_id);
             stmt.setInt(2,professor_usuario_id);
             List<Turma> turmas = new ArrayList<>();
-
             rs = stmt.executeQuery();
-
             while (rs.next()) {
                 Turma turma = new Turma();
                 turma.setId(rs.getInt("id"));
                 turma.setNome(rs.getString("nome"));
                 turma.getDisciplina().setId(rs.getInt("disciplina_id"));
                 turma.getProfessor().setId(rs.getInt("professor_usuario_id"));
+                turmas.add(turma);
             }
             return turmas;
         } catch (SQLException e) {
@@ -113,7 +113,6 @@ public class TurmaDao {
     }
   
     public Turma getTurmaById(int id){
-        Turma returnTurma = new Turma();
         try{
             Turma turma = new Turma();
             con  = new ConnectionFactory().getConnection();
@@ -123,10 +122,11 @@ public class TurmaDao {
             if(rs.next()){
                 turma.setId(rs.getInt("id"));
                 turma.setNome(rs.getString("nome"));
+                turma.setPalavra_chave(rs.getString("palavra_chave"));
                 turma.getDisciplina().setId(rs.getInt("disciplina_id"));
                 turma.getProfessor().setId(rs.getInt("professor_usuario_id"));
             }
-            return returnTurma;   
+            return turma;   
         }catch (SQLException e) {
             throw new RuntimeException(e);
         }finally{

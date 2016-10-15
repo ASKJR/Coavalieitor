@@ -9,12 +9,12 @@
     <br>
     <h2>Turmas</h2>
     <hr>
-    <form class="form-horizontal">
+    <a href="${pageContext.request.contextPath}/TurmaController?action=inserir" class="btn btn-success"> + Adicionar </a><br>
+    <hr>
+    <%@include file="../../include/mensagem.jsp" %>
+    <form class="form-horizontal" method="GET" action="${pageContext.request.contextPath}/TurmaController">
+        <input type="hidden" name="action" value="listarTurmasPorProfessor">
         <fieldset>
-        <!-- Form Name -->
-        <a href="${pageContext.request.contextPath}/TurmaController?action=inserir" class="btn btn-success"> + Adicionar </a><br>
-        <hr>
-        <!-- Text input-->
         <div class="form-group">
             <label class="col-md-3 control-label" for="labelInstituicao"><b>Nome da instituição:</b></label>  
             <div class="col-md-6">
@@ -27,7 +27,6 @@
             </div>
         </div><br><br>
         
-        <!-- Text input-->
         <div class="form-group">
             <label class="col-md-3 control-label" for="labelCurso"><b>Nome do curso:</b></label>  
             <div class="col-md-6">
@@ -37,8 +36,6 @@
             </div>
         </div><br><br>
         
-        
-        <!-- Text input-->
         <div class="form-group">
             <label class="col-md-3 control-label" for="labelDisciplina"><b>Nome da disciplina:</b></label>  
             <div class="col-md-6">
@@ -47,37 +44,48 @@
                 </select>
             </div>
         </div><br><br>
-        <!-- Button -->
+        
         <div class="form-group">
             <label class="col-md-3 control-label" for=""></label>
             <div class="col-md-6">
-                <button id="" name="" class="btn btn-primary">Listar</button>
+                <button id="" name="" class="btn btn-primary">Listar turmas</button>
             </div>
         </div>
         </fieldset>
     </form>
     <hr>
     <br>
+    <c:if test="${!empty disciplina.nome}">
+        <p><b>${instituicao.nome} >  ${curso.nome} > ${disciplina.nome}:</b></p>
+    </c:if>
     <div class="table-responsive">
         <table class="table table-striped">
             <thead class="thead-inverse">
                 <tr>
                     <th>#ID</th>
-                    <th>Nome</th>
+                    <th>Turma</th>
                     <th>Ações</th>
                 </tr>
             </thead>
-            <tr>
-                <td>1</td>
-                <td><a href="${pageContext.request.contextPath}/View/Professor/turmaAvaliacoes.jsp"> Turma Noturna</a></td>
-                <td> 
-                    <button id="" name="" class="btn btn-danger">Deletar</button>
-                    &nbsp
-                    <a href="${pageContext.request.contextPath}/View/Professor/editTurma.jsp" id="" name="" class="btn btn-info">Editar</a>
-                    &nbsp
-                    <a href="${pageContext.request.contextPath}/View/Professor/listarAlunosTurma.jsp" class="btn btn-success">Alunos</a>
-                </td>
-            <tr>
+            <c:choose>
+                <c:when test="${!empty turmas}">
+                    <c:forEach items="${turmas}" var="turma">
+                        <tr>
+                            <td>${turma.id}</td>
+                            <td>${turma.nome}</td>
+                            <td>
+                                <a class="btn btn-info" href="${pageContext.request.contextPath}/TurmaController?action=edit&idInstituicao=${instituicao.id}&idCurso=${disciplina.curso.id}&idDisciplina=${turma.disciplina.id}&idTurma=${turma.id}">Editar</a>&nbsp
+                                <a class="btn btn-danger" href="${pageContext.request.contextPath}/TurmaController?action=delete&idInstituicao=${instituicao.id}&idCurso=${disciplina.curso.id}&idDisciplina=${turma.disciplina.id}&idTurma=${turma.id}" 
+                                   onclick="return confirm('Tem certeza que deseja excluir essa turma?\nTodas informações serão perdidas, incluindo submissões, correções etc!')">Deletar</a>
+                                <a href="${pageContext.request.contextPath}/View/Professor/listarAlunosTurma.jsp" class="btn btn-success">Alunos</a>
+                            </td>
+                        </tr>
+                    </c:forEach>
+                </c:when>
+                <c:otherwise>
+                    <tr><td colspan="3" align="center"><b>Nenhum registro encontrado, ou o botão listar turmas não foi pressionado.</b></td></tr>
+                </c:otherwise>
+            </c:choose> 
         </table>
     </div>
 </div>
