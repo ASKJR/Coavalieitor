@@ -10,7 +10,7 @@
     <div class="collapse navbar-toggleable-xs" id="collapsingNavbar">
         <ul class="nav navbar-nav pull-right">
             <li class="nav-item">
-                <a class="nav-link" href="${pageContext.request.contextPath}/View/Aluno/meuCadastro.jsp">Meu cadastro</a>
+                <a class="nav-link" href="${pageContext.request.contextPath}/View/Aluno/meuCadastro.jsp">${sessionScope.usuarioLogado.nome}</a>
             </li>
             <li class="nav-item">
                 <a class="nav-link" href="${pageContext.request.contextPath}/LogoutController">Logout</a>

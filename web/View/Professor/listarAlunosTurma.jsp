@@ -14,7 +14,8 @@
             <div class="form-group">
                 <label class="col-md-3 control-label" for="textinputNome"><b>Incluir aluno manualmente:</b></label>  
                 <div class="col-md-6">
-                    <input id="textinput" name="nomeAluno" id="" type="text" class="form-control input-md">
+                    <input id="autocomplete" name="search" type="text" class="form-control input-md" required>
+                    <input id="idAluno" name="idAluno" type="hidden">
                 </div>
             </div><br><br>
 
@@ -50,4 +51,37 @@
     
 </div>
 <%@include file="../../include/footerProfessor.jsp" %>
-
+<script>
+    $(document).ready(function() {
+        $(function() {
+            $("#autocomplete").autocomplete({
+                minLength: 3,
+                source : function(request, response) {
+                    $.ajax({
+                        url  : 'AjaxController',
+                        type : 'GET',
+                        data : {
+                            autocomplete: true,
+                            term : request.term
+                        },
+                        dataType : 'json',
+                        statusCode: {
+                            404: function() {
+                                console.log('Pagina não encontrada');
+                            },
+                            500: function(){
+                                console.log('Erro no servidor');
+                            }
+                        },
+                        success : function(data) {
+                                response(data);
+                        }
+                    });
+                },
+                select: function(event, ui) {
+                    $('#idAluno').val(ui.item.id);
+                }
+            });
+        });
+    });
+</script>

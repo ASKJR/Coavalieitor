@@ -13,15 +13,22 @@ import java.io.Serializable;
  */
 public class Aluno implements Serializable{
     private int id;
+    private Usuario user;
     public Aluno(){
+        user = new Usuario();
     }
-
     public int getId() {
         return id;
     }
-
     public void setId(int id) {
         this.id = id;
     }
-    
+
+    public Usuario getUser() {
+        return user;
+    }
+
+    public void setUser(Usuario user) {
+        this.user = user;
+    }
 }

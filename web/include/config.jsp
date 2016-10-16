@@ -20,6 +20,7 @@
     <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0-alpha.2/css/bootstrap.min.css" />
     <link href="${pageContext.request.contextPath}/resource/css/font-awesome.min.css" rel="stylesheet">
     <link rel="stylesheet" href="${pageContext.request.contextPath}/resource/css/validationEngine.jquery.css" type="text/css"/>
+    <link rel="stylesheet" href="${pageContext.request.contextPath}/resource/css/jquery-ui.css" type="text/css"/>
     <link rel="stylesheet" type="text/css" href="//cdn.jsdelivr.net/bootstrap.daterangepicker/2/daterangepicker.css" />
     <title>Coavalieitor</title>
     <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
