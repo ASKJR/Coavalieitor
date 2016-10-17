@@ -6,46 +6,58 @@
 <%@include file="../../include/headerProfessor.jsp" %>
 <%@include file="../../include/sidebarLeftProfessor.jsp" %>
 <div class="col-md-9 col-lg-10 main">
-    <h2>Alunos da turma "tal" :</h2>
+    <br>
+    <h2>Alunos da turma: ${turma.nome}</h2>
     <hr>
-    <form class="form-horizontal">
+    <%@include file="../../include/mensagem.jsp" %>
+    <form class="form-horizontal" method="POST" action="${pageContext.request.contextPath}/MatriculaController">
         <fieldset>
             <!-- Text input-->
             <div class="form-group">
                 <label class="col-md-3 control-label" for="textinputNome"><b>Incluir aluno manualmente:</b></label>  
                 <div class="col-md-6">
-                    <input id="autocomplete" name="search" type="text" class="form-control input-md" required>
+                    <input id="autocomplete" name="nomeAluno" type="text" class="form-control input-md" required>
                     <input id="idAluno" name="idAluno" type="hidden">
+                    <input id="idTurma" name="idTurma" value="${turma.id}"type="hidden">
                 </div>
             </div><br><br>
 
             <div class="form-group">
                 <label class="col-md-3 control-label" for=""></label>
                 <div class="col-md-6">
-                    <button id="" name="" class="btn btn-primary">Incluir</button>
+                    <button id="" name="" class="btn btn-primary">Incluir aluno</button>
                 </div>
             </div>
         </fieldset>
     </form>
-    <hr><br>
+    <hr>
+    <br><br>
     <div class="table-responsive">
         <table class="table table-striped">
             <thead class="thead-inverse">
                 <tr>
-                    <th>Nome</th>
+                    <th>Aluno</th>
                     <th>E-mail</th>
                     <th>Opções</th>
                 </tr>
             </thead>
-            <tr>
-                
-                <td>Alberto Sussumu Kato Junior</td>
-                <td>albertokatojr@gmail.com</td> 
-                <td> 
-                    <button id="" name="" class="btn btn-danger">Remover</button>
-                    &nbsp
-                </td>
-            <tr>
+            <c:choose>
+                <c:when test="${!empty matriculas}">
+                    <c:forEach items="${matriculas}" var="matricula">
+                        <tr>
+                            <td>${matricula.aluno.user.nome}</td>
+                            <td>${matricula.aluno.user.email}</td>
+                            <td>
+                                <a class="btn btn-danger" href="${pageContext.request.contextPath}/MatriculaController?action=delete&idTurma=${turma.id}&idAluno=${matricula.aluno.user.id}" 
+                                   onclick="return confirm('Tem certeza que deseja remover esse aluno?')">Remover</a>
+                            </td>
+                        </tr>
+                    </c:forEach>
+                </c:when>
+                <c:otherwise>
+                    <tr><td colspan="3" align="center"><b>Nenhum aluno matriculado nessa turma até o momento...</b></td></tr>
+                </c:otherwise>
+            </c:choose>
         </table>
     </div>
     
