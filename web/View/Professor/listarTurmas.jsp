@@ -77,7 +77,7 @@
                                 <a class="btn btn-info" href="${pageContext.request.contextPath}/TurmaController?action=edit&idInstituicao=${instituicao.id}&idCurso=${disciplina.curso.id}&idDisciplina=${turma.disciplina.id}&idTurma=${turma.id}">Editar</a>&nbsp
                                 <a class="btn btn-danger" href="${pageContext.request.contextPath}/TurmaController?action=delete&idInstituicao=${instituicao.id}&idCurso=${disciplina.curso.id}&idDisciplina=${turma.disciplina.id}&idTurma=${turma.id}" 
                                    onclick="return confirm('Tem certeza que deseja excluir essa turma?\nTodas informações serão perdidas, incluindo submissões, correções etc!')">Deletar</a>
-                                <a href="${pageContext.request.contextPath}/MatriculaController?action=listarAlunosTurma&idTurma=${turma.id}" class="btn btn-success">Alunos</a>
+                                <a href="${pageContext.request.contextPath}/MatriculaController?action=listarAlunosTurma&idInstituicao=${instituicao.id}&idCurso=${disciplina.curso.id}&idDisciplina=${turma.disciplina.id}&idTurma=${turma.id}" class="btn btn-success">Alunos</a>
                             </td>
                         </tr>
                     </c:forEach>

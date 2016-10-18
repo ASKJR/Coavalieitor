@@ -39,7 +39,6 @@ public class MatriculaController extends HttpServlet {
         daoMatricula   = new MatriculaDao();
         turma          = new Turma();
         matricula      = new Matricula();
-        
     }
     
     @Override
@@ -48,33 +47,39 @@ public class MatriculaController extends HttpServlet {
         String forward;
         String action = request.getParameter("action");
         HttpSession session = request.getSession();
+        String idInstituicao = request.getParameter("idInstituicao");
+        String idCurso       = request.getParameter("idCurso");
+        String idDisciplina  = request.getParameter("idDisciplina");
+        int idTurma = Integer.parseInt(request.getParameter("idTurma"));
+        
+        //Settando valores na sessão para configurar o botão de voltar
+        if(idInstituicao!=null && idCurso!=null && idDisciplina!=null){
+            session.setAttribute("idInstituicao",idInstituicao);
+            session.setAttribute("idCurso",idCurso);
+            session.setAttribute("idDisciplina",idDisciplina);
+        }
         
         if (action.equalsIgnoreCase("delete")) {
-            int idTurma = Integer.parseInt(request.getParameter("idTurma"));
             int idAluno = Integer.parseInt(request.getParameter("idAluno"));
             daoMatricula.delete(idAluno, idTurma);
             turma = daoTurma.getTurmaById(idTurma);
             session.setAttribute("mensagemSucesso", "Aluno removido com sucesso!");
-            request.setAttribute("matriculas", daoMatricula.getAllMatriculasByTurma(idTurma));
-            request.setAttribute("turma",turma);
             forward = LIST;
         } else if(action.equalsIgnoreCase("listarAlunosTurma")){
-            int idTurma = Integer.parseInt(request.getParameter("idTurma"));
             turma = daoTurma.getTurmaById(idTurma);
-            request.setAttribute("matriculas", daoMatricula.getAllMatriculasByTurma(idTurma));
-            request.setAttribute("turma",turma);
             forward = LIST;
         } else {
             forward = LIST;
         }
+        request.setAttribute("matriculas", daoMatricula.getAllMatriculasByTurma(idTurma));
+        request.setAttribute("turma",turma);
         RequestDispatcher view = request.getRequestDispatcher(forward);
         view.forward(request, response);
-        
     }
     @Override
     protected void doPost(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
-        //System.out.println("INSERINDO ALUNO REBELDE");
+        
         String aluno = request.getParameter("idAluno");
         String turma = request.getParameter("idTurma");
         HttpSession session = request.getSession();
@@ -83,29 +88,27 @@ public class MatriculaController extends HttpServlet {
         if(aluno!=null && turma!=null){
             int idAluno   = Integer.parseInt(aluno);
             int idTurma   = Integer.parseInt(turma);
+            //Veririfica se o aluno já está matriculado na turma
             if(!daoMatricula.matriculaExist(idAluno, idTurma)){
-                //Inserir
+                //Matriculando um aluno em uma turma manualmente, módulo professor
                 matricula.getAluno().setId(idAluno);
                 matricula.getTurma().setId(idTurma);
                 daoMatricula.insert(matricula);
                 session.setAttribute("mensagemSucesso", "Aluno matriculado com sucesso!");
             }
             else{
-                session.setAttribute("mensagemErro", "O aluno selecionado já está matriculado nessa turma.");
-                
+                session.setAttribute("mensagemErro", "O aluno selecionado já está matriculado nessa turma.");        
             }
             request.setAttribute("matriculas", daoMatricula.getAllMatriculasByTurma(idTurma));
             request.setAttribute("turma",daoTurma.getTurmaById(idTurma));
             view = request.getRequestDispatcher(LIST);
             view.forward(request, response);
-            
         }
         else{
             try (PrintWriter out = response.getWriter()) {
                 out.print("Matrícula inválida!");
             }
         }
-        
     }
     @Override
     public String getServletInfo() {

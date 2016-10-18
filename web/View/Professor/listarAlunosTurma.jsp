@@ -9,6 +9,8 @@
     <br>
     <h2>Alunos da turma: ${turma.nome}</h2>
     <hr>
+        <a href="${pageContext.request.contextPath}/TurmaController?action=listarTurmasPorProfessor&selectInstituicao=${sessionScope.idInstituicao}&selectCurso=${sessionScope.idCurso}&selectDisciplina=${sessionScope.idDisciplina}" class="btn btn-info"> Voltar </a><br>  
+    <hr>    
     <%@include file="../../include/mensagem.jsp" %>
     <form class="form-horizontal" method="POST" action="${pageContext.request.contextPath}/MatriculaController">
         <fieldset>
@@ -31,7 +33,7 @@
         </fieldset>
     </form>
     <hr>
-    <br><br>
+    <br>
     <div class="table-responsive">
         <table class="table table-striped">
             <thead class="thead-inverse">

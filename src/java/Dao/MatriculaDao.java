@@ -28,9 +28,12 @@ public class MatriculaDao {
     private final static String SELECT_MATRICULA = "SELECT * FROM matricula WHERE aluno_usuario_id=? AND turma_id =?"; 
     
     private final static String SELECT_MATRICULA_BY_TURMA = 
-    "SELECT mat.*,us.*,tur.* from matricula mat "
+    "SELECT mat.*,us.*,tur.*,disc.*,cur.*,inst.* from matricula mat "
    +"JOIN usuario us ON (us.id = mat.aluno_usuario_id) "
    +"JOIN turma tur ON (tur.id = mat.turma_id) "
+   +"JOIN disciplina disc ON(tur.disciplina_id = disc.id) "
+   +"JOIN curso  cur ON(disc.curso_id = cur.id) "
+   +"JOIN instituicao inst ON (cur.instituicao_id = inst.id) "       
    +"WHERE mat.turma_id=? ORDER BY us.nome "; 
     
     private final static String DELETE_MATRICULA =
@@ -100,7 +103,6 @@ public class MatriculaDao {
             stmt = con.prepareStatement(SELECT_MATRICULA_BY_TURMA);
             stmt.setInt(1, idTurma);
             List<Matricula> matriculas = new ArrayList<>();
-
             rs = stmt.executeQuery();
 
             while (rs.next()) {
@@ -108,7 +110,7 @@ public class MatriculaDao {
                 Usuario user = new Usuario();
                 Aluno aluno  = new Aluno();
                 Turma turma  = new Turma();
-                
+               
                 user.setId(rs.getInt(1));
                 user.setNome(rs.getString(6));
                 user.setEmail(rs.getString(4));
@@ -118,9 +120,10 @@ public class MatriculaDao {
                 turma.setPalavra_chave(rs.getString(12));
                 turma.getDisciplina().setId(rs.getInt(13));
                 turma.getProfessor().setId(rs.getInt(14));
+                turma.getDisciplina().getCurso().setId(rs.getInt(17));
+                turma.getDisciplina().getCurso().getInstituicao().setId(rs.getInt(20));
                 matricula.setAluno(aluno);
                 matricula.setTurma(turma);
-                
                 matriculas.add(matricula);
             }
             return matriculas;
