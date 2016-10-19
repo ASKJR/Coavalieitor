@@ -55,6 +55,12 @@ public class UsuarioController extends HttpServlet {
                 user.setEmail(insertEmail);
                 user.setSenha(insertSenha);
                 user.setNome(insertNome);
+                //Perfil:
+                // 1 - Administrador
+                // 2 - aluno
+                // 3 - professor
+                int idPerfil = (userType.equals("professor"))? 3 : 2;
+                user.setPerfil_id(idPerfil);
 
                 //Antes de inserir um usuário no banco. checar se o e-mail já existe no BD.
                 if(!usuarioDao.emailExists(insertEmail)){

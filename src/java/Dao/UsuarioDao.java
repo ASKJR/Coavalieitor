@@ -20,7 +20,7 @@ import java.util.List;
  */
 public class UsuarioDao {
     /*SQL*/
-    private final static String INSERT = "INSERT INTO usuario (email, senha,nome) VALUES (?,MD5(?),?)";
+    private final static String INSERT = "INSERT INTO usuario (email, senha,nome,perfil_id) VALUES (?,MD5(?),?,?)";
     private final static String DELETE = "DELETE FROM usuario WHERE id=?";
     private final static String UPDATE_USER_INFO = "UPDATE usuario SET nome=?, telefone=?, nascimento=?, sexo=? WHERE id=?";
     private final static String UPDATE_USER_SENHA = "UPDATE usuario SET senha=MD5(?) WHERE id=?";
@@ -47,6 +47,7 @@ public class UsuarioDao {
             stmt.setString(1,usuario.getEmail());
             stmt.setString(2,usuario.getSenha());  //Criptografar 
             stmt.setString(3,usuario.getNome());
+            stmt.setInt(4,usuario.getPerfil_id());
             stmt.execute();
             rs = stmt.getGeneratedKeys();
             rs.next();

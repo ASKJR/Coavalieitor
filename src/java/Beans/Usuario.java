@@ -14,6 +14,7 @@ import java.sql.Date;
  * @author Welyngton
  */
 public class Usuario implements Serializable{
+    
     private int id;
     private String email;
     private String senha;
@@ -21,6 +22,7 @@ public class Usuario implements Serializable{
     private String telefone;
     private Date nascimento;
     private String sexo;
+    private int perfil_id;
     
     public Usuario(){
     }
@@ -76,5 +78,12 @@ public class Usuario implements Serializable{
     public void setSexo(String sexo) {
         this.sexo = sexo;
     }
-    
+
+    public int getPerfil_id() {
+        return perfil_id;
+    }
+
+    public void setPerfil_id(int perfil_id) {
+        this.perfil_id = perfil_id;
+    }
 }
