@@ -48,7 +48,7 @@ $(function() {
     
     
     
-    $('input[name="daterange"]').daterangepicker({
+    $('.daterange').daterangepicker({
         timePicker: true,
         autoUpdateInput: false,
         timePicker24Hour: true,
@@ -81,11 +81,20 @@ $(function() {
             ]
         }
     });
-    $('input[name="daterange"]').on('apply.daterangepicker', function(ev, picker) {
+    $('#periodoSubmissoes').on('apply.daterangepicker', function(ev, picker) {
       $(this).val(picker.startDate.format('DD/MM/YYYY H:mm') + ' - ' + picker.endDate.format('DD/MM/YYYY H:mm'));
     });
 
-    $('input[name="daterange"]').on('cancel.daterangepicker', function(ev, picker) {
+    $('#periodoSubmissoes').on('cancel.daterangepicker', function(ev, picker) {
+      $(this).val('');
+    });
+    
+    
+    $('#periodoCorrecoes').on('apply.daterangepicker', function(ev, picker) {
+      $(this).val(picker.startDate.format('DD/MM/YYYY H:mm') + ' - ' + picker.endDate.format('DD/MM/YYYY H:mm'));
+    });
+
+    $('#periodoCorrecoes').on('cancel.daterangepicker', function(ev, picker) {
       $(this).val('');
     });
 

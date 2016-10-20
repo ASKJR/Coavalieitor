@@ -190,7 +190,7 @@ ENGINE = InnoDB;
 DROP TABLE IF EXISTS `coavalieitor_db`.`status` ;
 
 CREATE TABLE IF NOT EXISTS `coavalieitor_db`.`status` (
-  `id` INT NOT NULL,
+  `id` INT NOT NULL AUTO_INCREMENT,
   `nome` VARCHAR(45) NULL,
   PRIMARY KEY (`id`))
 ENGINE = InnoDB;
@@ -204,17 +204,17 @@ DROP TABLE IF EXISTS `coavalieitor_db`.`avaliacao` ;
 CREATE TABLE IF NOT EXISTS `coavalieitor_db`.`avaliacao` (
   `id` INT NOT NULL AUTO_INCREMENT,
   `nome` VARCHAR(100) NULL,
-  `descricao` VARCHAR(500) NULL,
-  `requisito_adicional` VARCHAR(500) NULL,
+  `descricao` TEXT(500) NULL,
+  `requisito_adicional` TEXT(500) NULL,
   `submissao_inicial` DATETIME NULL,
   `submissao_final` DATETIME NULL,
   `correcao_inicial` DATETIME NULL,
   `correcao_final` DATETIME NULL,
   `num_correcao_estudante` INT NULL,
   `nota_maxima` INT NULL,
-  `criterio_correcao` VARCHAR(500) NULL,
+  `criterio_correcao` TEXT(500) NULL,
   `turma_id` INT NOT NULL,
-  `status_id` INT NOT NULL,
+  `status_id` INT NULL,
   PRIMARY KEY (`id`),
   INDEX `fk_avaliacao_turma1_idx` (`turma_id` ASC),
   INDEX `fk_avaliacao_status1_idx` (`status_id` ASC),

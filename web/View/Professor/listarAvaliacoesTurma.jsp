@@ -7,10 +7,12 @@
 <%@include file="../../include/headerProfessor.jsp" %>
 <%@include file="../../include/sidebarLeftProfessor.jsp" %>
 <div class="col-md-9 col-lg-10 main">
-    <h2>Turma Noturna - Avaliações</h2>
+    <br>
+    <h2>${turma.nome} - Avaliações</h2>
     <hr>
-    <a href="avaliacao.jsp" class="btn btn-info">+ Nova avaliação</a>
-    <br><br>
+    <a href="${pageContext.request.contextPath}/AvaliacaoController?action=inserir&idTurma=${turma.id}" class="btn btn-success">+ Adicionar</a>
+    <hr>
+    <br>
     <div class="table-responsive">
         <table class="table table-striped">
             <thead class="thead-inverse">

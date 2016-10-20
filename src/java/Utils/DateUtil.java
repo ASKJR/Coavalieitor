@@ -25,4 +25,17 @@ public class DateUtil {
         }
         return d;
     }
+    
+    
+    public static java.util.Date datetimeToDB(String stringDate){        
+        java.util.Date datetime = null;
+        SimpleDateFormat simpleDateFormat = new SimpleDateFormat("dd/MM/yyyy HH:mm");
+        try{
+            datetime = simpleDateFormat.parse(stringDate);
+        }
+        catch (ParseException ex){
+            ex.printStackTrace();
+        }
+        return datetime;
+    }
 }

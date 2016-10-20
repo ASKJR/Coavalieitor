@@ -110,3 +110,8 @@ INSERT INTO `coavalieitor_db`.`disciplina` (`nome`, `curso_id`) VALUES ('Banco d
 INSERT INTO `coavalieitor_db`.`turma` (`nome`, `palavra_chave`, `disciplina_id`, `professor_usuario_id`) VALUES ('Turma Matutina', 'BATATA1', 2, 1);
 INSERT INTO `coavalieitor_db`.`turma` (`nome`, `palavra_chave`, `disciplina_id`, `professor_usuario_id`) VALUES ('Turma Vespertina', 'BATATA2', 2, 1);
 INSERT INTO `coavalieitor_db`.`turma` (`nome`, `palavra_chave`, `disciplina_id`, `professor_usuario_id`) VALUES ('Turma Noturna', 'BATATA3', 2, 1);
+
+/*Status Avaliação*/
+INSERT INTO `coavalieitor_db`.`status` (`nome`) VALUES ('Correção');
+INSERT INTO `coavalieitor_db`.`status` (`nome`) VALUES ('Submissão');
+INSERT INTO `coavalieitor_db`.`status` (`nome`) VALUES ('Finalizado');
