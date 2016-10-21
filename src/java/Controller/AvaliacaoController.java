@@ -50,10 +50,12 @@ public class AvaliacaoController extends HttpServlet {
         }
         else if (action.equalsIgnoreCase("edit")) {
             request.setAttribute("action","edit");
+            request.setAttribute("avaliacao",daoAvaliacao.getAvaliacaoById(Integer.parseInt(request.getParameter("idAvaliacao"))));
             forward = INSERT_OR_EDIT;
         }
         else if (action.equalsIgnoreCase("listarAvaliacoesPorTurma")) {
             request.setAttribute("turma",daoTurma.getTurmaById(Integer.parseInt(request.getParameter("idTurma"))));
+            request.setAttribute("avaliacoes",daoAvaliacao.getAvaliacoesByTurma(Integer.parseInt(request.getParameter("idTurma"))));
             forward = LIST;
         }
         else {
@@ -79,7 +81,7 @@ public class AvaliacaoController extends HttpServlet {
         String numCorrecoes           = request.getParameter("numCorrecoes");
         String notaMaxima             = request.getParameter("notaMaxima");
         String criterio               = request.getParameter("criterio");
-        String idTurma                = request.getParameter("idTurma");
+      
         
         String[] periodoSubmissoesArray = periodoSubmissoes.split("-"); 
         String submissao_inicial = periodoSubmissoesArray[0].trim();
@@ -89,27 +91,29 @@ public class AvaliacaoController extends HttpServlet {
         String[] periodoCorrecoesArray = periodoCorrecoes.split("-");
         String correcao_inicial = periodoCorrecoesArray[0].trim();
         String correcao_final   = periodoCorrecoesArray[1].trim();
-       
-        System.out.println(submissao_inicial + "---" + submissao_final);
-        System.out.println(correcao_inicial  + "---"  + correcao_final);
+        
+        avaliacao.setNome(nomeAvaliacao);
+        avaliacao.setDescricao(descricao);
+        avaliacao.setRequisito_adicional(requisitosAdicionais);
+        avaliacao.setSubmissao_inicial(Utils.DateUtil.datetimeToDB(submissao_inicial));
+        avaliacao.setSubmissao_final(Utils.DateUtil.datetimeToDB(submissao_final));
+        avaliacao.setCorrecao_inicial(Utils.DateUtil.datetimeToDB(correcao_inicial));
+        avaliacao.setCorrecao_final(Utils.DateUtil.datetimeToDB(correcao_final));
+        avaliacao.setNum_correcao_estudante(Integer.parseInt(numCorrecoes));
+        avaliacao.setNota_maxima(Integer.parseInt(notaMaxima));
+        avaliacao.setCriterio_correcao(criterio);
+          
         
         if (action.equalsIgnoreCase("inserir")) {
-            
-            avaliacao.setNome(nomeAvaliacao);
-            avaliacao.setDescricao(descricao);
-            avaliacao.setRequisito_adicional(requisitosAdicionais);
-            avaliacao.setSubmissao_inicial(Utils.DateUtil.datetimeToDB(submissao_inicial));
-            avaliacao.setSubmissao_final(Utils.DateUtil.datetimeToDB(submissao_final));
-            avaliacao.setCorrecao_inicial(Utils.DateUtil.datetimeToDB(correcao_inicial));
-            avaliacao.setCorrecao_final(Utils.DateUtil.datetimeToDB(correcao_final));
-            avaliacao.setNum_correcao_estudante(Integer.parseInt(numCorrecoes));
-            avaliacao.setNota_maxima(Integer.parseInt(notaMaxima));
-            avaliacao.setCriterio_correcao(criterio);
+            String idTurma = request.getParameter("idTurma");
             avaliacao.getTurma().setId(Integer.parseInt(idTurma));
             daoAvaliacao.insert(avaliacao);
         }
         else {
             //Editar
+            String idAvaliacao = request.getParameter("idAvaliacao");
+            avaliacao.setId(Integer.parseInt(idAvaliacao));
+            daoAvaliacao.update(avaliacao);
         }
     }
 

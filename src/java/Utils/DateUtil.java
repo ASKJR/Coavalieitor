@@ -38,4 +38,9 @@ public class DateUtil {
         }
         return datetime;
     }
+    
+    public static String datetimeFromDB (java.util.Date datetime){
+        SimpleDateFormat sdf = new java.text.SimpleDateFormat("dd/MM/yyyy HH:mm");
+        return sdf.format(datetime);
+    }
 }

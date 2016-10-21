@@ -67,7 +67,7 @@ public class Avaliacao implements Serializable{
     public Date getSubmissao_inicial() {
         return submissao_inicial;
     }
-
+    
     public void setSubmissao_inicial(Date submissao_inicial) {
         this.submissao_inicial = submissao_inicial;
     }
@@ -134,5 +134,19 @@ public class Avaliacao implements Serializable{
 
     public void setStatus_id(int status_id) {
         this.status_id = status_id;
-    }   
+    }
+    //
+    public String getSI(){
+        return Utils.DateUtil.datetimeFromDB(this.getSubmissao_inicial());
+    }
+    public String getSF(){
+        return Utils.DateUtil.datetimeFromDB(this.getSubmissao_final());
+    }
+    public String getCI(){
+        return Utils.DateUtil.datetimeFromDB(this.getCorrecao_inicial());
+    }
+    
+    public String getCF(){
+        return Utils.DateUtil.datetimeFromDB(this.getCorrecao_final());
+    }
 }

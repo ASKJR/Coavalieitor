@@ -238,7 +238,7 @@ DROP TABLE IF EXISTS `coavalieitor_db`.`solucao` ;
 
 CREATE TABLE IF NOT EXISTS `coavalieitor_db`.`solucao` (
   `id` INT NOT NULL AUTO_INCREMENT,
-  `resposta` VARCHAR(500) NULL,
+  `resposta` TEXT(500) NULL,
   `avaliacao_id` INT NOT NULL,
   `aluno_usuario_id` INT NOT NULL,
   `solucao_data` DATETIME NULL,
@@ -265,7 +265,7 @@ DROP TABLE IF EXISTS `coavalieitor_db`.`correcao` ;
 
 CREATE TABLE IF NOT EXISTS `coavalieitor_db`.`correcao` (
   `id` INT NOT NULL AUTO_INCREMENT,
-  `comentario` VARCHAR(500) NULL,
+  `comentario` TEXT(500) NULL,
   `nota` INT NULL,
   `solucao_id` INT NOT NULL,
   `aluno_usuario_id` INT NOT NULL,
@@ -293,7 +293,7 @@ DROP TABLE IF EXISTS `coavalieitor_db`.`correcao_final` ;
 
 CREATE TABLE IF NOT EXISTS `coavalieitor_db`.`correcao_final` (
   `id` INT NOT NULL AUTO_INCREMENT,
-  `feedback` VARCHAR(500) NULL,
+  `feedback` TEXT(500) NULL,
   `nota_final` INT NULL,
   `avaliacao_id` INT NOT NULL,
   `aluno_usuario_id` INT NOT NULL,
