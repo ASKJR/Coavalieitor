@@ -10,9 +10,11 @@
     <br>
     <h2>${turma.nome} - Avaliações</h2>
     <hr>
+    <a href="${pageContext.request.contextPath}/TurmaController?action=listarTurmasPorProfessor&selectInstituicao=${sessionScope.idInstituicao}&selectCurso=${sessionScope.idCurso}&selectDisciplina=${sessionScope.idDisciplina}" class="btn btn-info">Voltar</a>
     <a href="${pageContext.request.contextPath}/AvaliacaoController?action=inserir&idTurma=${turma.id}" class="btn btn-success">+ Adicionar</a>
     <hr>
     <br>
+    <%@include file="../../include/mensagem.jsp" %>
     <div class="table-responsive">
         <table class="table table-striped">
             <thead class="thead-inverse">
@@ -25,10 +27,11 @@
                 <c:when test="${!empty avaliacoes}">
                     <c:forEach items="${avaliacoes}" var="avaliacao">
                         <tr>
-                            <td>${avaliacao.nome}</td>
+                            <td><a href="#" data-toggle="tooltip" title="${avaliacao.descricao}">${avaliacao.nome} </a></td>
                             <td>
-                                <a class="btn btn-info" href="${pageContext.request.contextPath}/AvaliacaoController?action=edit&idInstituicao=${instituicao.id}&idCurso=${disciplina.curso.id}&idDisciplina=${turma.disciplina.id}&idTurma=${turma.id}&idAvaliacao=${avaliacao.id}">Editar</a>&nbsp
-                                <a class="btn btn-danger">Deletar</a>&nbsp
+                                <a class="btn btn-info" href="${pageContext.request.contextPath}/AvaliacaoController?action=edit&&idTurma=${turma.id}&idAvaliacao=${avaliacao.id}">Editar</a>&nbsp
+                                <a class="btn btn-danger" href="${pageContext.request.contextPath}/AvaliacaoController?action=delete&idTurma=${turma.id}&idAvaliacao=${avaliacao.id}"
+                                     onclick="return confirm('Tem certeza que deseja excluir essa avaliação?')">Deletar</a>&nbsp
                                 <a class="btn btn-success" href="View/Professor/listarSubmissoes.jsp">Listar submissões</a>&nbsp
                                 <a class="btn btn-primary" href="View/Professor/listarCorrecoes.jsp">Listar correções</a>&nbsp
                                 <a class="btn btn-warning" href="View/Professor/feedback.jsp">Avaliar</a>

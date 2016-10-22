@@ -8,6 +8,8 @@
 <div class="col-md-9 col-lg-10 main">
     <br>
     <h2>${action eq 'edit' ? "Editar" : "Nova"} avaliação:</h2>
+    <c:set var="edit"
+    value="${( action eq 'edit') ? '-' : ''}" />
     <hr>
     <div class="row">
         <div class="col-md-6 col-sm-6 col-xs-12">
@@ -31,11 +33,11 @@
                 <div class="form-group ">
                     <label class="control-label " for="name"><b>Período de submissões:</b> </label>
                     <input class="form-control daterange" id="periodoSubmissoes" name="periodoSubmissoes" type="text" 
-                    value="${avaliacao.SI} - ${avaliacao.SF}"/>
+                    value="${avaliacao.SI} ${edit} ${avaliacao.SF}"/>
                 </div>
                 <div class="form-group ">
                     <label class="control-label " for="name"><b>Período de correções:</b> </label>
-                    <input class="form-control daterange" id="periodoCorrecoes" name="periodoCorrecoes" type="text" value="${avaliacao.CI} - ${avaliacao.CF}"/>
+                    <input class="form-control daterange" id="periodoCorrecoes" name="periodoCorrecoes" type="text" value="${avaliacao.CI} ${edit} ${avaliacao.CF}"/>
                 </div>
                 <div class="form-group ">
                     <label class="control-label " for="lblNumCorr"><b>Número de correções por estudante:</b> </label>

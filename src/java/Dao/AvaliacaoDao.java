@@ -34,7 +34,7 @@ public class AvaliacaoDao {
     +"nota_maxima=?,criterio_correcao=? "
     +"WHERE id=?";
     
-    private final static String DELETE = "DELETE * FROM avaliacao WHERE id=?";
+    private final static String DELETE = "DELETE FROM avaliacao WHERE id=?";
     private final static String SELECT_AVALIACAO_BY_ID = "SELECT * FROM avaliacao WHERE id=?";
     private final static String SELECT_AVALIACOES_BY_TURMA = "SELECT * FROM avaliacao WHERE turma_id=?";
     

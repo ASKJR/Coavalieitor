@@ -6,7 +6,6 @@
 package Dao;
 
 import Beans.Aluno;
-import Beans.Disciplina;
 import Beans.Matricula;
 import Beans.Turma;
 import Beans.Usuario;
@@ -116,12 +115,12 @@ public class MatriculaDao {
                 user.setEmail(rs.getString(4));
                 aluno.setUser(user);
                 turma.setId(2);
-                turma.setNome(rs.getString(11));
-                turma.setPalavra_chave(rs.getString(12));
-                turma.getDisciplina().setId(rs.getInt(13));
-                turma.getProfessor().setId(rs.getInt(14));
-                turma.getDisciplina().getCurso().setId(rs.getInt(17));
-                turma.getDisciplina().getCurso().getInstituicao().setId(rs.getInt(20));
+                turma.setNome(rs.getString(12));
+                turma.setPalavra_chave(rs.getString(13));
+                turma.getDisciplina().setId(rs.getInt(14));
+                turma.getProfessor().setId(rs.getInt(15));
+                turma.getDisciplina().getCurso().setId(rs.getInt(18));
+                turma.getDisciplina().getCurso().getInstituicao().setId(rs.getInt(21));
                 matricula.setAluno(aluno);
                 matricula.setTurma(turma);
                 matriculas.add(matricula);

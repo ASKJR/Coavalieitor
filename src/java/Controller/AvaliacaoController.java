@@ -17,6 +17,7 @@ import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
+import javax.servlet.http.HttpSession;
 
 /**
  *
@@ -44,16 +45,24 @@ public class AvaliacaoController extends HttpServlet {
             throws ServletException, IOException {
         String forward;
         String action = request.getParameter("action");
-        
+        HttpSession session = request.getSession();
         if (action.equalsIgnoreCase("delete")) {
+            avaliacao.setId(Integer.parseInt(request.getParameter("idAvaliacao")));
+            daoAvaliacao.delete(avaliacao);
+            request.setAttribute("turma",daoTurma.getTurmaById(Integer.parseInt(request.getParameter("idTurma"))));
+            request.setAttribute("avaliacoes",daoAvaliacao.getAvaliacoesByTurma(Integer.parseInt(request.getParameter("idTurma"))));
             forward = LIST;
         }
         else if (action.equalsIgnoreCase("edit")) {
             request.setAttribute("action","edit");
+            request.setAttribute("turma",daoTurma.getTurmaById(Integer.parseInt(request.getParameter("idTurma"))));
             request.setAttribute("avaliacao",daoAvaliacao.getAvaliacaoById(Integer.parseInt(request.getParameter("idAvaliacao"))));
             forward = INSERT_OR_EDIT;
         }
         else if (action.equalsIgnoreCase("listarAvaliacoesPorTurma")) {
+            session.setAttribute("idInstituicao",request.getParameter("idInstituicao"));
+            session.setAttribute("idCurso", request.getParameter("idCurso"));
+            session.setAttribute("idDisciplina", request.getParameter("idDisciplina"));
             request.setAttribute("turma",daoTurma.getTurmaById(Integer.parseInt(request.getParameter("idTurma"))));
             request.setAttribute("avaliacoes",daoAvaliacao.getAvaliacoesByTurma(Integer.parseInt(request.getParameter("idTurma"))));
             forward = LIST;
@@ -72,6 +81,7 @@ public class AvaliacaoController extends HttpServlet {
     protected void doPost(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
         String action = request.getParameter("action");
+        HttpSession session = request.getSession();
         
         String nomeAvaliacao          = request.getParameter("nomeAvaliacao");
         String descricao              = request.getParameter("descricao");
@@ -108,15 +118,20 @@ public class AvaliacaoController extends HttpServlet {
             String idTurma = request.getParameter("idTurma");
             avaliacao.getTurma().setId(Integer.parseInt(idTurma));
             daoAvaliacao.insert(avaliacao);
+            session.setAttribute("mensagemSucesso","Avaliação adicionada com sucesso.");
         }
         else {
             //Editar
             String idAvaliacao = request.getParameter("idAvaliacao");
             avaliacao.setId(Integer.parseInt(idAvaliacao));
             daoAvaliacao.update(avaliacao);
+            session.setAttribute("mensagemSucesso","Avaliação atualizada com sucesso.");
         }
+        request.setAttribute("turma",daoTurma.getTurmaById(Integer.parseInt(request.getParameter("idTurma"))));
+        request.setAttribute("avaliacoes",daoAvaliacao.getAvaliacoesByTurma(Integer.parseInt(request.getParameter("idTurma"))));
+        RequestDispatcher view = request.getRequestDispatcher(LIST);
+        view.forward(request, response);
     }
-
     @Override
     public String getServletInfo() {
         return "Short description";

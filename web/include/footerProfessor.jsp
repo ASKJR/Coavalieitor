@@ -22,5 +22,10 @@
     <script src="${pageContext.request.contextPath}/resource/js/jquery.validationEngine-pt_BR.js" type="text/javascript" charset="utf-8"></script>
     <script src="${pageContext.request.contextPath}/resource/js/jquery.validationEngine.js" type="text/javascript" charset="utf-8"></script>
     <script src="${pageContext.request.contextPath}/resource/js/jquery-ui.js" type="text/javascript" charset="utf-8"></script>
+    <script>
+        $(function () {
+            $('[data-toggle="tooltip"]').tooltip();
+        });
+    </script>
     </body>
 </html>
