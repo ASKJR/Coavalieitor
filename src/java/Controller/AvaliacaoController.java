@@ -91,46 +91,56 @@ public class AvaliacaoController extends HttpServlet {
         String numCorrecoes           = request.getParameter("numCorrecoes");
         String notaMaxima             = request.getParameter("notaMaxima");
         String criterio               = request.getParameter("criterio");
+        
+        if(nomeAvaliacao!=null && descricao!=null && requisitosAdicionais!=null
+                && periodoSubmissoes!=null && periodoCorrecoes!=null && numCorrecoes!=null
+                && notaMaxima!=null && criterio!=null) {
       
-        
-        String[] periodoSubmissoesArray = periodoSubmissoes.split("-"); 
-        String submissao_inicial = periodoSubmissoesArray[0].trim();
-        String submissao_final   = periodoSubmissoesArray[1].trim();
-        
-        
-        String[] periodoCorrecoesArray = periodoCorrecoes.split("-");
-        String correcao_inicial = periodoCorrecoesArray[0].trim();
-        String correcao_final   = periodoCorrecoesArray[1].trim();
-        
-        avaliacao.setNome(nomeAvaliacao);
-        avaliacao.setDescricao(descricao);
-        avaliacao.setRequisito_adicional(requisitosAdicionais);
-        avaliacao.setSubmissao_inicial(Utils.DateUtil.datetimeToDB(submissao_inicial));
-        avaliacao.setSubmissao_final(Utils.DateUtil.datetimeToDB(submissao_final));
-        avaliacao.setCorrecao_inicial(Utils.DateUtil.datetimeToDB(correcao_inicial));
-        avaliacao.setCorrecao_final(Utils.DateUtil.datetimeToDB(correcao_final));
-        avaliacao.setNum_correcao_estudante(Integer.parseInt(numCorrecoes));
-        avaliacao.setNota_maxima(Integer.parseInt(notaMaxima));
-        avaliacao.setCriterio_correcao(criterio);
-          
-        
-        if (action.equalsIgnoreCase("inserir")) {
-            String idTurma = request.getParameter("idTurma");
-            avaliacao.getTurma().setId(Integer.parseInt(idTurma));
-            daoAvaliacao.insert(avaliacao);
-            session.setAttribute("mensagemSucesso","Avaliação adicionada com sucesso.");
+
+            String[] periodoSubmissoesArray = periodoSubmissoes.split("-"); 
+            String submissao_inicial = periodoSubmissoesArray[0].trim();
+            String submissao_final   = periodoSubmissoesArray[1].trim();
+
+
+            String[] periodoCorrecoesArray = periodoCorrecoes.split("-");
+            String correcao_inicial = periodoCorrecoesArray[0].trim();
+            String correcao_final   = periodoCorrecoesArray[1].trim();
+
+            avaliacao.setNome(nomeAvaliacao);
+            avaliacao.setDescricao(descricao);
+            avaliacao.setRequisito_adicional(requisitosAdicionais);
+            avaliacao.setSubmissao_inicial(Utils.DateUtil.datetimeToDB(submissao_inicial));
+            avaliacao.setSubmissao_final(Utils.DateUtil.datetimeToDB(submissao_final));
+            avaliacao.setCorrecao_inicial(Utils.DateUtil.datetimeToDB(correcao_inicial));
+            avaliacao.setCorrecao_final(Utils.DateUtil.datetimeToDB(correcao_final));
+            avaliacao.setNum_correcao_estudante(Integer.parseInt(numCorrecoes));
+            avaliacao.setNota_maxima(Integer.parseInt(notaMaxima));
+            avaliacao.setCriterio_correcao(criterio);
+
+
+            if (action.equalsIgnoreCase("inserir")) {
+                String idTurma = request.getParameter("idTurma");
+                avaliacao.getTurma().setId(Integer.parseInt(idTurma));
+                daoAvaliacao.insert(avaliacao);
+                session.setAttribute("mensagemSucesso","Avaliação adicionada com sucesso.");
+            }
+            else {
+                //Editar
+                String idAvaliacao = request.getParameter("idAvaliacao");
+                avaliacao.setId(Integer.parseInt(idAvaliacao));
+                daoAvaliacao.update(avaliacao);
+                session.setAttribute("mensagemSucesso","Avaliação atualizada com sucesso.");
+            }
+            request.setAttribute("turma",daoTurma.getTurmaById(Integer.parseInt(request.getParameter("idTurma"))));
+            request.setAttribute("avaliacoes",daoAvaliacao.getAvaliacoesByTurma(Integer.parseInt(request.getParameter("idTurma"))));
+            RequestDispatcher view = request.getRequestDispatcher(LIST);
+            view.forward(request, response);
         }
-        else {
-            //Editar
-            String idAvaliacao = request.getParameter("idAvaliacao");
-            avaliacao.setId(Integer.parseInt(idAvaliacao));
-            daoAvaliacao.update(avaliacao);
-            session.setAttribute("mensagemSucesso","Avaliação atualizada com sucesso.");
+        else{
+            try (PrintWriter out = response.getWriter()) {
+                out.print("Erro: Informações nulas!!");
+            }
         }
-        request.setAttribute("turma",daoTurma.getTurmaById(Integer.parseInt(request.getParameter("idTurma"))));
-        request.setAttribute("avaliacoes",daoAvaliacao.getAvaliacoesByTurma(Integer.parseInt(request.getParameter("idTurma"))));
-        RequestDispatcher view = request.getRequestDispatcher(LIST);
-        view.forward(request, response);
     }
     @Override
     public String getServletInfo() {
