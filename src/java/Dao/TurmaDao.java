@@ -31,6 +31,18 @@ public class TurmaDao {
                                                            + "AND "
                                                            + "professor_usuario_id=?";
     
+    private final static String SELECT_ALL_TURMAS_INFO =
+    "SELECT tur.id AS idTurma,us.nome AS professor,tur.nome AS turma,disc.nome AS disciplina,cur.nome AS curso, inst.nome AS instituicao "
+    +"FROM turma tur "
+    +"INNER JOIN usuario       us ON (tur.professor_usuario_id = us.id) "
+    +"INNER JOIN disciplina  disc ON (tur.disciplina_id = disc.id) "
+    +"INNER JOIN curso        cur ON (disc.curso_id  = cur.id) "
+    +"INNER JOIN instituicao inst ON (cur.instituicao_id = inst.id) ";
+        
+            
+    private final static String SELECT_SECRET_WORD=
+    "SELECT * FROM turma "
+   +"WHERE id=? AND palavra_chave=?";
     
     private final static String ORDER_BY = " ORDER BY nome";
     /*DB variables*/
@@ -86,7 +98,7 @@ public class TurmaDao {
         }
     }
     
-    public List<Turma> getAllTurmas(int disciplina_id,int professor_usuario_id) {
+    public List<Turma> getAllTurmasByProfessor(int disciplina_id,int professor_usuario_id) {
         try {
             con  = new ConnectionFactory().getConnection();
             stmt = con.prepareStatement(SELECT_TURMAS_BY_PROFESSOR);
@@ -134,5 +146,49 @@ public class TurmaDao {
             try { if (stmt != null) stmt.close();   } catch (Exception e) {};
             try { if (con  != null) con.close();    } catch (Exception e) {};
         }
+    }
+    public List<Turma> getAllTurmasInfo() {
+        //retorna os nomes da seguinte estrutura
+        //professor|turma|disciplina|curso|instituicao
+        try {
+            con  = new ConnectionFactory().getConnection();
+            stmt = con.prepareStatement(SELECT_ALL_TURMAS_INFO);
+            List<Turma> turmas = new ArrayList<>();
+            rs = stmt.executeQuery();
+            while (rs.next()) {
+                Turma turma = new Turma();
+                turma.setId(rs.getInt("idTurma"));
+                turma.getProfessor().getUser().setNome(rs.getString("professor"));
+                turma.setNome(rs.getString("turma"));
+                turma.getDisciplina().setNome(rs.getString("disciplina"));
+                turma.getDisciplina().getCurso().setNome(rs.getString("curso"));
+                turma.getDisciplina().getCurso().getInstituicao().setNome(rs.getString("instituicao"));
+                turmas.add(turma);
+            }
+            return turmas;
+        } catch (SQLException e) {
+            throw new RuntimeException(e);
+        }finally{
+            try { if (rs   != null) stmt.close();   } catch (Exception e) {};
+            try { if (stmt != null) stmt.close();   } catch (Exception e) {};
+            try { if (con  != null) con.close();    } catch (Exception e) {};
+        }
+    }
+    public boolean IsPalavraChaveValid(Turma turma){
+        try {
+            con  = new ConnectionFactory().getConnection();
+            stmt = con.prepareStatement(SELECT_SECRET_WORD);
+            stmt.setInt(1,turma.getId());
+            stmt.setString(2,turma.getPalavra_chave());
+            rs = stmt.executeQuery();
+            
+            return rs.next();
+        } catch (SQLException e) {
+            throw new RuntimeException(e);
+        }finally{
+            try { if (rs   != null) stmt.close();   } catch (Exception e) {};
+            try { if (stmt != null) stmt.close();   } catch (Exception e) {};
+            try { if (con  != null) con.close();    } catch (Exception e) {};
+        } 
     }
 }

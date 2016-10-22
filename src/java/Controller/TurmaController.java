@@ -75,7 +75,7 @@ public class TurmaController extends HttpServlet {
             request.setAttribute("instituicao",daoInstituicao.getInstituicaoById(idInstituicao));
             request.setAttribute("curso",daoCurso.getCursoById(idCurso));
             request.setAttribute("disciplina",daoDisciplina.getDisciplinaById(idDisciplina));
-            request.setAttribute("turmas",daoTurma.getAllTurmas(idDisciplina, idProfessor));
+            request.setAttribute("turmas",daoTurma.getAllTurmasByProfessor(idDisciplina, idProfessor));
             forward = LIST;
         } else if (action.equalsIgnoreCase("edit")) {
             int idInstituicao   = Integer.parseInt(request.getParameter("idInstituicao"));
@@ -99,7 +99,7 @@ public class TurmaController extends HttpServlet {
             request.setAttribute("instituicao",daoInstituicao.getInstituicaoById(idInstituicao));
             request.setAttribute("curso",daoCurso.getCursoById(idCurso));
             request.setAttribute("disciplina",daoDisciplina.getDisciplinaById(idDisciplina));  
-            request.setAttribute("turmas",daoTurma.getAllTurmas(idDisciplina, idProfessor));
+            request.setAttribute("turmas",daoTurma.getAllTurmasByProfessor(idDisciplina, idProfessor));
             forward = LIST;
             
         } else if (action.equalsIgnoreCase("pesquisarTurmas")) {
@@ -150,7 +150,7 @@ public class TurmaController extends HttpServlet {
                 request.setAttribute("instituicao",daoInstituicao.getInstituicaoById(idInstituicao));
                 request.setAttribute("curso",daoCurso.getCursoById(idCurso));
                 request.setAttribute("disciplina",daoDisciplina.getDisciplinaById(idDisciplina));  
-                request.setAttribute("turmas",daoTurma.getAllTurmas(idDisciplina,user.getId()));
+                request.setAttribute("turmas",daoTurma.getAllTurmasByProfessor(idDisciplina,user.getId()));
                 session.setAttribute("mensagemSucesso", "Turma adicionada com sucesso.");
           
                 view = request.getRequestDispatcher(LIST);

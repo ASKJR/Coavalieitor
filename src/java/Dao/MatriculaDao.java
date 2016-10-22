@@ -35,11 +35,15 @@ public class MatriculaDao {
    +"JOIN instituicao inst ON (cur.instituicao_id = inst.id) "       
    +"WHERE mat.turma_id=? ORDER BY us.nome "; 
     
+    
     private final static String DELETE_MATRICULA =
     "DELETE FROM matricula "
     +"WHERE aluno_usuario_id=? AND "
     +"turma_id=? ";
     
+    private final static String SELECT_MATRIBULA_BY_ALUNO = 
+    "SELECT * FROM matricula "
+   +"WHERE aluno_usuario_id=? ";
     
     /*DB variables*/
     
@@ -134,6 +138,27 @@ public class MatriculaDao {
             try { if (con  != null) con.close();    } catch (Exception e) {};
         }
     }
-      
+    public List<Matricula> getMatriculaByAluno(int idAluno) {
+        try {
+            con  = new ConnectionFactory().getConnection();
+            stmt = con.prepareStatement(SELECT_MATRIBULA_BY_ALUNO);
+            stmt.setInt(1, idAluno);
+            List<Matricula> matriculas = new ArrayList<>();
+            rs = stmt.executeQuery();
+
+            while (rs.next()) {
+                Matricula matricula = new Matricula();
+                matricula.getTurma().setId(rs.getInt("turma_id"));
+                matriculas.add(matricula);
+            }
+            return matriculas;
+        } catch (SQLException e) {
+            throw new RuntimeException(e);
+        }finally{
+            try { if (rs   != null) stmt.close();   } catch (Exception e) {};
+            try { if (stmt != null) stmt.close();   } catch (Exception e) {};
+            try { if (con  != null) con.close();    } catch (Exception e) {};
+        }
+    }  
     
 }

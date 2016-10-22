@@ -7,40 +7,55 @@
 <%@include file="../../include/headerAluno.jsp" %>
 <%@include file="../../include/sidebarLeftAluno.jsp" %>
 <div class="col-md-9 col-lg-10 main">
+    <br>
     <h2>Turmas disponíveis:</h2>
     <hr>
+    <%@include file="../../include/mensagem.jsp" %>
+    <br>
     <div class="table-responsive">
         <table class="table table-striped">
             <thead class="thead-inverse">
                 <tr>
-                    <th>Turma</th>
-                    <th>Instituição / Curso / Disciplina/</th>
+                    <th>Professor</th>
+                    <th>Instituição / Curso / Disciplina/ Turma</th>
                     <th>Opções</th>
                     
                 </tr>
             </thead>
-            <tr>
-                <td>TurmaN1</td>
-                <td>UFPR / TADS / AlG1</td>
-                <td>
-                    <button class="btn btn-success"  disabled data-toggle="modal" data-target="#myModal">Inscreva-me</button>
-                </td>
-            </tr>
-            <tr>
-                <td>TurmaPxk</td>
-                <td>PUC-PR / Medicina / Biologia1</td>
-                <td>
-                    <button class="btn btn-success" data-toggle="modal" data-target="#myModal">Inscreva-me</button>
-                </td>        
-            </tr>
-            
-            <tr>
-                <td>Turma-2012</td>
-                <td>POSITIVO / Sist.Inform / Banco de dados I</td>
-                <td>
-                    <button class="btn btn-success"  data-toggle="modal" data-target="#myModal">Inscreva-me</button>
-                </td>
-            </tr>
+            <c:choose>
+                <c:when test="${!empty turmas}">
+                    <c:forEach items="${turmas}" var="turma">
+                        <tr>
+                            <td>${turma.professor.user.nome}</td>
+                            <td>
+                                ${turma.disciplina.curso.instituicao.nome} /
+                                ${turma.disciplina.curso.nome} /
+                                ${turma.disciplina.nome} /
+                                ${turma.nome}
+                            </td>
+                            <td>
+                                <c:forEach items="${matriculasAluno}" var="matricula">
+                                   <c:if test="${matricula.turma.id eq turma.id}">
+                                       <c:set var="found" value="true"/>
+                                   </c:if>
+                                </c:forEach>
+                                <c:choose>
+                                    <c:when test="${found eq 'true'}">
+                                        <button class="btn btn-primary">Inscrito</button>
+                                        <c:set var="found" value="false"/>
+                                    </c:when>
+                                    <c:otherwise>
+                                        <button class="btn btn-success open-Dialog"  data-toggle="modal" data-target="#myModal" data-id="${turma.id}">Inscreva-me</button>  
+                                    </c:otherwise>
+                                </c:choose>
+                            </td>
+                        </tr>
+                    </c:forEach>
+                </c:when>
+                <c:otherwise>
+                    <tr><td colspan="3" align="center"><b>Nenhuma turma disponível no momento...</b></td></tr>
+                </c:otherwise>
+            </c:choose> 
         </table>
     </div>
 </div>
@@ -56,10 +71,11 @@
                 <h4 class="modal-title" id="myModalLabel">Inscreva-se</h4>
             </div>
             <div class="modal-body">
-                <form action="#" method="post">
+                <form  method="POST" id="form-matricula" action="${pageContext.request.contextPath}/TurmaControllerAluno">
                     <div class="form-group ">
                         <label class="control-label " for="name"><b>Senha:</b> </label>
-                        <input class="form-control" id="name" name="senha" type="password"/>
+                        <input class="form-control" id="palavraChave" name="palavraChave" type="password" required/>
+                        <input type="hidden" name="idTurma" id="idTurma" value=""/>
                     </div>
                     <div class="modal-footer">
                         <button type="button" class="btn btn-secondary" data-dismiss="modal">Fechar</button>
@@ -73,3 +89,9 @@
 
 
 <%@include file="../../include/footerAluno.jsp" %>
+<script>
+$(document).on("click", ".open-Dialog", function () {
+     var idTurma = $(this).data('id');
+     $(".modal-body #idTurma").val( idTurma );
+});
+</script>
