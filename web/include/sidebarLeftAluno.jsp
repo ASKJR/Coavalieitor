@@ -8,7 +8,7 @@
         <div class="col-md-3 col-lg-2 sidebar-offcanvas" id="sidebar" role="navigation">
             <ul class="nav nav-pills nav-stacked">
                 <li class="nav-item"><a class="nav-link" href="${pageContext.request.contextPath}/TurmaControllerAluno?action=listarTurmas">Turmas</a></li>
-                <li class="nav-item"><a class="nav-link" href="${pageContext.request.contextPath}/View/Aluno/avaliacoes.jsp">Avaliações</a></li>
-                <li class="nav-item"><a class="nav-link" href="${pageContext.request.contextPath}/View/Aluno/notas.jsp">Notas</a></li>
+                <li class="nav-item"><a class="nav-link" href="${pageContext.request.contextPath}/AvaliacaoControllerAluno?action=buscarAvaliacoes">Avaliações</a></li>
+                <li class="nav-item"><a class="nav-link" href="${pageContext.request.contextPath}/NotaControllerAluno?action=buscarNotas">Notas</a></li>
             </ul>
         </div>

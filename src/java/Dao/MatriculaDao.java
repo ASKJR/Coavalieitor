@@ -42,7 +42,11 @@ public class MatriculaDao {
     +"turma_id=? ";
     
     private final static String SELECT_MATRIBULA_BY_ALUNO = 
-    "SELECT * FROM matricula "
+    "SELECT mat.*,tur.nome AS turma ,disc.nome AS disciplina, prof.nome AS professor "
+   +"FROM matricula mat "
+   +"INNER JOIN turma tur ON (mat.turma_id = tur.id) "
+   +"INNER JOIN usuario prof ON (tur.professor_usuario_id = prof.id) "
+   +"INNER JOIN disciplina disc ON (tur.disciplina_id = disc.id) "
    +"WHERE aluno_usuario_id=? ";
     
     /*DB variables*/
@@ -149,6 +153,9 @@ public class MatriculaDao {
             while (rs.next()) {
                 Matricula matricula = new Matricula();
                 matricula.getTurma().setId(rs.getInt("turma_id"));
+                matricula.getTurma().setNome(rs.getString("turma"));
+                matricula.getTurma().getDisciplina().setNome(rs.getString("disciplina"));
+                matricula.getTurma().getProfessor().getUser().setNome(rs.getString("professor"));
                 matriculas.add(matricula);
             }
             return matriculas;
@@ -159,6 +166,5 @@ public class MatriculaDao {
             try { if (stmt != null) stmt.close();   } catch (Exception e) {};
             try { if (con  != null) con.close();    } catch (Exception e) {};
         }
-    }  
-    
+    }   
 }

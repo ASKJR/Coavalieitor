@@ -18,5 +18,10 @@
     <script src="${pageContext.request.contextPath}/resource/js/calendario.js"></script>
     <script src="${pageContext.request.contextPath}/resource/js/jquery.validationEngine-pt_BR.js" type="text/javascript" charset="utf-8"></script>
     <script src="${pageContext.request.contextPath}/resource/js/jquery.validationEngine.js" type="text/javascript" charset="utf-8"></script>
+    <script>
+        $(document).ready(function(){
+            $('[data-toggle="tooltip"]').tooltip(); 
+        });
+    </script>
     </body>
 </html>
