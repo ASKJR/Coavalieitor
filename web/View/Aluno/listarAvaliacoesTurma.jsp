@@ -6,16 +6,77 @@
 <%@include file="../../include/headerAluno.jsp" %>
 <%@include file="../../include/sidebarLeftAluno.jsp" %>
 <div class="col-md-9 col-lg-10 main">
+    <br>
     <h2>TurmaN1 - Avaliações:</h2>
+    <hr>
+    <br>
+    <h3>Submeter soluções:</h3>
     <hr>
     <div class="table-responsive">
         <table class="table table-striped">
             <thead class="thead-inverse">
                 <tr>
-                    <th>Nome</th>
-                    <th>Fase</th>
-                    <th>Resolução</th>
-                    <th>Correção</th>
+                    <th>Avaliação</th>
+                    <th>Resolvido em:</th>
+                    <th>Opção</th>
+                </tr>
+            </thead>
+            <tr>
+                <td>Tarefa1 - Fatorial</td>
+                <td>--</td>
+                <td><a class="btn btn-primary" href="resolverAvaliacao.jsp">Resolver</a></td>
+            </tr>
+            <tr>
+                <td>Tarefa2 - Fibonnaci</td>
+                <td>--</td>
+                <td><a class="btn btn-primary" href="resolverAvaliacao.jsp">Resolver</a></td>
+            </tr>
+            
+            <tr>
+                <td>Tarefa3 - Caixeiro viajante</td>
+                <td>--</td>
+                <td><a class="btn btn-primary" href="resolverAvaliacao.jsp">Resolver</a></td>
+            </tr>
+        </table>
+    </div>
+    <br><br><br><br>
+    <h3>Corrigir soluções:</h3>
+    <hr>
+   <div class="table-responsive">
+        <table class="table table-striped">
+            <thead class="thead-inverse">
+                <tr>
+                    <th>Avaliação</th>
+                    <th>Corrigido em:</th>
+                    <th>Opção</th>
+                </tr>
+            </thead>
+            <tr>
+                <td>Tarefa1 - Fatorial</td>
+                <td>--</td>
+                <td><a class="btn btn-warning" href="listarCorrecoes.jsp">Corrigir</a></td>
+            </tr>
+            <tr>
+                <td>Tarefa2 - Fibonnaci</td>
+                <td>--</td> 
+                <td><a class="btn btn-warning" href="listarCorrecoes.jsp">Corrigir</a></td>
+            </tr>
+            
+            <tr>
+                <td>Tarefa3 - Caixeiro viajante</td>
+                <td>--</td>
+                <td><a class="btn btn-warning" href="listarCorrecoes.jsp">Corrigir</a></td>
+            </tr>
+        </table>
+    </div>
+    <br><br><br><br>
+    <h3>Pontuação e comentários do Professor:</h3>
+    <hr>
+   <div class="table-responsive">
+        <table class="table table-striped">
+            <thead class="thead-inverse">
+                <tr>
+                    <th>Avaliação</th>
                     <th>Nota Prof.</th>
                     <th>FeedBack Prof.</th>
                     
@@ -23,26 +84,17 @@
             </thead>
             <tr>
                 <td>Tarefa1 - Fatorial</td>
-                <td>Correção</td>
-                <td>Já resolvido 01/10/2016</td>
-                <td><a href="listarCorrecoes.jsp">Corrigir</a></td>
                 <td>--</td>
                 <td>--</td>
             </tr>
             <tr>
                 <td>Tarefa2 - Fibonnaci</td>
-                <td>Encerrado</td>
-                <td>Já resolvido em 01/10/2016</td>
-                <td>Correções efetuadas em 02/10/2016</td>
                 <td>70</td>
                 <td>Excelente trabalho</td>        
             </tr>
             
             <tr>
                 <td>Tarefa3 - Caixeiro viajante</td>
-                <td>Submissão</td>
-                <td><a href="resolverAvaliacao.jsp">Resolver</a></td>
-                <td>Período de correções não disponível</td>
                 <td>--</td>
                 <td>--</td>
             </tr>

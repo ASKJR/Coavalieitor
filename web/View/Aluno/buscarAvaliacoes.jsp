@@ -10,7 +10,7 @@
     <h2>Avaliações:</h2>
     <hr>
     <br>
-    <form class="form-horizontal" action="avaliacoesTurma.jsp">
+    <form class="form-horizontal" action="${pageContext.request.contextPath}/View/Aluno/listarAvaliacoesTurma.jsp">
         <fieldset>
         <div class="form-group">
             <label class="col-md-3 control-label" for="nomeTurma>">

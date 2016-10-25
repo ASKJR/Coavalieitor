@@ -266,7 +266,7 @@ DROP TABLE IF EXISTS `coavalieitor_db`.`correcao` ;
 CREATE TABLE IF NOT EXISTS `coavalieitor_db`.`correcao` (
   `id` INT NOT NULL AUTO_INCREMENT,
   `comentario` TEXT(500) NULL,
-  `nota` INT NULL,
+  `nota` DOUBLE NULL,
   `solucao_id` INT NOT NULL,
   `aluno_usuario_id` INT NOT NULL,
   `correcao_data` DATETIME NULL,
