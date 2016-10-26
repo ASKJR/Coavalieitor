@@ -4,14 +4,15 @@ INSERT INTO `coavalieitor_db`.`perfil` (`nome`) VALUES ('Aluno');
 INSERT INTO `coavalieitor_db`.`perfil` (`nome`) VALUES ('Professor');
 
 
-/*Professores*/
-INSERT INTO `coavalieitor_db`.`usuario` (`email`, `senha`,`nome`,`perfil_id`) VALUES ('albertokatojr@gmail.com', MD5('1234'),'Alberto',1);
-INSERT INTO `coavalieitor_db`.`usuario` (`email`, `senha`,`nome`,`perfil_id`) VALUES ('ivoneterq@gmail.com', MD5('1234'),'Ivonete',1);
-INSERT INTO `coavalieitor_db`.`usuario` (`email`, `senha`,`nome`,`perfil_id`) VALUES ('welyngton.dp@gmail.com', MD5('1234'),'Welyngton',1);
-INSERT INTO `coavalieitor_db`.`usuario` (`email`, `senha`,`nome`,`perfil_id`) VALUES ('professor1@gmail.com', MD5('1234'),'Carmem Baggio',3);
-INSERT INTO `coavalieitor_db`.`usuario` (`email`, `senha`,`nome`,`perfil_id`) VALUES ('professor2@gmail.com', MD5('1234'),'Amélia da Silva',3);
-INSERT INTO `coavalieitor_db`.`usuario` (`email`, `senha`,`nome`,`perfil_id`) VALUES ('professor3@gmail.com', MD5('1234'),'Roberto Ivanoviski',3);
+/*Professores - tabela usuário*/
+INSERT INTO `coavalieitor_db`.`usuario` (`email`, `senha`,`nome`,`perfil_id`) VALUES ('albertokatojr@gmail.com', MD5('123456'),'Alberto',1);
+INSERT INTO `coavalieitor_db`.`usuario` (`email`, `senha`,`nome`,`perfil_id`) VALUES ('ivoneterq@gmail.com', MD5('123456'),'Ivonete',1);
+INSERT INTO `coavalieitor_db`.`usuario` (`email`, `senha`,`nome`,`perfil_id`) VALUES ('welyngton.dp@gmail.com', MD5('123456'),'Welyngton',1);
+INSERT INTO `coavalieitor_db`.`usuario` (`email`, `senha`,`nome`,`perfil_id`) VALUES ('professor1@gmail.com', MD5('123456'),'Carmem Baggio',3);
+INSERT INTO `coavalieitor_db`.`usuario` (`email`, `senha`,`nome`,`perfil_id`) VALUES ('professor2@gmail.com', MD5('123456'),'Amélia da Silva',3);
+INSERT INTO `coavalieitor_db`.`usuario` (`email`, `senha`,`nome`,`perfil_id`) VALUES ('professor3@gmail.com', MD5('123456'),'Roberto Ivanoviski',3);
 
+/*Professores - tabela professor*/
 INSERT INTO `coavalieitor_db`.`professor` (`usuario_id`) VALUES (1);
 INSERT INTO `coavalieitor_db`.`professor` (`usuario_id`) VALUES (2);
 INSERT INTO `coavalieitor_db`.`professor` (`usuario_id`) VALUES (3);
@@ -19,42 +20,109 @@ INSERT INTO `coavalieitor_db`.`professor` (`usuario_id`) VALUES (4);
 INSERT INTO `coavalieitor_db`.`professor` (`usuario_id`) VALUES (5);
 INSERT INTO `coavalieitor_db`.`professor` (`usuario_id`) VALUES (6);
 
-/*Alunos*/
-INSERT INTO `coavalieitor_db`.`usuario` (`email`, `senha`,`nome`,`perfil_id`) VALUES ('aluno1@gmail.com', MD5('1234'),'Alfredo Caballero',2);
-INSERT INTO `coavalieitor_db`.`usuario` (`email`, `senha`,`nome`,`perfil_id`) VALUES ('aluno2@gmail.com', MD5('1234'),'Allan',2);
-INSERT INTO `coavalieitor_db`.`usuario` (`email`, `senha`,`nome`,`perfil_id`) VALUES ('aluno3@gmail.com', MD5('1234'),'Antonia',2);
-INSERT INTO `coavalieitor_db`.`usuario` (`email`, `senha`,`nome`,`perfil_id`) VALUES ('aluno4@gmail.com', MD5('1234'),'Brock',2);
-INSERT INTO `coavalieitor_db`.`usuario` (`email`, `senha`,`nome`,`perfil_id`) VALUES ('aluno5@gmail.com', MD5('1234'),'Bruno',2);
-INSERT INTO `coavalieitor_db`.`usuario` (`email`, `senha`,`nome`,`perfil_id`) VALUES ('aluno6@gmail.com', MD5('1234'),'Calvin',2);
-INSERT INTO `coavalieitor_db`.`usuario` (`email`, `senha`,`nome`,`perfil_id`) VALUES ('aluno7@gmail.com', MD5('1234'),'Cameron',2);
-INSERT INTO `coavalieitor_db`.`usuario` (`email`, `senha`,`nome`,`perfil_id`) VALUES ('aluno8@gmail.com', MD5('1234'),'Cortez Poland',2);
-INSERT INTO `coavalieitor_db`.`usuario` (`email`, `senha`,`nome`,`perfil_id`) VALUES ('aluno9@gmail.com', MD5('1234'),'Donny',2);
-INSERT INTO `coavalieitor_db`.`usuario` (`email`, `senha`,`nome`,`perfil_id`) VALUES ('aluno10@gmail.com', MD5('1234'),'Elissa',2);
+/*Alunos - tabela usuário*/
+INSERT INTO `coavalieitor_db`.`usuario` (`email`, `senha`,`nome`,`perfil_id`) VALUES ('aluno1@gmail.com', MD5('123456'),'Alfredo Caballero',2);
+INSERT INTO `coavalieitor_db`.`usuario` (`email`, `senha`,`nome`,`perfil_id`) VALUES ('aluno2@gmail.com', MD5('123456'),'Allan',2);
+INSERT INTO `coavalieitor_db`.`usuario` (`email`, `senha`,`nome`,`perfil_id`) VALUES ('aluno3@gmail.com', MD5('123456'),'Antonia',2);
+INSERT INTO `coavalieitor_db`.`usuario` (`email`, `senha`,`nome`,`perfil_id`) VALUES ('aluno4@gmail.com', MD5('123456'),'Brock',2);
+INSERT INTO `coavalieitor_db`.`usuario` (`email`, `senha`,`nome`,`perfil_id`) VALUES ('aluno5@gmail.com', MD5('123456'),'Bruno',2);
+INSERT INTO `coavalieitor_db`.`usuario` (`email`, `senha`,`nome`,`perfil_id`) VALUES ('aluno6@gmail.com', MD5('123456'),'Calvin',2);
+INSERT INTO `coavalieitor_db`.`usuario` (`email`, `senha`,`nome`,`perfil_id`) VALUES ('aluno7@gmail.com', MD5('123456'),'Cameron',2);
+INSERT INTO `coavalieitor_db`.`usuario` (`email`, `senha`,`nome`,`perfil_id`) VALUES ('aluno8@gmail.com', MD5('123456'),'Cortez Poland',2);
+INSERT INTO `coavalieitor_db`.`usuario` (`email`, `senha`,`nome`,`perfil_id`) VALUES ('aluno9@gmail.com', MD5('123456'),'Donny',2);
+INSERT INTO `coavalieitor_db`.`usuario` (`email`, `senha`,`nome`,`perfil_id`) VALUES ('aluno10@gmail.com',MD5('123456'),'Elissa',2);
+INSERT INTO `coavalieitor_db`.`usuario` (`email`, `senha`,`nome`,`perfil_id`) VALUES ('aluno11@gmail.com', MD5('123456'),'Esmeralda',2);
+INSERT INTO `coavalieitor_db`.`usuario` (`email`, `senha`,`nome`,`perfil_id`) VALUES ('aluno12@gmail.com', MD5('123456'),'Fernanda',2);
+INSERT INTO `coavalieitor_db`.`usuario` (`email`, `senha`,`nome`,`perfil_id`) VALUES ('aluno13@gmail.com', MD5('123456'),'Flora Leblanc',2);
+INSERT INTO `coavalieitor_db`.`usuario` (`email`, `senha`,`nome`,`perfil_id`) VALUES ('aluno14@gmail.com', MD5('123456'),'Gladys',2);
+INSERT INTO `coavalieitor_db`.`usuario` (`email`, `senha`,`nome`,`perfil_id`) VALUES ('aluno15@gmail.com', MD5('123456'),'Ivana',2);
+INSERT INTO `coavalieitor_db`.`usuario` (`email`, `senha`,`nome`,`perfil_id`) VALUES ('aluno16@gmail.com', MD5('123456'),'Jeannie',2);
+INSERT INTO `coavalieitor_db`.`usuario` (`email`, `senha`,`nome`,`perfil_id`) VALUES ('aluno17@gmail.com', MD5('123456'),'Kimberlee Underwood',2);
+INSERT INTO `coavalieitor_db`.`usuario` (`email`, `senha`,`nome`,`perfil_id`) VALUES ('aluno18@gmail.com', MD5('123456'),'Melody',2);
+INSERT INTO `coavalieitor_db`.`usuario` (`email`, `senha`,`nome`,`perfil_id`) VALUES ('aluno19@gmail.com', MD5('123456'),'Nancee Trammell',2);
+INSERT INTO `coavalieitor_db`.`usuario` (`email`, `senha`,`nome`,`perfil_id`) VALUES ('aluno20@gmail.com', MD5('123456'),'Zelda Link',2);
+INSERT INTO `coavalieitor_db`.`usuario` (`email`, `senha`,`nome`,`perfil_id`) VALUES ('aluno21@gmail.com', MD5('123456'),'Maria da Silva',2);
+INSERT INTO `coavalieitor_db`.`usuario` (`email`, `senha`,`nome`,`perfil_id`) VALUES ('aluno22@gmail.com', MD5('123456'),'Jose da Silva',2);
+INSERT INTO `coavalieitor_db`.`usuario` (`email`, `senha`,`nome`,`perfil_id`) VALUES ('aluno23@gmail.com', MD5('123456'),'Harumi Kato',2);
+INSERT INTO `coavalieitor_db`.`usuario` (`email`, `senha`,`nome`,`perfil_id`) VALUES ('aluno24@gmail.com', MD5('123456'),'Tieko Kato',2);
+INSERT INTO `coavalieitor_db`.`usuario` (`email`, `senha`,`nome`,`perfil_id`) VALUES ('aluno25@gmail.com', MD5('123456'),'Joshua Wright',2);
+INSERT INTO `coavalieitor_db`.`usuario` (`email`, `senha`,`nome`,`perfil_id`) VALUES ('aluno26@gmail.com', MD5('123456'),'Roger Wright',2);
+INSERT INTO `coavalieitor_db`.`usuario` (`email`, `senha`,`nome`,`perfil_id`) VALUES ('aluno27@gmail.com', MD5('123456'),'Luiz Gonçalvez da Silva',2);
+INSERT INTO `coavalieitor_db`.`usuario` (`email`, `senha`,`nome`,`perfil_id`) VALUES ('aluno28@gmail.com', MD5('123456'),'Luiz Eduardo Bueno',2);
+INSERT INTO `coavalieitor_db`.`usuario` (`email`, `senha`,`nome`,`perfil_id`) VALUES ('aluno29@gmail.com', MD5('123456'),'Yasuyuki Kato',2);
+INSERT INTO `coavalieitor_db`.`usuario` (`email`, `senha`,`nome`,`perfil_id`) VALUES ('aluno30@gmail.com', MD5('123456'),'Maria Helena Menezes',2);
+INSERT INTO `coavalieitor_db`.`usuario` (`email`, `senha`,`nome`,`perfil_id`) VALUES ('aluno31@gmail.com', MD5('123456'),'Johanna	Thomas',2);
+INSERT INTO `coavalieitor_db`.`usuario` (`email`, `senha`,`nome`,`perfil_id`) VALUES ('aluno32@gmail.com', MD5('123456'),'Michele	Farmer',2);
+INSERT INTO `coavalieitor_db`.`usuario` (`email`, `senha`,`nome`,`perfil_id`) VALUES ('aluno33@gmail.com', MD5('123456'),'Geoffrey Day',2);
+INSERT INTO `coavalieitor_db`.`usuario` (`email`, `senha`,`nome`,`perfil_id`) VALUES ('aluno34@gmail.com', MD5('123456'),'Maria Mitchell',2);
+INSERT INTO `coavalieitor_db`.`usuario` (`email`, `senha`,`nome`,`perfil_id`) VALUES ('aluno35@gmail.com', MD5('123456'),'Rosie Gutierrez',2);
+INSERT INTO `coavalieitor_db`.`usuario` (`email`, `senha`,`nome`,`perfil_id`) VALUES ('aluno36@gmail.com', MD5('123456'),'Arlene Page',2);
+INSERT INTO `coavalieitor_db`.`usuario` (`email`, `senha`,`nome`,`perfil_id`) VALUES ('aluno37@gmail.com', MD5('123456'),'Bruce Peters',2);
+INSERT INTO `coavalieitor_db`.`usuario` (`email`, `senha`,`nome`,`perfil_id`) VALUES ('aluno38@gmail.com', MD5('123456'),'Lynn Weber',2);
+INSERT INTO `coavalieitor_db`.`usuario` (`email`, `senha`,`nome`,`perfil_id`) VALUES ('aluno39@gmail.com', MD5('123456'),'Mario Jacobs',2);
+INSERT INTO `coavalieitor_db`.`usuario` (`email`, `senha`,`nome`,`perfil_id`) VALUES ('aluno40@gmail.com', MD5('123456'),'Jimmie Neal',2);
+INSERT INTO `coavalieitor_db`.`usuario` (`email`, `senha`,`nome`,`perfil_id`) VALUES ('aluno41@gmail.com', MD5('123456'),'Hugh Moreno',2);
+INSERT INTO `coavalieitor_db`.`usuario` (`email`, `senha`,`nome`,`perfil_id`) VALUES ('aluno42@gmail.com', MD5('123456'),'Cathy Schultz',2);
+INSERT INTO `coavalieitor_db`.`usuario` (`email`, `senha`,`nome`,`perfil_id`) VALUES ('aluno43@gmail.com', MD5('123456'),'John Mccormick',2);
+INSERT INTO `coavalieitor_db`.`usuario` (`email`, `senha`,`nome`,`perfil_id`) VALUES ('aluno44@gmail.com', MD5('123456'),'Wayne Graves',2);
+INSERT INTO `coavalieitor_db`.`usuario` (`email`, `senha`,`nome`,`perfil_id`) VALUES ('aluno45@gmail.com', MD5('123456'),'Carole Vasquez',2);
+INSERT INTO `coavalieitor_db`.`usuario` (`email`, `senha`,`nome`,`perfil_id`) VALUES ('aluno46@gmail.com', MD5('123456'),'Luther Holland',2);
+INSERT INTO `coavalieitor_db`.`usuario` (`email`, `senha`,`nome`,`perfil_id`) VALUES ('aluno47@gmail.com', MD5('123456'),'Ella Wheeler',2);
+INSERT INTO `coavalieitor_db`.`usuario` (`email`, `senha`,`nome`,`perfil_id`) VALUES ('aluno48@gmail.com', MD5('123456'),'Mandy Smith',2);
+INSERT INTO `coavalieitor_db`.`usuario` (`email`, `senha`,`nome`,`perfil_id`) VALUES ('aluno49@gmail.com', MD5('123456'),'Nathaniel Grant',2);
+INSERT INTO `coavalieitor_db`.`usuario` (`email`, `senha`,`nome`,`perfil_id`) VALUES ('aluno50@gmail.com', MD5('123456'),'Ebony Stone',2);
+INSERT INTO `coavalieitor_db`.`usuario` (`email`, `senha`,`nome`,`perfil_id`) VALUES ('aluno51@gmail.com', MD5('123456'),'Luz	Sullivan',2);
+INSERT INTO `coavalieitor_db`.`usuario` (`email`, `senha`,`nome`,`perfil_id`) VALUES ('aluno52@gmail.com', MD5('123456'),'Nelson Banks',2);
+INSERT INTO `coavalieitor_db`.`usuario` (`email`, `senha`,`nome`,`perfil_id`) VALUES ('aluno53@gmail.com', MD5('123456'),'Glen Zimmerman',2);
+INSERT INTO `coavalieitor_db`.`usuario` (`email`, `senha`,`nome`,`perfil_id`) VALUES ('aluno54@gmail.com', MD5('123456'),'Elias Graham',2);
+INSERT INTO `coavalieitor_db`.`usuario` (`email`, `senha`,`nome`,`perfil_id`) VALUES ('aluno55@gmail.com', MD5('123456'),'Travis Simon',2);
+INSERT INTO `coavalieitor_db`.`usuario` (`email`, `senha`,`nome`,`perfil_id`) VALUES ('aluno56@gmail.com', MD5('123456'),'Amos Thornton',2);
+INSERT INTO `coavalieitor_db`.`usuario` (`email`, `senha`,`nome`,`perfil_id`) VALUES ('aluno57@gmail.com', MD5('123456'),'Dolores Cobb',2);
+INSERT INTO `coavalieitor_db`.`usuario` (`email`, `senha`,`nome`,`perfil_id`) VALUES ('aluno58@gmail.com', MD5('123456'),'Lois Lamb',2);
+INSERT INTO `coavalieitor_db`.`usuario` (`email`, `senha`,`nome`,`perfil_id`) VALUES ('aluno59@gmail.com', MD5('123456'),'Wilbur Bates',2);
+INSERT INTO `coavalieitor_db`.`usuario` (`email`, `senha`,`nome`,`perfil_id`) VALUES ('aluno60@gmail.com', MD5('123456'),'Candice Park',2);
+INSERT INTO `coavalieitor_db`.`usuario` (`email`, `senha`,`nome`,`perfil_id`) VALUES ('aluno61@gmail.com', MD5('123456'),'Leonard Cain',2);
+INSERT INTO `coavalieitor_db`.`usuario` (`email`, `senha`,`nome`,`perfil_id`) VALUES ('aluno62@gmail.com', MD5('123456'),'Alberto Sparks',2);
+INSERT INTO `coavalieitor_db`.`usuario` (`email`, `senha`,`nome`,`perfil_id`) VALUES ('aluno63@gmail.com', MD5('123456'),'Irving Morton',2);
+INSERT INTO `coavalieitor_db`.`usuario` (`email`, `senha`,`nome`,`perfil_id`) VALUES ('aluno64@gmail.com', MD5('123456'),'Alvin Gonzales',2);
+INSERT INTO `coavalieitor_db`.`usuario` (`email`, `senha`,`nome`,`perfil_id`) VALUES ('aluno65@gmail.com', MD5('123456'),'Corey Gibson',2);
+INSERT INTO `coavalieitor_db`.`usuario` (`email`, `senha`,`nome`,`perfil_id`) VALUES ('aluno66@gmail.com', MD5('123456'),'Daryl Stevens',2);
+INSERT INTO `coavalieitor_db`.`usuario` (`email`, `senha`,`nome`,`perfil_id`) VALUES ('aluno67@gmail.com', MD5('123456'),'Kent Burgess',2);
+INSERT INTO `coavalieitor_db`.`usuario` (`email`, `senha`,`nome`,`perfil_id`) VALUES ('aluno68@gmail.com', MD5('123456'),'Shaun Long',2);
+INSERT INTO `coavalieitor_db`.`usuario` (`email`, `senha`,`nome`,`perfil_id`) VALUES ('aluno69@gmail.com', MD5('123456'),'Erika Palmer',2);
+INSERT INTO `coavalieitor_db`.`usuario` (`email`, `senha`,`nome`,`perfil_id`) VALUES ('aluno70@gmail.com', MD5('123456'),'Cary Jackson',2);
+INSERT INTO `coavalieitor_db`.`usuario` (`email`, `senha`,`nome`,`perfil_id`) VALUES ('aluno71@gmail.com', MD5('123456'),'Lorene Andrews',2);
+INSERT INTO `coavalieitor_db`.`usuario` (`email`, `senha`,`nome`,`perfil_id`) VALUES ('aluno72@gmail.com', MD5('123456'),'Jo West',2);
+INSERT INTO `coavalieitor_db`.`usuario` (`email`, `senha`,`nome`,`perfil_id`) VALUES ('aluno73@gmail.com', MD5('123456'),'Jaime Hamilton',2);
+INSERT INTO `coavalieitor_db`.`usuario` (`email`, `senha`,`nome`,`perfil_id`) VALUES ('aluno74@gmail.com', MD5('123456'),'Lorraine Jefferson',2);
+INSERT INTO `coavalieitor_db`.`usuario` (`email`, `senha`,`nome`,`perfil_id`) VALUES ('aluno75@gmail.com', MD5('123456'),'Eddie Parks',2);
+INSERT INTO `coavalieitor_db`.`usuario` (`email`, `senha`,`nome`,`perfil_id`) VALUES ('aluno76@gmail.com', MD5('123456'),'Emma Washington',2);
+INSERT INTO `coavalieitor_db`.`usuario` (`email`, `senha`,`nome`,`perfil_id`) VALUES ('aluno77@gmail.com', MD5('123456'),'Shane Wallace',2);
+INSERT INTO `coavalieitor_db`.`usuario` (`email`, `senha`,`nome`,`perfil_id`) VALUES ('aluno78@gmail.com', MD5('123456'),'Winston Yates',2);
+INSERT INTO `coavalieitor_db`.`usuario` (`email`, `senha`,`nome`,`perfil_id`) VALUES ('aluno79@gmail.com', MD5('123456'),'Violet Lucas',2);
+INSERT INTO `coavalieitor_db`.`usuario` (`email`, `senha`,`nome`,`perfil_id`) VALUES ('aluno80@gmail.com', MD5('123456'),'Armando Vaughn',2);
+INSERT INTO `coavalieitor_db`.`usuario` (`email`, `senha`,`nome`,`perfil_id`) VALUES ('aluno81@gmail.com', MD5('123456'),'Allison Strickland',2);
+INSERT INTO `coavalieitor_db`.`usuario` (`email`, `senha`,`nome`,`perfil_id`) VALUES ('aluno82@gmail.com', MD5('123456'),'Enrique Newman',2);
+INSERT INTO `coavalieitor_db`.`usuario` (`email`, `senha`,`nome`,`perfil_id`) VALUES ('aluno83@gmail.com', MD5('123456'),'Maryann Arnold',2);
+INSERT INTO `coavalieitor_db`.`usuario` (`email`, `senha`,`nome`,`perfil_id`) VALUES ('aluno84@gmail.com', MD5('123456'),'Wm Simmons',2);
+INSERT INTO `coavalieitor_db`.`usuario` (`email`, `senha`,`nome`,`perfil_id`) VALUES ('aluno85@gmail.com', MD5('123456'),'Celia Alvarado',2);
+INSERT INTO `coavalieitor_db`.`usuario` (`email`, `senha`,`nome`,`perfil_id`) VALUES ('aluno86@gmail.com', MD5('123456'),'Carroll Barnett',2);
+INSERT INTO `coavalieitor_db`.`usuario` (`email`, `senha`,`nome`,`perfil_id`) VALUES ('aluno87@gmail.com', MD5('123456'),'Vicky Gill',2);
+INSERT INTO `coavalieitor_db`.`usuario` (`email`, `senha`,`nome`,`perfil_id`) VALUES ('aluno88@gmail.com', MD5('123456'),'Michelle Garrett',2);
+INSERT INTO `coavalieitor_db`.`usuario` (`email`, `senha`,`nome`,`perfil_id`) VALUES ('aluno89@gmail.com', MD5('123456'),'Fernando Caldwell',2);
+INSERT INTO `coavalieitor_db`.`usuario` (`email`, `senha`,`nome`,`perfil_id`) VALUES ('aluno90@gmail.com', MD5('123456'),'Elsie Keller',2);
+INSERT INTO `coavalieitor_db`.`usuario` (`email`, `senha`,`nome`,`perfil_id`) VALUES ('aluno91@gmail.com', MD5('123456'),'Elvira Peterson',2);
+INSERT INTO `coavalieitor_db`.`usuario` (`email`, `senha`,`nome`,`perfil_id`) VALUES ('aluno92@gmail.com', MD5('123456'),'Bridget Mclaughlin',2);
+INSERT INTO `coavalieitor_db`.`usuario` (`email`, `senha`,`nome`,`perfil_id`) VALUES ('aluno93@gmail.com', MD5('123456'),'Cristina Wilson',2);
+INSERT INTO `coavalieitor_db`.`usuario` (`email`, `senha`,`nome`,`perfil_id`) VALUES ('aluno94@gmail.com', MD5('123456'),'Rebecca Salazar',2);
+INSERT INTO `coavalieitor_db`.`usuario` (`email`, `senha`,`nome`,`perfil_id`) VALUES ('aluno95@gmail.com', MD5('123456'),'Lena Ramsey',2);
+INSERT INTO `coavalieitor_db`.`usuario` (`email`, `senha`,`nome`,`perfil_id`) VALUES ('aluno96@gmail.com', MD5('123456'),'Anna Reid',2);
+INSERT INTO `coavalieitor_db`.`usuario` (`email`, `senha`,`nome`,`perfil_id`) VALUES ('aluno97@gmail.com', MD5('123456'),'Sophie Lawrence',2);
+INSERT INTO `coavalieitor_db`.`usuario` (`email`, `senha`,`nome`,`perfil_id`) VALUES ('aluno98@gmail.com', MD5('123456'),'Sonya Shelton',2);
+INSERT INTO `coavalieitor_db`.`usuario` (`email`, `senha`,`nome`,`perfil_id`) VALUES ('aluno99@gmail.com', MD5('123456'),'Donald Harvey',2);
+INSERT INTO `coavalieitor_db`.`usuario` (`email`, `senha`,`nome`,`perfil_id`) VALUES ('aluno100@gmail.com',MD5('123456'),'Jodi Lopez',2);
 
-
-INSERT INTO `coavalieitor_db`.`usuario` (`email`, `senha`,`nome`,`perfil_id`) VALUES ('aluno11@gmail.com', MD5('1234'),'Esmeralda',2);
-INSERT INTO `coavalieitor_db`.`usuario` (`email`, `senha`,`nome`,`perfil_id`) VALUES ('aluno12@gmail.com', MD5('1234'),'Fernanda',2);
-INSERT INTO `coavalieitor_db`.`usuario` (`email`, `senha`,`nome`,`perfil_id`) VALUES ('aluno13@gmail.com', MD5('1234'),'Flora Leblanc',2);
-INSERT INTO `coavalieitor_db`.`usuario` (`email`, `senha`,`nome`,`perfil_id`) VALUES ('aluno14@gmail.com', MD5('1234'),'Gladys',2);
-INSERT INTO `coavalieitor_db`.`usuario` (`email`, `senha`,`nome`,`perfil_id`) VALUES ('aluno15@gmail.com', MD5('1234'),'Ivana',2);
-INSERT INTO `coavalieitor_db`.`usuario` (`email`, `senha`,`nome`,`perfil_id`) VALUES ('aluno16@gmail.com', MD5('1234'),'Jeannie',2);
-INSERT INTO `coavalieitor_db`.`usuario` (`email`, `senha`,`nome`,`perfil_id`) VALUES ('aluno17@gmail.com', MD5('1234'),'Kimberlee Underwood',2);
-INSERT INTO `coavalieitor_db`.`usuario` (`email`, `senha`,`nome`,`perfil_id`) VALUES ('aluno18@gmail.com', MD5('1234'),'Melody',2);
-INSERT INTO `coavalieitor_db`.`usuario` (`email`, `senha`,`nome`,`perfil_id`) VALUES ('aluno19@gmail.com', MD5('1234'),'Nancee Trammell',2);
-INSERT INTO `coavalieitor_db`.`usuario` (`email`, `senha`,`nome`,`perfil_id`) VALUES ('aluno20@gmail.com', MD5('1234'),'Zelda Link',2);
-
-INSERT INTO `coavalieitor_db`.`usuario` (`email`, `senha`,`nome`,`perfil_id`) VALUES ('aluno21@gmail.com', MD5('1234'),'Maria da Silva',2);
-INSERT INTO `coavalieitor_db`.`usuario` (`email`, `senha`,`nome`,`perfil_id`) VALUES ('aluno22@gmail.com', MD5('1234'),'Jose da Silva',2);
-INSERT INTO `coavalieitor_db`.`usuario` (`email`, `senha`,`nome`,`perfil_id`) VALUES ('aluno23@gmail.com', MD5('1234'),'Harumi Kato',2);
-INSERT INTO `coavalieitor_db`.`usuario` (`email`, `senha`,`nome`,`perfil_id`) VALUES ('aluno24@gmail.com', MD5('1234'),'Tieko Kato',2);
-INSERT INTO `coavalieitor_db`.`usuario` (`email`, `senha`,`nome`,`perfil_id`) VALUES ('aluno25@gmail.com', MD5('1234'),'Joshua Wright',2);
-INSERT INTO `coavalieitor_db`.`usuario` (`email`, `senha`,`nome`,`perfil_id`) VALUES ('aluno26@gmail.com', MD5('1234'),'Roger Wright',2);
-INSERT INTO `coavalieitor_db`.`usuario` (`email`, `senha`,`nome`,`perfil_id`) VALUES ('aluno27@gmail.com', MD5('1234'),'Luiz Gonçalvez da Silva',2);
-INSERT INTO `coavalieitor_db`.`usuario` (`email`, `senha`,`nome`,`perfil_id`) VALUES ('aluno28@gmail.com', MD5('1234'),'Luiz Eduardo Bueno',2);
-INSERT INTO `coavalieitor_db`.`usuario` (`email`, `senha`,`nome`,`perfil_id`) VALUES ('aluno29@gmail.com', MD5('1234'),'Yasuyuki Kato',2);
-INSERT INTO `coavalieitor_db`.`usuario` (`email`, `senha`,`nome`,`perfil_id`) VALUES ('aluno30@gmail.com', MD5('1234'),'Maria Helena Menezes',2);
-
-
+/*Alunos - tabela aluno*/
 INSERT INTO `coavalieitor_db`.`aluno` (`usuario_id`) VALUES (7);
 INSERT INTO `coavalieitor_db`.`aluno` (`usuario_id`) VALUES (8);
 INSERT INTO `coavalieitor_db`.`aluno` (`usuario_id`) VALUES (9);
@@ -65,8 +133,6 @@ INSERT INTO `coavalieitor_db`.`aluno` (`usuario_id`) VALUES (13);
 INSERT INTO `coavalieitor_db`.`aluno` (`usuario_id`) VALUES (14);
 INSERT INTO `coavalieitor_db`.`aluno` (`usuario_id`) VALUES (15);
 INSERT INTO `coavalieitor_db`.`aluno` (`usuario_id`) VALUES (16);
-
-
 INSERT INTO `coavalieitor_db`.`aluno` (`usuario_id`) VALUES (17);
 INSERT INTO `coavalieitor_db`.`aluno` (`usuario_id`) VALUES (18);
 INSERT INTO `coavalieitor_db`.`aluno` (`usuario_id`) VALUES (19);
@@ -77,8 +143,6 @@ INSERT INTO `coavalieitor_db`.`aluno` (`usuario_id`) VALUES (23);
 INSERT INTO `coavalieitor_db`.`aluno` (`usuario_id`) VALUES (24);
 INSERT INTO `coavalieitor_db`.`aluno` (`usuario_id`) VALUES (25);
 INSERT INTO `coavalieitor_db`.`aluno` (`usuario_id`) VALUES (26);
-
-
 INSERT INTO `coavalieitor_db`.`aluno` (`usuario_id`) VALUES (27);
 INSERT INTO `coavalieitor_db`.`aluno` (`usuario_id`) VALUES (28);
 INSERT INTO `coavalieitor_db`.`aluno` (`usuario_id`) VALUES (29);
@@ -89,6 +153,76 @@ INSERT INTO `coavalieitor_db`.`aluno` (`usuario_id`) VALUES (33);
 INSERT INTO `coavalieitor_db`.`aluno` (`usuario_id`) VALUES (34);
 INSERT INTO `coavalieitor_db`.`aluno` (`usuario_id`) VALUES (35);
 INSERT INTO `coavalieitor_db`.`aluno` (`usuario_id`) VALUES (36);
+INSERT INTO `coavalieitor_db`.`aluno` (`usuario_id`) VALUES (37);
+INSERT INTO `coavalieitor_db`.`aluno` (`usuario_id`) VALUES (38);
+INSERT INTO `coavalieitor_db`.`aluno` (`usuario_id`) VALUES (39);
+INSERT INTO `coavalieitor_db`.`aluno` (`usuario_id`) VALUES (40);
+INSERT INTO `coavalieitor_db`.`aluno` (`usuario_id`) VALUES (41);
+INSERT INTO `coavalieitor_db`.`aluno` (`usuario_id`) VALUES (42);
+INSERT INTO `coavalieitor_db`.`aluno` (`usuario_id`) VALUES (43);
+INSERT INTO `coavalieitor_db`.`aluno` (`usuario_id`) VALUES (44);
+INSERT INTO `coavalieitor_db`.`aluno` (`usuario_id`) VALUES (45);
+INSERT INTO `coavalieitor_db`.`aluno` (`usuario_id`) VALUES (46);
+INSERT INTO `coavalieitor_db`.`aluno` (`usuario_id`) VALUES (47);
+INSERT INTO `coavalieitor_db`.`aluno` (`usuario_id`) VALUES (48);
+INSERT INTO `coavalieitor_db`.`aluno` (`usuario_id`) VALUES (49);
+INSERT INTO `coavalieitor_db`.`aluno` (`usuario_id`) VALUES (50);
+INSERT INTO `coavalieitor_db`.`aluno` (`usuario_id`) VALUES (51);
+INSERT INTO `coavalieitor_db`.`aluno` (`usuario_id`) VALUES (52);
+INSERT INTO `coavalieitor_db`.`aluno` (`usuario_id`) VALUES (53);
+INSERT INTO `coavalieitor_db`.`aluno` (`usuario_id`) VALUES (54);
+INSERT INTO `coavalieitor_db`.`aluno` (`usuario_id`) VALUES (55);
+INSERT INTO `coavalieitor_db`.`aluno` (`usuario_id`) VALUES (56);
+INSERT INTO `coavalieitor_db`.`aluno` (`usuario_id`) VALUES (57);
+INSERT INTO `coavalieitor_db`.`aluno` (`usuario_id`) VALUES (58);
+INSERT INTO `coavalieitor_db`.`aluno` (`usuario_id`) VALUES (59);
+INSERT INTO `coavalieitor_db`.`aluno` (`usuario_id`) VALUES (60);
+INSERT INTO `coavalieitor_db`.`aluno` (`usuario_id`) VALUES (61);
+INSERT INTO `coavalieitor_db`.`aluno` (`usuario_id`) VALUES (62);
+INSERT INTO `coavalieitor_db`.`aluno` (`usuario_id`) VALUES (63);
+INSERT INTO `coavalieitor_db`.`aluno` (`usuario_id`) VALUES (64);
+INSERT INTO `coavalieitor_db`.`aluno` (`usuario_id`) VALUES (65);
+INSERT INTO `coavalieitor_db`.`aluno` (`usuario_id`) VALUES (66);
+INSERT INTO `coavalieitor_db`.`aluno` (`usuario_id`) VALUES (67);
+INSERT INTO `coavalieitor_db`.`aluno` (`usuario_id`) VALUES (68);
+INSERT INTO `coavalieitor_db`.`aluno` (`usuario_id`) VALUES (69);
+INSERT INTO `coavalieitor_db`.`aluno` (`usuario_id`) VALUES (70);
+INSERT INTO `coavalieitor_db`.`aluno` (`usuario_id`) VALUES (71);
+INSERT INTO `coavalieitor_db`.`aluno` (`usuario_id`) VALUES (72);
+INSERT INTO `coavalieitor_db`.`aluno` (`usuario_id`) VALUES (73);
+INSERT INTO `coavalieitor_db`.`aluno` (`usuario_id`) VALUES (74);
+INSERT INTO `coavalieitor_db`.`aluno` (`usuario_id`) VALUES (75);
+INSERT INTO `coavalieitor_db`.`aluno` (`usuario_id`) VALUES (76);
+INSERT INTO `coavalieitor_db`.`aluno` (`usuario_id`) VALUES (77);
+INSERT INTO `coavalieitor_db`.`aluno` (`usuario_id`) VALUES (78);
+INSERT INTO `coavalieitor_db`.`aluno` (`usuario_id`) VALUES (79);
+INSERT INTO `coavalieitor_db`.`aluno` (`usuario_id`) VALUES (80);
+INSERT INTO `coavalieitor_db`.`aluno` (`usuario_id`) VALUES (81);
+INSERT INTO `coavalieitor_db`.`aluno` (`usuario_id`) VALUES (82);
+INSERT INTO `coavalieitor_db`.`aluno` (`usuario_id`) VALUES (83);
+INSERT INTO `coavalieitor_db`.`aluno` (`usuario_id`) VALUES (84);
+INSERT INTO `coavalieitor_db`.`aluno` (`usuario_id`) VALUES (85);
+INSERT INTO `coavalieitor_db`.`aluno` (`usuario_id`) VALUES (86);
+INSERT INTO `coavalieitor_db`.`aluno` (`usuario_id`) VALUES (87);
+INSERT INTO `coavalieitor_db`.`aluno` (`usuario_id`) VALUES (88);
+INSERT INTO `coavalieitor_db`.`aluno` (`usuario_id`) VALUES (89);
+INSERT INTO `coavalieitor_db`.`aluno` (`usuario_id`) VALUES (90);
+INSERT INTO `coavalieitor_db`.`aluno` (`usuario_id`) VALUES (91);
+INSERT INTO `coavalieitor_db`.`aluno` (`usuario_id`) VALUES (92);
+INSERT INTO `coavalieitor_db`.`aluno` (`usuario_id`) VALUES (93);
+INSERT INTO `coavalieitor_db`.`aluno` (`usuario_id`) VALUES (94);
+INSERT INTO `coavalieitor_db`.`aluno` (`usuario_id`) VALUES (95);
+INSERT INTO `coavalieitor_db`.`aluno` (`usuario_id`) VALUES (96);
+INSERT INTO `coavalieitor_db`.`aluno` (`usuario_id`) VALUES (97);
+INSERT INTO `coavalieitor_db`.`aluno` (`usuario_id`) VALUES (98);
+INSERT INTO `coavalieitor_db`.`aluno` (`usuario_id`) VALUES (99);
+INSERT INTO `coavalieitor_db`.`aluno` (`usuario_id`) VALUES (100);
+INSERT INTO `coavalieitor_db`.`aluno` (`usuario_id`) VALUES (101);
+INSERT INTO `coavalieitor_db`.`aluno` (`usuario_id`) VALUES (102);
+INSERT INTO `coavalieitor_db`.`aluno` (`usuario_id`) VALUES (103);
+INSERT INTO `coavalieitor_db`.`aluno` (`usuario_id`) VALUES (104);
+INSERT INTO `coavalieitor_db`.`aluno` (`usuario_id`) VALUES (105);
+INSERT INTO `coavalieitor_db`.`aluno` (`usuario_id`) VALUES (106);
 
 /*Instituições*/
 INSERT INTO `coavalieitor_db`.`instituicao` (`nome`) VALUES ('Universidade Federal do Paraná');
@@ -100,16 +234,33 @@ INSERT INTO `coavalieitor_db`.`curso` (`nome`, `instituicao_id`) VALUES ('Tecnol
 INSERT INTO `coavalieitor_db`.`curso` (`nome`, `instituicao_id`) VALUES ('Tecnologia em Gestão de Qualidade',1);
 INSERT INTO `coavalieitor_db`.`curso` (`nome`, `instituicao_id`) VALUES ('Química', 2);
 INSERT INTO `coavalieitor_db`.`curso` (`nome`, `instituicao_id`) VALUES ('Engenharia Civil',2);
+INSERT INTO `coavalieitor_db`.`curso` (`nome`, `instituicao_id`) VALUES ('Letras em Inglês',1);
 
 /*Disciplinas*/
 INSERT INTO `coavalieitor_db`.`disciplina` (`nome`, `curso_id`) VALUES ('Estrutura de dados', 1);
 INSERT INTO `coavalieitor_db`.`disciplina` (`nome`, `curso_id`) VALUES ('Algoritmo I', 1);
 INSERT INTO `coavalieitor_db`.`disciplina` (`nome`, `curso_id`) VALUES ('Banco de dados', 1);
+INSERT INTO `coavalieitor_db`.`disciplina` (`nome`, `curso_id`) VALUES ('Química Orgânica', 3);
+INSERT INTO `coavalieitor_db`.`disciplina` (`nome`, `curso_id`) VALUES ('Química Inorgânica', 3);
+INSERT INTO `coavalieitor_db`.`disciplina` (`nome`, `curso_id`) VALUES ('Estudos da Tradução', 5);
 
 /*Turmas*/
 INSERT INTO `coavalieitor_db`.`turma` (`nome`, `palavra_chave`, `disciplina_id`, `professor_usuario_id`) VALUES ('Turma Matutina', 'BATATA1', 2, 1);
 INSERT INTO `coavalieitor_db`.`turma` (`nome`, `palavra_chave`, `disciplina_id`, `professor_usuario_id`) VALUES ('Turma Vespertina', 'BATATA2', 2, 1);
 INSERT INTO `coavalieitor_db`.`turma` (`nome`, `palavra_chave`, `disciplina_id`, `professor_usuario_id`) VALUES ('Turma Noturna', 'BATATA3', 2, 1);
+INSERT INTO `coavalieitor_db`.`turma` (`nome`, `palavra_chave`, `disciplina_id`, `professor_usuario_id`) VALUES ('Turma Matutina', 'QUIMICA1', 4, 3);
+INSERT INTO `coavalieitor_db`.`turma` (`nome`, `palavra_chave`, `disciplina_id`, `professor_usuario_id`) VALUES ('Turma Noturna', 'QUIMICA2', 5, 3);
+INSERT INTO `coavalieitor_db`.`turma` (`nome`, `palavra_chave`, `disciplina_id`, `professor_usuario_id`) VALUES ('Turma Matutina', 'LETRAS1', 6, 2);
+INSERT INTO `coavalieitor_db`.`turma` (`nome`, `palavra_chave`, `disciplina_id`, `professor_usuario_id`) VALUES ('Turma Noturna', 'LETRAS2', 6, 2);
+
+/*Avaliação*/
+INSERT INTO `avaliacao` (`nome`, `descricao`, `requisito_adicional`, `submissao_inicial`, `submissao_final`, `correcao_inicial`, `correcao_final`, `num_correcao_estudante`, `nota_maxima`, `criterio_correcao`, `turma_id`, `status_id`) VALUES ('Sequência inversa', 'Escreva um algoritmo que coloque os números de 1 a 100 na tela na\r\nordem inversa (começando em 100 e terminando em 1). ', '*Linguagem C++\r\n*Utlizar estrutura de repetição \'for\'', '2016-10-25 00:00:00', '2016-10-28 23:59:00', '2016-10-29 00:00:00', '2016-11-02 23:59:00', 2, 100, '20 - Legibilidade do código.\r\n20 - Elegância do código.\r\n20 - Lógica de programação.\r\n20 - Complexidade do algoritmo.\r\n20 - Indentação.', 1, NULL);
+INSERT INTO `avaliacao` (`nome`, `descricao`, `requisito_adicional`, `submissao_inicial`, `submissao_final`, `correcao_inicial`, `correcao_final`, `num_correcao_estudante`, `nota_maxima`, `criterio_correcao`, `turma_id`, `status_id`) VALUES ('Converter temperatura', 'Faça um algoritmo que apresente na tela a tabela de conversão de\r\ngraus Celsius para Fahrenheit, de -100 C a 100 C. Use um incremento de 10 C. Observação: Fahrenheit = (9 / 5) × Celsius + 32', '*Linguagem C++.', '2016-10-26 00:00:00', '2016-10-28 23:59:00', '2016-10-29 00:00:00', '2016-10-31 23:59:00', 2, 100, '20 - Legibilidade do código.\r\n20 - Elegância do código.\r\n20 - Lógica de programação.\r\n20 - Complexidade do algoritmo.\r\n20 - Indentação.', 1, NULL);
+INSERT INTO `avaliacao` (`nome`, `descricao`, `requisito_adicional`, `submissao_inicial`, `submissao_final`, `correcao_inicial`, `correcao_final`, `num_correcao_estudante`, `nota_maxima`, `criterio_correcao`, `turma_id`, `status_id`) VALUES ('Múltiplos 7', 'Faça um algoritmo para listar todos os múltiplos positivos do número 7 menores ou iguais a 100.\r\n ', '*Linguagem C++.', '2016-10-26 00:00:00', '2016-10-28 23:59:00', '2016-10-29 00:00:00', '2016-10-31 23:59:00', 2, 100, '20 - Legibilidade do código.\r\n20 - Elegância do código.\r\n20 - Lógica de programação.\r\n20 - Complexidade do algoritmo.\r\n20 - Indentação.', 1, NULL);
+INSERT INTO `avaliacao` (`nome`, `descricao`, `requisito_adicional`, `submissao_inicial`, `submissao_final`, `correcao_inicial`, `correcao_final`, `num_correcao_estudante`, `nota_maxima`, `criterio_correcao`, `turma_id`, `status_id`) VALUES ('Calcular o número h', 'Sendo h = 1 + 1/2 + 1/3 + 1/4 + ... + 1/N, construa um algoritmo para\r\ncalcular o número h, sendo o número inteiro N fornecido pelo usuário. Seu algoritmo deve garantir que apenas um valor maior do que zero seja aceito como entrada. ', '*Linguagem PHP || C#', '2016-10-26 00:00:00', '2016-10-28 23:59:00', '2016-10-29 00:00:00', '2016-10-31 23:59:00', 2, 100, '20 - Legibilidade do código.\r\n20 - Elegância do código.\r\n20 - Lógica de programação.\r\n20 - Complexidade do algoritmo.\r\n20 - Indentação.', 1, NULL);
+INSERT INTO `avaliacao` (`nome`, `descricao`, `requisito_adicional`, `submissao_inicial`, `submissao_final`, `correcao_inicial`, `correcao_final`, `num_correcao_estudante`, `nota_maxima`, `criterio_correcao`, `turma_id`, `status_id`) VALUES ('Fatorial', 'Elabore um algoritmo (pseudocódigo) que calcule N! (fatorial de N), sendo que o valor de N é fornecido pelo usuário. Lembre que N é sempre um valor inteiro e não negativo.Logo, seu algoritmo deve evitar que valores negativos sejam aceitos como entrada. Lembre também que N! = 1 × 2 × 3 × ... × (N-1) × N, e que 0! = 1 por definição. ', '*Linguagem JAVA.', '2016-10-26 00:00:00', '2016-10-28 23:59:00', '2016-10-29 00:00:00', '2016-10-31 23:59:00', 2, 100, '20 - Legibilidade do código.\r\n20 - Elegância do código.\r\n20 - Lógica de programação.\r\n20 - Complexidade do algoritmo.\r\n20 - Indentação.', 1, NULL);
+INSERT INTO `avaliacao` (`nome`, `descricao`, `requisito_adicional`, `submissao_inicial`, `submissao_final`, `correcao_inicial`, `correcao_final`, `num_correcao_estudante`, `nota_maxima`, `criterio_correcao`, `turma_id`, `status_id`) VALUES ('Soma de números', 'Faça um algoritmo que pergunte ao usuário quantos números deseja somar. Em seguida, leia a quantidade informada de números e apresentar o valor da soma, quantos números são maiores que 7 e quantos números são maiores que 9. ', '*Linguagem Ruby\r\n*Utilize Do-While', '2016-10-26 00:00:00', '2016-10-28 23:59:00', '2016-10-29 00:00:00', '2016-10-31 23:59:00', 2, 100, '20 - Legibilidade do código.\r\n20 - Elegância do código.\r\n20 - Lógica de programação.\r\n20 - Complexidade do algoritmo.\r\n20 - Indentação.', 1, NULL);
+
 
 /*Status Avaliação*/
 INSERT INTO `coavalieitor_db`.`status` (`nome`) VALUES ('Correção');
