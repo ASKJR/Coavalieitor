@@ -7,7 +7,7 @@
 <%@include file="../../include/sidebarLeftAluno.jsp" %>
 <div class="col-md-9 col-lg-10 main">
     <br>
-    <h2>TurmaN1 - Avaliações:</h2>
+    <h2>${turma.nome} - Avaliações:</h2>
     <hr>
     <br>
     <h3>Submeter soluções:</h3>
@@ -17,26 +17,26 @@
             <thead class="thead-inverse">
                 <tr>
                     <th>Avaliação</th>
-                    <th>Resolvido em:</th>
-                    <th>Opção</th>
+                    <th style="text-align: center;">Resolver até:</th>
+                    <th style="text-align: center;">Resolvido em:</th>
+                    <th style="text-align: center;">Opção</th>
                 </tr>
             </thead>
-            <tr>
-                <td>Tarefa1 - Fatorial</td>
-                <td>--</td>
-                <td><a class="btn btn-primary" href="resolverAvaliacao.jsp">Resolver</a></td>
-            </tr>
-            <tr>
-                <td>Tarefa2 - Fibonnaci</td>
-                <td>--</td>
-                <td><a class="btn btn-primary" href="resolverAvaliacao.jsp">Resolver</a></td>
-            </tr>
-            
-            <tr>
-                <td>Tarefa3 - Caixeiro viajante</td>
-                <td>--</td>
-                <td><a class="btn btn-primary" href="resolverAvaliacao.jsp">Resolver</a></td>
-            </tr>
+            <c:choose>
+                <c:when test="${!empty avaliacoesSubmissao}">
+                    <c:forEach items="${avaliacoesSubmissao}" var="avaliacao">
+                        <tr>
+                            <td><a href="#" data-toggle="tooltip" title="${avaliacao.descricao}">${avaliacao.nome}</a></td>
+                            <td style="text-align: center;"><a href="#" data-toggle="tooltip" title="${avaliacao.SF}">  <span class="fa fa-clock-o glyphicon glyphicon-time" style="color: black; font-size: 25px;"></span></a></td>
+                            <td style="text-align: center;"></td>
+                            <td style="text-align: center;"><a class="btn btn-primary" href="${pageContext.request.contextPath}/SolucaoControllerAluno?action=insert&idAvaliacao=${avaliacao.id}">Resolver</a></td>
+                        </tr>
+                    </c:forEach>
+                </c:when>
+                <c:otherwise>
+                    <td style="text-align: center;" colspan="4">Nenhuma avaliacão no período de submissões disponível no momento...</td>                            
+                </c:otherwise>
+            </c:choose>
         </table>
     </div>
     <br><br><br><br>
@@ -47,26 +47,26 @@
             <thead class="thead-inverse">
                 <tr>
                     <th>Avaliação</th>
-                    <th>Corrigido em:</th>
-                    <th>Opção</th>
+                    <th style="text-align: center;">Corrigir até:</th>
+                    <th style="text-align: center;">Corrigido em:</th>
+                    <th style="text-align: center;">Opção</th>
                 </tr>
             </thead>
-            <tr>
-                <td>Tarefa1 - Fatorial</td>
-                <td>--</td>
-                <td><a class="btn btn-warning" href="listarCorrecoes.jsp">Corrigir</a></td>
-            </tr>
-            <tr>
-                <td>Tarefa2 - Fibonnaci</td>
-                <td>--</td> 
-                <td><a class="btn btn-warning" href="listarCorrecoes.jsp">Corrigir</a></td>
-            </tr>
-            
-            <tr>
-                <td>Tarefa3 - Caixeiro viajante</td>
-                <td>--</td>
-                <td><a class="btn btn-warning" href="listarCorrecoes.jsp">Corrigir</a></td>
-            </tr>
+            <c:choose>
+                <c:when test="${!empty avaliacoesCorrecao}">
+                    <c:forEach items="${avaliacoesCorrecao}" var="avaliacao">
+                        <tr>
+                            <td><a href="#" data-toggle="tooltip" title="${avaliacao.descricao}">${avaliacao.nome}</a></td>
+                            <td style="text-align: center;"><a href="#" data-toggle="tooltip" title="${avaliacao.CF}">  <span class="fa fa-clock-o glyphicon glyphicon-time" style="color: black; font-size: 25px;"></span></a></td>
+                            <td style="text-align: center;"></td>
+                            <td style="text-align: center;"><a class="btn btn-warning" href="#">Corrigir</a></td>
+                        </tr>
+                    </c:forEach>
+                </c:when>
+                <c:otherwise>
+                    <td style="text-align: center;" colspan="4">Nenhuma avaliacão no período de correções disponível no momento...</td>                            
+                </c:otherwise>
+            </c:choose>
         </table>
     </div>
     <br><br><br><br>
@@ -82,22 +82,20 @@
                     
                 </tr>
             </thead>
-            <tr>
-                <td>Tarefa1 - Fatorial</td>
-                <td>--</td>
-                <td>--</td>
-            </tr>
-            <tr>
-                <td>Tarefa2 - Fibonnaci</td>
-                <td>70</td>
-                <td>Excelente trabalho</td>        
-            </tr>
-            
-            <tr>
-                <td>Tarefa3 - Caixeiro viajante</td>
-                <td>--</td>
-                <td>--</td>
-            </tr>
+            <c:choose>
+                <c:when test="${!empty avaliacoesEncerrado}">
+                    <c:forEach items="${avaliacoesEncerrado}" var="avaliacao">
+                        <tr>
+                            <td><a href="#" data-toggle="tooltip" title="${avaliacao.descricao}">${avaliacao.nome}</a></td>
+                            <td></td>
+                            <td></td>
+                        <tr>
+                    </c:forEach>
+                </c:when>
+                <c:otherwise>
+                    <td style="text-align: center;" colspan="4">Nenhuma avaliacão na fila para correção do professor...</td>                            
+                </c:otherwise>
+            </c:choose>    
         </table>
     </div>
 </div>

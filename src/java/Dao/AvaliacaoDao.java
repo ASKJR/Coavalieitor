@@ -39,6 +39,16 @@ public class AvaliacaoDao {
     private final static String SELECT_AVALIACOES_BY_TURMA = "SELECT * FROM avaliacao WHERE turma_id=?";
     
     
+    //Fases das correções
+    private final static String PHASE_SUBMISSAO = 
+    " AND  NOW() >= submissao_inicial AND NOW() <= submissao_final ";
+    
+    private final static String PHASE_CORRECAO =
+    " AND  NOW() >= correcao_inicial AND NOW() <= correcao_final ";
+    
+    private final static String PHASE_ENCERRADO =
+    " AND NOW() > correcao_final ";         
+    
     /*DB variables*/
     private Connection con         = null;
     private ResultSet rs           = null;
@@ -127,7 +137,6 @@ public class AvaliacaoDao {
                 avaliacao.setNota_maxima(rs.getInt("nota_maxima"));
                 avaliacao.setCriterio_correcao(rs.getString("criterio_correcao"));
                 avaliacao.getTurma().setId(rs.getInt("turma_id"));
-                avaliacao.setStatus_id(rs.getInt("status_id"));
                 avaliacoes.add(avaliacao);
             }
             return avaliacoes;
@@ -161,10 +170,54 @@ public class AvaliacaoDao {
                 avaliacao.setNota_maxima(rs.getInt("nota_maxima"));
                 avaliacao.setCriterio_correcao(rs.getString("criterio_correcao"));
                 avaliacao.getTurma().setId(rs.getInt("turma_id"));
-                avaliacao.setStatus_id(rs.getInt("status_id"));
             }
             return avaliacao;   
         }catch (SQLException e) {
+            throw new RuntimeException(e);
+        }finally{
+            try { if (rs   != null) stmt.close();   } catch (Exception e) {};
+            try { if (stmt != null) stmt.close();   } catch (Exception e) {};
+            try { if (con  != null) con.close();    } catch (Exception e) {};
+        }
+    }
+    
+    public List<Avaliacao> getAvaliacoesByTurmaByPhase(int idTurma,String phase){
+        try {
+            String PHASE = "";
+            if(phase.equalsIgnoreCase("SUBMISSAO")){
+                PHASE = PHASE_SUBMISSAO;
+            }
+            else if (phase.equalsIgnoreCase("CORRECAO")) {
+                PHASE = PHASE_CORRECAO;
+            }
+            else if (phase.equalsIgnoreCase("ENCERRADO")) {
+                PHASE = PHASE_ENCERRADO;
+            }
+             
+            con  = new ConnectionFactory().getConnection();
+            stmt = con.prepareStatement(SELECT_AVALIACOES_BY_TURMA + PHASE);
+            stmt.setInt(1,idTurma);
+           
+            List<Avaliacao> avaliacoes = new ArrayList<>();
+            rs = stmt.executeQuery();
+            while (rs.next()) {
+                Avaliacao avaliacao = new Avaliacao();
+                avaliacao.setId(rs.getInt("id"));
+                avaliacao.setNome(rs.getString("nome"));
+                avaliacao.setDescricao(rs.getString("descricao"));
+                avaliacao.setRequisito_adicional(rs.getString("requisito_adicional"));
+                avaliacao.setSubmissao_inicial(rs.getTimestamp("submissao_inicial"));
+                avaliacao.setSubmissao_final(rs.getTimestamp("submissao_final"));
+                avaliacao.setCorrecao_inicial(rs.getTimestamp("correcao_inicial"));
+                avaliacao.setCorrecao_final(rs.getTimestamp("correcao_final"));
+                avaliacao.setNum_correcao_estudante(rs.getInt("num_correcao_estudante"));
+                avaliacao.setNota_maxima(rs.getInt("nota_maxima"));
+                avaliacao.setCriterio_correcao(rs.getString("criterio_correcao"));
+                avaliacao.getTurma().setId(rs.getInt("turma_id"));
+                avaliacoes.add(avaliacao);
+            }
+            return avaliacoes;
+        } catch (SQLException e) {
             throw new RuntimeException(e);
         }finally{
             try { if (rs   != null) stmt.close();   } catch (Exception e) {};

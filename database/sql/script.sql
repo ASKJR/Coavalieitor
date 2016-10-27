@@ -185,18 +185,6 @@ ENGINE = InnoDB;
 
 
 -- -----------------------------------------------------
--- Table `coavalieitor_db`.`status`
--- -----------------------------------------------------
-DROP TABLE IF EXISTS `coavalieitor_db`.`status` ;
-
-CREATE TABLE IF NOT EXISTS `coavalieitor_db`.`status` (
-  `id` INT NOT NULL AUTO_INCREMENT,
-  `nome` VARCHAR(45) NULL,
-  PRIMARY KEY (`id`))
-ENGINE = InnoDB;
-
-
--- -----------------------------------------------------
 -- Table `coavalieitor_db`.`avaliacao`
 -- -----------------------------------------------------
 DROP TABLE IF EXISTS `coavalieitor_db`.`avaliacao` ;
@@ -214,18 +202,11 @@ CREATE TABLE IF NOT EXISTS `coavalieitor_db`.`avaliacao` (
   `nota_maxima` INT NULL,
   `criterio_correcao` TEXT(500) NULL,
   `turma_id` INT NOT NULL,
-  `status_id` INT NULL,
   PRIMARY KEY (`id`),
   INDEX `fk_avaliacao_turma1_idx` (`turma_id` ASC),
-  INDEX `fk_avaliacao_status1_idx` (`status_id` ASC),
   CONSTRAINT `fk_avaliacao_turma1`
     FOREIGN KEY (`turma_id`)
     REFERENCES `coavalieitor_db`.`turma` (`id`)
-    ON DELETE NO ACTION
-    ON UPDATE NO ACTION,
-  CONSTRAINT `fk_avaliacao_status1`
-    FOREIGN KEY (`status_id`)
-    REFERENCES `coavalieitor_db`.`status` (`id`)
     ON DELETE NO ACTION
     ON UPDATE NO ACTION)
 ENGINE = InnoDB;

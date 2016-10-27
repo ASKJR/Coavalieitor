@@ -22,7 +22,7 @@ public class SolucaoDao {
     private final static String INSERT = 
     "INSERT INTO solucao "
    +"(resposta,avaliacao_id,aluno_usuario_id,solucao_data) "
-   +"VALUES (?,?,?,?)";         
+   +"VALUES (?,?,?,NOW())";         
     
     /*DB variables*/
     private Connection con         = null;
@@ -38,8 +38,7 @@ public class SolucaoDao {
             stmt = con.prepareStatement(INSERT);	
             stmt.setString(1,solucao.getResposta());
             stmt.setInt(2,solucao.getAvaliacao().getId());
-            stmt.setInt(3,solucao.getAluno().getId());
-            stmt.setTimestamp(4,new Timestamp(solucao.getSolucao_data().getTime()));
+            stmt.setInt(3,solucao.getAluno().getUser().getId());
             stmt.execute();
         }catch(SQLException e) {
             throw new RuntimeException(e);

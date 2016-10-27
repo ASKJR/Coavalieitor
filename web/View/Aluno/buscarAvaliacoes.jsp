@@ -10,7 +10,7 @@
     <h2>Avaliações:</h2>
     <hr>
     <br>
-    <form class="form-horizontal" action="${pageContext.request.contextPath}/View/Aluno/listarAvaliacoesTurma.jsp">
+    <form class="form-horizontal" method="POST" action="AvaliacaoControllerAluno">
         <fieldset>
         <div class="form-group">
             <label class="col-md-3 control-label" for="nomeTurma>">
@@ -22,10 +22,10 @@
                 </b>
             </label>  
             <div class="col-md-6">
-                <select class="form-control" id="selectTurma" required>
+                <select class="form-control" id="selectTurma" name="selectTurma" required>
                     <option></option>
                     <c:forEach items="${matriculas}" var="matricula">
-                        <option id="${matricula.turma.id}">
+                        <option value="${matricula.turma.id}">
                             Professor: ${matricula.turma.professor.user.nome} - 
                             ${matricula.turma.disciplina.nome} -
                             ${matricula.turma.nome}
