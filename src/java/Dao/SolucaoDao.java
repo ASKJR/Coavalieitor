@@ -6,11 +6,13 @@
 package Dao;
 
 import Beans.Solucao;
+import Beans.Turma;
 import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
-import java.sql.Timestamp;
+import java.util.ArrayList;
+import java.util.List;
 
 /**
  *
@@ -23,6 +25,10 @@ public class SolucaoDao {
     "INSERT INTO solucao "
    +"(resposta,avaliacao_id,aluno_usuario_id,solucao_data) "
    +"VALUES (?,?,?,NOW())";         
+    
+    private final static String SELECT_SOLUCOES_BY_ALUNO =
+    "SELECT * FROM solucao "
+   +"WHERE aluno_usuario_id =?";
     
     /*DB variables*/
     private Connection con         = null;
@@ -46,5 +52,30 @@ public class SolucaoDao {
             try { if (stmt != null) stmt.close(); } catch (Exception e) {};
             try { if (con  != null) con.close();  } catch (Exception e) {};
         }
-    }    
+    }
+    public List<Solucao> getSolucoesByAluno(int idAluno) {
+        try {
+            con  = new ConnectionFactory().getConnection();
+            stmt = con.prepareStatement(SELECT_SOLUCOES_BY_ALUNO);
+            stmt.setInt(1,idAluno);
+            List<Solucao> solucoes = new ArrayList<>();
+            rs = stmt.executeQuery();
+            while (rs.next()) {
+                Solucao solucao = new Solucao();
+                solucao.setId(rs.getInt("id"));
+                solucao.setResposta(rs.getString("resposta"));
+                solucao.getAvaliacao().setId(rs.getInt("avaliacao_id"));
+                solucao.getAluno().getUser().setId(rs.getInt("aluno_usuario_id"));
+                solucao.setSolucao_data(rs.getTimestamp("solucao_data"));
+                solucoes.add(solucao);
+            }
+            return solucoes;
+        } catch (SQLException e) {
+            throw new RuntimeException(e);
+        }finally{
+            try { if (rs   != null) stmt.close();   } catch (Exception e) {};
+            try { if (stmt != null) stmt.close();   } catch (Exception e) {};
+            try { if (con  != null) con.close();    } catch (Exception e) {};
+        }
+    }
 }

@@ -26,6 +26,7 @@ import javax.servlet.http.HttpSession;
 @WebServlet(name = "SolucaoControllerAluno", urlPatterns = {"/SolucaoControllerAluno"})
 public class SolucaoControllerAluno extends HttpServlet {
     private static String INSERT    = "View/Aluno/addSolucao.jsp";
+    private static String LIST      = "View/Aluno/listarAvaliacoesTurma.jsp";
     
     private AvaliacaoDao   daoAvaliacao;
     private SolucaoDao     daoSolucao;
@@ -66,6 +67,8 @@ public class SolucaoControllerAluno extends HttpServlet {
             solucao.getAvaliacao().setId(Integer.parseInt(idAvaliacao));
             solucao.setResposta(resposta);
             daoSolucao.insert(solucao);
+            session.setAttribute("mensagemSucesso","Sua solução foi submetida com sucesso!");
+            response.sendRedirect("AvaliacaoControllerAluno?action=listarAvaliacoesPorTurma&selectTurma=" +session.getAttribute("idTurma") );
         }
         else{
             try (PrintWriter out = response.getWriter()) {

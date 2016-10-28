@@ -10,6 +10,7 @@
     <h2>${turma.nome} - Avaliações:</h2>
     <hr>
     <br>
+    <%@include file="../../include/mensagem.jsp" %>
     <h3>Submeter soluções:</h3>
     <hr>
     <div class="table-responsive">
@@ -28,8 +29,27 @@
                         <tr>
                             <td><a href="#" data-toggle="tooltip" title="${avaliacao.descricao}">${avaliacao.nome}</a></td>
                             <td style="text-align: center;"><a href="#" data-toggle="tooltip" title="${avaliacao.SF}">  <span class="fa fa-clock-o glyphicon glyphicon-time" style="color: black; font-size: 25px;"></span></a></td>
-                            <td style="text-align: center;"></td>
-                            <td style="text-align: center;"><a class="btn btn-primary" href="${pageContext.request.contextPath}/SolucaoControllerAluno?action=insert&idAvaliacao=${avaliacao.id}">Resolver</a></td>
+                                <c:forEach items="${solucoesAluno}" var="solucao">
+                                    <c:if test="${avaliacao.id eq solucao.avaliacao.id}">
+                                       <c:set var="found" value="true"/>
+                                       <c:set var="submetidoEm" value="${solucao.SD}"/>
+                                    </c:if>
+                                </c:forEach>
+                                <c:choose>
+                                    <c:when test="${found eq 'true'}">
+                                        <td style="text-align: center;">${submetidoEm}</td>
+                                        <td style="text-align: center;">
+                                            <button class="btn btn-success">Submetido</button>
+                                        </td>
+                                        <c:set var="found" value="false"/>
+                                    </c:when>
+                                    <c:otherwise>
+                                        <td style="text-align: center;"></td>
+                                        <td style="text-align: center;">
+                                            <a class="btn btn-primary" href="${pageContext.request.contextPath}/SolucaoControllerAluno?action=insert&idAvaliacao=${avaliacao.id}">Resolver</a>
+                                        </td>
+                                    </c:otherwise>
+                                </c:choose>
                         </tr>
                     </c:forEach>
                 </c:when>

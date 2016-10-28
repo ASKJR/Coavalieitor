@@ -64,4 +64,7 @@ public class Solucao implements Serializable {
     public void setSolucao_data(Date solucao_data) {
         this.solucao_data = solucao_data;
     }
+    public String getSD(){
+        return Utils.DateUtil.datetimeFromDB(this.getSolucao_data());
+    }
 }

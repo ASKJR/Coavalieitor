@@ -10,6 +10,7 @@ import Beans.Turma;
 import Beans.Usuario;
 import Dao.AvaliacaoDao;
 import Dao.MatriculaDao;
+import Dao.SolucaoDao;
 import Dao.TurmaDao;
 import java.io.IOException;
 import java.io.PrintWriter;
@@ -36,6 +37,7 @@ public class AvaliacaoControllerAluno extends HttpServlet {
     private MatriculaDao   daoMatricula;
     private Matricula      matricula;
     private AvaliacaoDao   daoAvaliacao;
+    private SolucaoDao     daoSolucao;
     
     public AvaliacaoControllerAluno(){
         daoTurma      = new TurmaDao();
@@ -43,6 +45,7 @@ public class AvaliacaoControllerAluno extends HttpServlet {
         turma         = new Turma();
         matricula     = new Matricula();
         daoAvaliacao  = new AvaliacaoDao();
+        daoSolucao    = new SolucaoDao();
     }
     
     
@@ -58,23 +61,22 @@ public class AvaliacaoControllerAluno extends HttpServlet {
         String forward = "";
         String action = request.getParameter("action");
         
-        if(action.equalsIgnoreCase("buscarAvaliacoes")){
+        if (action.equalsIgnoreCase("buscarAvaliacoes")){
             request.setAttribute("matriculas",daoMatricula.getMatriculaByAluno(idAluno));
             forward = BUSCAR;
         }
+        else if (action.equalsIgnoreCase("listarAvaliacoesPorTurma")){
+            String idTurma = request.getParameter("selectTurma");
+            int id = Integer.parseInt(idTurma);
+            session.setAttribute("idTurma",id);
+            request.setAttribute("solucoesAluno",daoSolucao.getSolucoesByAluno(idAluno));
+            request.setAttribute("turma",daoTurma.getTurmaById(id));
+            request.setAttribute("avaliacoesSubmissao",daoAvaliacao.getAvaliacoesByTurmaByPhase(id,"SUBMISSAO"));
+            request.setAttribute("avaliacoesCorrecao",daoAvaliacao.getAvaliacoesByTurmaByPhase(id,"CORRECAO"));
+            request.setAttribute("avaliacoesEncerrado",daoAvaliacao.getAvaliacoesByTurmaByPhase(id,"ENCERRADO"));
+            forward = LIST;       
+        }
         RequestDispatcher view = request.getRequestDispatcher(forward);
-        view.forward(request, response);
-    }
-    @Override
-    protected void doPost(HttpServletRequest request, HttpServletResponse response)
-            throws ServletException, IOException {
-        String idTurma = request.getParameter("selectTurma");
-        int id = Integer.parseInt(idTurma);
-        request.setAttribute("turma",daoTurma.getTurmaById(id));
-        request.setAttribute("avaliacoesSubmissao",daoAvaliacao.getAvaliacoesByTurmaByPhase(id,"SUBMISSAO"));
-        request.setAttribute("avaliacoesCorrecao",daoAvaliacao.getAvaliacoesByTurmaByPhase(id,"CORRECAO"));
-        request.setAttribute("avaliacoesEncerrado",daoAvaliacao.getAvaliacoesByTurmaByPhase(id,"ENCERRADO"));
-        RequestDispatcher view = request.getRequestDispatcher(LIST);
         view.forward(request, response);
     }
     @Override

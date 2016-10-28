@@ -10,7 +10,8 @@
     <h2>Avaliações:</h2>
     <hr>
     <br>
-    <form class="form-horizontal" method="POST" action="AvaliacaoControllerAluno">
+    <form class="form-horizontal" method="GET" action="${pageContext.request.contextPath}/AvaliacaoControllerAluno">
+        <input type="hidden" name="action" value="listarAvaliacoesPorTurma">
         <fieldset>
         <div class="form-group">
             <label class="col-md-3 control-label" for="nomeTurma>">
