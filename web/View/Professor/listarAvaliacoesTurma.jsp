@@ -33,10 +33,10 @@
                             <td style="text-align: center;"><a href="#" data-toggle="tooltip" title="${avaliacao.SI} - ${avaliacao.SF}">  <span class="fa fa-clock-o glyphicon glyphicon-time" style="color: black; font-size: 25px;"></span></a></td>
                             <td style="text-align: center;"><a href="#" data-toggle="tooltip" title="${avaliacao.CI} - ${avaliacao.CF}">  <span class="fa fa-clock-o glyphicon glyphicon-time" style="color: black; font-size: 25px;"></span></a></td>
                             <td style="text-align: center;">
-                                <a class="btn btn-info" href="${pageContext.request.contextPath}/AvaliacaoController?action=edit&&idTurma=${turma.id}&idAvaliacao=${avaliacao.id}">Editar</a>&nbsp
+                                <a class="btn btn-info" href="${pageContext.request.contextPath}/AvaliacaoController?action=edit&idTurma=${turma.id}&idAvaliacao=${avaliacao.id}">Editar</a>&nbsp
                                 <a class="btn btn-danger" href="${pageContext.request.contextPath}/AvaliacaoController?action=delete&idTurma=${turma.id}&idAvaliacao=${avaliacao.id}"
                                      onclick="return confirm('Tem certeza que deseja excluir essa avaliação?')">Deletar</a>&nbsp
-                                <a class="btn btn-success" href="View/Professor/listarSubmissoes.jsp">Listar submissões</a>&nbsp
+                                <a class="btn btn-success" href="${pageContext.request.contextPath}/SolucaoController?action=listarSolucoesPorAvaliacao&idTurma=${turma.id}&idAvaliacao=${avaliacao.id}">Listar submissões</a>&nbsp
                                 <a class="btn btn-primary" href="View/Professor/listarCorrecoes.jsp">Listar correções</a>&nbsp
                                 <a class="btn btn-warning" href="View/Professor/feedback.jsp">Avaliar</a>
                             </td>

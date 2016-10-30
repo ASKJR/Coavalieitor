@@ -30,6 +30,15 @@ public class SolucaoDao {
     "SELECT * FROM solucao "
    +"WHERE aluno_usuario_id =?";
     
+    private final static String SELECT_SOLUCOES_BY_AVALIACAO =
+    "SELECT sol.*,us.nome "
+   +"FROM matricula mat "
+   +"LEFT JOIN usuario us ON (us.id = mat.aluno_usuario_id) "
+   +"LEFT JOIN avaliacao aval ON (mat.turma_id = aval.turma_id) "
+   +"LEFT JOIN solucao sol ON(sol.aluno_usuario_id = mat.aluno_usuario_id AND sol.avaliacao_id = aval.id) "
+   +"WHERE mat.turma_id = ? "
+   +"AND aval.id = ? ";
+    
     /*DB variables*/
     private Connection con         = null;
     private ResultSet rs           = null;
@@ -66,6 +75,35 @@ public class SolucaoDao {
                 solucao.setResposta(rs.getString("resposta"));
                 solucao.getAvaliacao().setId(rs.getInt("avaliacao_id"));
                 solucao.getAluno().getUser().setId(rs.getInt("aluno_usuario_id"));
+                solucao.setSolucao_data(rs.getTimestamp("solucao_data"));
+                solucoes.add(solucao);
+            }
+            return solucoes;
+        } catch (SQLException e) {
+            throw new RuntimeException(e);
+        }finally{
+            try { if (rs   != null) stmt.close();   } catch (Exception e) {};
+            try { if (stmt != null) stmt.close();   } catch (Exception e) {};
+            try { if (con  != null) con.close();    } catch (Exception e) {};
+        }
+    }
+    
+    public List<Solucao> getSolucoesByAvaliacao(int idTurma, int idAvaliacao) {
+        try {
+            con  = new ConnectionFactory().getConnection();
+            stmt = con.prepareStatement(SELECT_SOLUCOES_BY_AVALIACAO);
+            stmt.setInt(1,idTurma);
+            stmt.setInt(2,idAvaliacao);
+            System.out.println(stmt);
+            List<Solucao> solucoes = new ArrayList<>();
+            rs = stmt.executeQuery();
+            while (rs.next()) {
+                Solucao solucao = new Solucao();
+                solucao.setId(rs.getInt("id"));
+                solucao.setResposta(rs.getString("resposta"));
+                solucao.getAvaliacao().setId(rs.getInt("avaliacao_id"));
+                solucao.getAluno().getUser().setId(rs.getInt("aluno_usuario_id"));
+                solucao.getAluno().getUser().setNome(rs.getString("nome"));
                 solucao.setSolucao_data(rs.getTimestamp("solucao_data"));
                 solucoes.add(solucao);
             }
