@@ -9,7 +9,8 @@
     <br>
     <h2>${action eq 'edit' ? "Editar" : "Nova"} avaliação:</h2>
     <c:set var="edit"
-    value="${( action eq 'edit') ? '-' : ''}" />
+    value="${( action eq 'edit') ? ' - ' : ''}" />
+    <%@include file="../../include/mensagem.jsp" %>
     <hr>
     <div class="row">
         <div class="col-md-6 col-sm-6 col-xs-12">
@@ -24,32 +25,32 @@
                 </div>
                 <div class="form-group ">
                     <label class="control-label " for="lblDescricao"><b>Descrição:</b></label>
-                    <textarea class="form-control" cols="40" id="descricao" name="descricao" rows="10">${avaliacao.descricao}</textarea>
+                    <textarea class="form-control" cols="40" id="descricao" name="descricao" rows="10" required>${avaliacao.descricao}</textarea>
                 </div>
                 <div class="form-group ">
                     <label class="control-label " for="lblrequisitosAdicionais"><b>Requisitos adicionais:</b></label>
-                    <textarea class="form-control" cols="40" id="requisitosAdicionais" name="requisitosAdicionais" rows="10">${avaliacao.requisito_adicional}</textarea>
+                    <textarea class="form-control" cols="40" id="requisitosAdicionais" name="requisitosAdicionais" rows="10" required>${avaliacao.requisito_adicional}</textarea>
                 </div>
                 <div class="form-group ">
                     <label class="control-label " for="name"><b>Período de submissões:</b> </label>
                     <input class="form-control daterange" id="periodoSubmissoes" name="periodoSubmissoes" type="text" 
-                    value="${avaliacao.SI} ${edit} ${avaliacao.SF}"/>
+                    value="${avaliacao.SI}${edit}${avaliacao.SF}" required readonly/>
                 </div>
                 <div class="form-group ">
                     <label class="control-label " for="name"><b>Período de correções:</b> </label>
-                    <input class="form-control daterange" id="periodoCorrecoes" name="periodoCorrecoes" type="text" value="${avaliacao.CI} ${edit} ${avaliacao.CF}"/>
+                    <input class="form-control daterange" id="periodoCorrecoes" name="periodoCorrecoes" type="text" value="${empty avaliacao.CI ? "":avaliacao.CI}${empty edit?"":edit}${empty avaliacao.CF?"":avaliacao.CF}" required readonly/>
                 </div>
                 <div class="form-group ">
                     <label class="control-label " for="lblNumCorr"><b>Número de correções por estudante:</b> </label>
-                    <input class="form-control" id="numCorrecoes" name="numCorrecoes" type="text" value="${avaliacao.num_correcao_estudante}"/>
+                    <input class="form-control" id="numCorrecoes" name="numCorrecoes" type="number" min="1" step="1" value="${avaliacao.num_correcao_estudante}" required/>
                 </div>
                 <div class="form-group ">
                     <label class="control-label " for="lblNotaMaxima"><b>Nota máxima:</b> </label>
-                    <input class="form-control" id="notaMaxima" name="notaMaxima" type="text" value="${avaliacao.nota_maxima}"/>
+                    <input class="form-control" id="notaMaxima" name="notaMaxima" type="number" min="1" step="1" value="${avaliacao.nota_maxima}" required/>
                 </div>
                  <div class="form-group ">
                     <label class="control-label " for="lblCriterios"><b>Critérios de correções:</b></label>
-                    <textarea class="form-control" cols="40" id="criterio" name="criterio" rows="10">${avaliacao.criterio_correcao}</textarea>
+                    <textarea class="form-control" cols="40" id="criterio" name="criterio" rows="10" required>${avaliacao.criterio_correcao}</textarea>
                 </div>
                 <div class="form-group">
                     <div>

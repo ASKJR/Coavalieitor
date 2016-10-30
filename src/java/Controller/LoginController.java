@@ -64,8 +64,7 @@ public class LoginController extends HttpServlet {
                     //Senão encontrar o usuário é aluno
                     else{
                         session.setAttribute("tipoUsuario","aluno");
-                        RequestDispatcher rd=request.getRequestDispatcher("View/Aluno/indexAluno.jsp");  
-                        rd.forward(request, response);  
+                        response.sendRedirect("TurmaControllerAluno?action=listarTurmas");
                     }
                 }
                 //mostrar mensagem de erro

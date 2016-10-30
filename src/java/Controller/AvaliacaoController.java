@@ -116,11 +116,19 @@ public class AvaliacaoController extends HttpServlet {
             avaliacao.setNum_correcao_estudante(Integer.parseInt(numCorrecoes));
             avaliacao.setNota_maxima(Integer.parseInt(notaMaxima));
             avaliacao.setCriterio_correcao(criterio);
-
+            
+            
+            String idTurma = request.getParameter("idTurma");
 
             if (action.equalsIgnoreCase("inserir")) {
-                String idTurma = request.getParameter("idTurma");
                 avaliacao.getTurma().setId(Integer.parseInt(idTurma));
+                //Verificando o intervalo das datas.
+                //O período de correções deve começar depois do período de submissões
+                if(avaliacao.getCorrecao_inicial().before(avaliacao.getSubmissao_final())){
+                    session.setAttribute("mensagemErro","O período de correções deve começar posteriormente ao período de submissões.");
+                    response.sendRedirect("AvaliacaoController?action=inserir&idTurma="+idTurma);
+                    return;
+                }
                 daoAvaliacao.insert(avaliacao);
                 session.setAttribute("mensagemSucesso","Avaliação adicionada com sucesso.");
             }
@@ -128,6 +136,15 @@ public class AvaliacaoController extends HttpServlet {
                 //Editar
                 String idAvaliacao = request.getParameter("idAvaliacao");
                 avaliacao.setId(Integer.parseInt(idAvaliacao));
+                
+                //Verificando o intervalo das datas.
+                //O período de correções deve começar depois do período de submissões
+                if(avaliacao.getCorrecao_inicial().before(avaliacao.getSubmissao_final())){
+                    session.setAttribute("mensagemErro","O período de correções deve começar posteriormente ao período de submissões.");
+                    response.sendRedirect("AvaliacaoController?action=edit&idTurma="+idTurma+"&idAvaliacao="+idAvaliacao);
+                    return;
+                }
+                
                 daoAvaliacao.update(avaliacao);
                 session.setAttribute("mensagemSucesso","Avaliação atualizada com sucesso.");
             }

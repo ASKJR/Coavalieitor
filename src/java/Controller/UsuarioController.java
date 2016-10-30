@@ -85,8 +85,7 @@ public class UsuarioController extends HttpServlet {
                         aluno.setId(id);
                         alunoDao.insert(aluno);
                         session.setAttribute("tipoUsuario","aluno");
-                        RequestDispatcher rd=request.getRequestDispatcher("View/Aluno/indexAluno.jsp");  
-                        rd.forward(request, response);
+                        response.sendRedirect("TurmaControllerAluno?action=listarTurmas");
                     }  
                 }
                 else{
