@@ -26,7 +26,7 @@ import javax.servlet.http.HttpSession;
 @WebServlet(name = "SolucaoControllerAluno", urlPatterns = {"/SolucaoControllerAluno"})
 public class SolucaoControllerAluno extends HttpServlet {
     private static String INSERT    = "View/Aluno/addSolucao.jsp";
-    private static String LIST      = "View/Aluno/listarAvaliacoesTurma.jsp";
+    private static String LIST      = "View/Aluno/listarSolucoes.jsp";
     
     private AvaliacaoDao   daoAvaliacao;
     private SolucaoDao     daoSolucao;
@@ -47,6 +47,12 @@ public class SolucaoControllerAluno extends HttpServlet {
             request.setAttribute("avaliacao",daoAvaliacao.getAvaliacaoById(idAvaliacao));
             forward = INSERT;
         }
+        if (action.equalsIgnoreCase("listarSolucoes")) {
+            int idAvaliacao = Integer.parseInt(request.getParameter("idAvaliacao"));
+            request.setAttribute("avaliacao",daoAvaliacao.getAvaliacaoById(idAvaliacao));
+            request.setAttribute("solucoes",daoSolucao.getSolucoesForAluno(idAvaliacao));
+            forward = LIST;
+        } 
         RequestDispatcher view = request.getRequestDispatcher(forward);
         view.forward(request, response);
     }

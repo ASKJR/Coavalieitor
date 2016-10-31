@@ -10,7 +10,6 @@ import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
-import java.sql.Timestamp;
 
 /**
  *
@@ -22,7 +21,7 @@ public class CorrecaoDao {
     private final static String INSERT = 
     "INSERT INTO correcao "
    +"(comentario,nota,solucao_id,aluno_usuario_id,correcao_data) "
-   +"VALUES (?,?,?,?,?)";         
+   +"VALUES (?,?,?,?,NOW())";         
    
     /*DB variables*/
     private Connection con         = null;
@@ -39,8 +38,7 @@ public class CorrecaoDao {
             stmt.setString(1,correcao.getComentario());
             stmt.setDouble(2,correcao.getNota());
             stmt.setInt(3,correcao.getSolucao().getId());
-            stmt.setInt(4,correcao.getAluno().getId());
-            stmt.setTimestamp(5,new Timestamp(correcao.getCorrecao_data().getTime()));
+            stmt.setInt(4,correcao.getAluno().getUser().getId());
             stmt.execute();
         }catch(SQLException e) {
             throw new RuntimeException(e);

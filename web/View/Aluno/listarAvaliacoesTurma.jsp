@@ -79,7 +79,7 @@
                             <td><a href="#" data-toggle="tooltip" title="${avaliacao.descricao}">${avaliacao.nome}</a></td>
                             <td style="text-align: center;"><a href="#" data-toggle="tooltip" title="${avaliacao.CF}">  <span class="fa fa-clock-o glyphicon glyphicon-time" style="color: black; font-size: 25px;"></span></a></td>
                             <td style="text-align: center;"></td>
-                            <td style="text-align: center;"><a class="btn btn-warning" href="#">Corrigir</a></td>
+                            <td style="text-align: center;"><a class="btn btn-warning" href="${pageContext.request.contextPath}/SolucaoControllerAluno?action=listarSolucoes&idAvaliacao=${avaliacao.id}">Corrigir</a></td>
                         </tr>
                     </c:forEach>
                 </c:when>
