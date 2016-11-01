@@ -73,4 +73,7 @@ public class Correcao implements Serializable{
     public void setCorrecao_data(Date correcao_data) {
         this.correcao_data = correcao_data;
     }
+    public String getCD(){
+        return Utils.DateUtil.datetimeFromDB(this.getCorrecao_data());
+    }
 }

@@ -6,10 +6,13 @@
 package Dao;
 
 import Beans.Correcao;
+import Beans.Solucao;
 import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
+import java.util.ArrayList;
+import java.util.List;
 
 /**
  *
@@ -21,7 +24,16 @@ public class CorrecaoDao {
     private final static String INSERT = 
     "INSERT INTO correcao "
    +"(comentario,nota,solucao_id,aluno_usuario_id,correcao_data) "
-   +"VALUES (?,?,?,?,NOW())";         
+   +"VALUES (?,?,?,?,NOW())";
+    
+    private final static String SELECT_CORRECOES_BY_AVALIACAO = 
+    "SELECT corr.comentario,corr.nota,corr.correcao_data ,us.nome AS corrigidoPor,"
+  + "sol.resposta,us1.nome AS submetidoPor "
+  + "FROM correcao corr "
+  + "INNER JOIN usuario us ON (us.id = corr.aluno_usuario_id) " 
+  + "INNER JOIN solucao sol ON(sol.id = corr.solucao_id) " 
+  + "INNER JOIN usuario us1 ON (us1.id = sol.aluno_usuario_id) " 
+  + "WHERE sol.avaliacao_id = ? ";
    
     /*DB variables*/
     private Connection con         = null;
@@ -46,5 +58,32 @@ public class CorrecaoDao {
             try { if (stmt != null) stmt.close(); } catch (Exception e) {};
             try { if (con  != null) con.close();  } catch (Exception e) {};
         }
-    }       
+    }
+    public List<Correcao> getCorrecoesByAvaliacao(int idAvaliacao) {
+        try {
+            con  = new ConnectionFactory().getConnection();
+            stmt = con.prepareStatement(SELECT_CORRECOES_BY_AVALIACAO);
+            stmt.setInt(1,idAvaliacao);
+            List<Correcao> correcoes = new ArrayList<>();
+            rs = stmt.executeQuery();
+            while (rs.next()) {
+                Correcao correcao = new Correcao();
+                correcao.setComentario(rs.getString("comentario"));
+                correcao.setNota(rs.getDouble("nota"));
+                correcao.getAluno().getUser().setNome(rs.getString("corrigidoPor"));
+                correcao.setCorrecao_data(rs.getTimestamp("correcao_data"));
+                correcao.getSolucao().setResposta(rs.getString("resposta"));
+                correcao.getSolucao().getAluno().getUser().setNome(rs.getString("submetidoPor"));
+                correcoes.add(correcao);
+            }
+            return correcoes;
+        } catch (SQLException e) {
+            throw new RuntimeException(e);
+        }finally{
+            try { if (rs   != null) stmt.close();   } catch (Exception e) {};
+            try { if (stmt != null) stmt.close();   } catch (Exception e) {};
+            try { if (con  != null) con.close();    } catch (Exception e) {};
+        }
+    }
+    
 }

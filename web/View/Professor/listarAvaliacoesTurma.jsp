@@ -37,7 +37,7 @@
                                 <a class="btn btn-danger" href="${pageContext.request.contextPath}/AvaliacaoController?action=delete&idTurma=${turma.id}&idAvaliacao=${avaliacao.id}"
                                      onclick="return confirm('Tem certeza que deseja excluir essa avaliação?')">Deletar</a>&nbsp
                                 <a class="btn btn-success" href="${pageContext.request.contextPath}/SolucaoController?action=listarSolucoesPorAvaliacao&idTurma=${turma.id}&idAvaliacao=${avaliacao.id}">Listar submissões</a>&nbsp
-                                <a class="btn btn-primary" href="View/Professor/listarCorrecoes.jsp">Listar correções</a>&nbsp
+                                <a class="btn btn-primary" href="${pageContext.request.contextPath}/CorrecaoController?action=listarCorrecoesPorAvaliacao&idTurma=${turma.id}&idAvaliacao=${avaliacao.id}">Listar correções</a>&nbsp
                                 <a class="btn btn-warning" href="View/Professor/feedback.jsp">Avaliar</a>
                             </td>
                         </tr>
