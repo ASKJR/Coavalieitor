@@ -7,6 +7,7 @@ SET @OLD_SQL_MODE=@@SQL_MODE, SQL_MODE='TRADITIONAL,ALLOW_INVALID_DATES';
 -- -----------------------------------------------------
 -- Schema coavalieitor_db
 -- -----------------------------------------------------
+DROP SCHEMA IF EXISTS `coavalieitor_db` ;
 
 -- -----------------------------------------------------
 -- Schema coavalieitor_db
@@ -275,9 +276,10 @@ DROP TABLE IF EXISTS `coavalieitor_db`.`correcao_final` ;
 CREATE TABLE IF NOT EXISTS `coavalieitor_db`.`correcao_final` (
   `id` INT NOT NULL AUTO_INCREMENT,
   `feedback` TEXT(500) NULL,
-  `nota_final` INT NULL,
+  `nota_final` DOUBLE NULL,
   `avaliacao_id` INT NOT NULL,
   `aluno_usuario_id` INT NOT NULL,
+  `correcao_visivel` TINYINT(1) NULL DEFAULT 0,
   `correcao_final_data` DATETIME NULL,
   PRIMARY KEY (`id`),
   INDEX `fk_correcao_final_avaliacao1_idx` (`avaliacao_id` ASC),

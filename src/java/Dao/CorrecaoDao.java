@@ -6,7 +6,6 @@
 package Dao;
 
 import Beans.Correcao;
-import Beans.Solucao;
 import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
@@ -85,5 +84,4 @@ public class CorrecaoDao {
             try { if (con  != null) con.close();    } catch (Exception e) {};
         }
     }
-    
 }
