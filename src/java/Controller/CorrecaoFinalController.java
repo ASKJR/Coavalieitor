@@ -5,6 +5,8 @@
  */
 package Controller;
 
+import Dao.AvaliacaoDao;
+import Dao.CorrecaoDao;
 import Dao.CorrecaoFinalDao;
 import java.io.IOException;
 import java.io.PrintWriter;
@@ -26,9 +28,13 @@ public class CorrecaoFinalController extends HttpServlet {
     
     
     private CorrecaoFinalDao  daoCorrecaoFinal;
+    private CorrecaoDao       daoCorrecao;
+    private AvaliacaoDao      daoAvaliacao;
     
     public CorrecaoFinalController(){
         daoCorrecaoFinal = new CorrecaoFinalDao();
+        daoCorrecao      = new CorrecaoDao();
+        daoAvaliacao     = new AvaliacaoDao();
     }
     
     
@@ -39,6 +45,12 @@ public class CorrecaoFinalController extends HttpServlet {
         String action       = request.getParameter("action");
         
         if (action.equalsIgnoreCase("avaliarAlunos")) {
+            int idTurma     = Integer.parseInt(request.getParameter("idTurma"));
+            int idAvaliacao = Integer.parseInt(request.getParameter("idAvaliacao"));
+            
+            request.setAttribute("correcoesfinais",daoCorrecaoFinal.getCorrecoesFinalByAvaliacao(idTurma,idAvaliacao));
+            request.setAttribute("avaliacao",daoAvaliacao.getAvaliacaoById(idAvaliacao));
+            request.setAttribute("medias",daoCorrecao.getMediaByAluno(idAvaliacao));
             forward = LIST;
         }
         

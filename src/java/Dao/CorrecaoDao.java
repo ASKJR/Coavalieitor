@@ -33,6 +33,16 @@ public class CorrecaoDao {
   + "INNER JOIN solucao sol ON(sol.id = corr.solucao_id) " 
   + "INNER JOIN usuario us1 ON (us1.id = sol.aluno_usuario_id) " 
   + "WHERE sol.avaliacao_id = ? ";
+    
+    
+    //Média artimética das nota 
+    //que uma solução de um aluno recebeu pelos outros alunos
+    private final static String SELECT_MEDIA_BY_ALUNO_BY_AVALIACAO = 
+    "SELECT ROUND(AVG(corr.nota),2) AS media, sol.aluno_usuario_id AS submetidoPor "
+  + "FROM correcao corr "
+  + "JOIN solucao sol ON (sol.id = corr.solucao_id) "
+  + "WHERE sol.avaliacao_id = ? "
+  + "GROUP BY submetidoPor ";
    
     /*DB variables*/
     private Connection con         = null;
@@ -73,6 +83,28 @@ public class CorrecaoDao {
                 correcao.setCorrecao_data(rs.getTimestamp("correcao_data"));
                 correcao.getSolucao().setResposta(rs.getString("resposta"));
                 correcao.getSolucao().getAluno().getUser().setNome(rs.getString("submetidoPor"));
+                correcoes.add(correcao);
+            }
+            return correcoes;
+        } catch (SQLException e) {
+            throw new RuntimeException(e);
+        }finally{
+            try { if (rs   != null) stmt.close();   } catch (Exception e) {};
+            try { if (stmt != null) stmt.close();   } catch (Exception e) {};
+            try { if (con  != null) con.close();    } catch (Exception e) {};
+        }
+    }
+    public List<Correcao> getMediaByAluno(int idAvaliacao) {
+        try {
+            con  = new ConnectionFactory().getConnection();
+            stmt = con.prepareStatement(SELECT_MEDIA_BY_ALUNO_BY_AVALIACAO);
+            stmt.setInt(1,idAvaliacao);
+            List<Correcao> correcoes = new ArrayList<>();
+            rs = stmt.executeQuery();
+            while (rs.next()) {
+                Correcao correcao = new Correcao();
+                correcao.setNota(rs.getDouble("media"));
+                correcao.getAluno().getUser().setId(rs.getInt("submetidoPor"));
                 correcoes.add(correcao);
             }
             return correcoes;

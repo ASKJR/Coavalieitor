@@ -6,7 +6,8 @@
 <%@include file="../../include/headerProfessor.jsp" %>
 <%@include file="../../include/sidebarLeftProfessor.jsp" %>
 <div class="col-md-9 col-lg-10 main">
-    <h2> Avaliar Estudantes </h2>
+    <br>
+    <h2> Avaliar Estudantes  - ${avaliacao.nome}</h2>
     <hr>
     <button class="btn btn-info"> Liberar notas </button>
     <button class="btn btn-danger" disabled> Bloquear notas </button>
@@ -15,36 +16,41 @@
         <table class="table table-striped">
             <thead class="thead-inverse">
                 <tr>
-                    <th>Estudante</th>
-                    <th>Média do sistema</th>
-                    <th>Média final Professor</th>
+                    <th>Aluno</th>
+                    <th style="text-align:center;">Média do sistema</th>
+                    <th style="text-align:center;">Média final Professor</th>
                     <th>Seu feedback</th>
+                    <th>Avaliar</th>
                 </tr>
-            </thead>
-            <tr>
-                <td><a data-toggle="modal" href="#myModal">Alberto Sussumu Kato Junior</a></td>
-                <td>7.7</td>
-                <td>8.8</td>
-                <td>Excelente trabalho Alberto. Continue assim.</td>
-            </tr>
-            <tr>
-                <td>Ivonete Roque</td>
-                <td>7.7</td>
-                <td>8.8</td>
-                <td>Excelente trabalho Ivonete. Continue assim.</td>
-            </tr>
-            
-            <tr>
-                <td>Welygton Del Pra</td>
-                <td>7.7</td>
-                <td>8.8</td>
-                <td>
-                    Excelente trabalho DelPra. Continue assim.
-                    Excelente trabalho DelPra. Continue assim.
-                    Excelente trabalho DelPra. Continue assim.
-                    Excelente trabalho DelPra. Continue assim.
-                </td>
-            </tr>
+            </thead>    
+            <c:choose>
+                <c:when test="${!empty correcoesfinais}">
+                    <c:forEach items="${correcoesfinais}" var="correcao">
+                        <c:forEach items="${medias}" var="media">
+                            <c:if test="${media.aluno.user.id eq correcao.aluno.user.id}">
+                                <c:set var="mediaSystem" value="${media.nota}"/>
+                            </c:if>
+                        </c:forEach>
+                        <tr>
+                            <td> ${correcao.aluno.user.nome}</td>
+                            <td  style="text-align:center;">${mediaSystem}</td>
+                            <td  style="text-align:center;"><b>${correcao.nota_final eq 0.0 ? '' : correcao.nota_final}</b></td>
+                            <td>${correcao.feedback}</td>
+                            <td>
+                                <a href="#" class="btn btn-info open-Dialog" data-toggle="modal" data-target="#myModal" 
+                                   data-nome="${correcao.aluno.user.nome}" data-mediasystem="${mediaSystem}" data-feedback="${correcao.feedback}"
+                                   data-profnota="${correcao.nota_final eq 0.0 ? '' : correcao.nota_final}" data-idcorrecao="${correcao.id}">
+                                    <span class="fa fa-check" style="font-size: 25px;" title="Corrigir solução"></span>
+                                </a>
+                            </td>
+                        </tr>
+                        <c:set var="mediaSystem" value=""/>
+                    </c:forEach>
+                </c:when>
+                <c:otherwise>
+                    <tr><td colspan="5" align="center"><b>Nenhuma aluno matriculado no momento.</b></td></tr>
+                </c:otherwise>
+            </c:choose>
         </table>
     </div>
 <!-- Button trigger modal -->
@@ -60,30 +66,26 @@
                 <button type="button" class="close" data-dismiss="modal" aria-label="Close">
                 <span aria-hidden="true">&times;</span>
                 </button>
-                <h4 class="modal-title" id="myModalLabel">Alberto Sussumu Kato Junior</h4>
+                <h4 class="modal-title" id="nomeAluno"></h4>
             </div>
             <div class="modal-body">
                 <form action="feedback.jsp" method="post">
+                    <input type="hidden" name="idCorrecaoFinal" id="idCorrecaoFinal">
                     <div class="form-group ">
                         <label class="control-label " for="name"><b>Média do sistema:</b> </label>
-                        <input class="form-control" id="name" name="name" type="text" value="7.7" disabled/>
+                        <input class="form-control" name="avgSystem" id="avgSystem" type="text" disabled/>
                     </div>
                     <div class="form-group ">
-                        <label class="control-label " for="name"><b>Peso da média do sistema no calculo da média final:</b> </label>
-                        <select class="form-control" id="sel1">
-                            <option>0%</option>
-                            <option>10%</option>
-                            <option>20%</option>
-                            <option>50%</option>
-                        </select>                    
+                        <label class="control-label " for="name"><b>Peso da média do sistema no calculo da média final: (0-100)%</b> </label>
+                        <input class="form-control" type="number" step="1" min="0" max="100" required>                
                     </div>
                     <div class="form-group ">
                         <label class="control-label " for="name"><b>Média final Professor:</b> </label>
-                        <input class="form-control" id="name" name="name" type="number"/>
+                        <input class="form-control" id="notaProf" name="notaProf" type="number"/>
                     </div>
                     <div class="form-group ">
                         <label class="control-label " for="subject"><b>FeedBack do Professor:</b></label>
-                        <textarea class="form-control" cols="40" id="message" name="message" rows="5"></textarea>
+                        <textarea class="form-control" cols="40" id="feedback" name="feedback" rows="5"></textarea>
                     </div>
                     <div class="modal-footer">
                         <button type="button" class="btn btn-secondary" data-dismiss="modal">Fechar</button>
@@ -95,6 +97,17 @@
     </div>
 </div>
 <%@include file="../../include/footerProfessor.jsp" %>
-
-
-
+<script>
+$(document).on("click", ".open-Dialog", function () {
+    var nome             = $(this).data('nome');
+    var mediaSystem      = $(this).data('mediasystem');
+    var feedback         = $(this).data('feedback');
+    var notaProf         = $(this).data('profnota');
+    var idcorrecao       = $(this).data('idcorrecao');
+    $(".modal-body #avgSystem").val( mediaSystem  );
+    $(".modal-body #feedback").val( feedback  );
+    $(".modal-body #notaProf").val( notaProf  );
+    $(".modal-body #idCorrecaoFinal").val( idcorrecao  );
+    $("#nomeAluno").html(nome);
+});
+</script>
