@@ -5,6 +5,7 @@
  */
 package Controller;
 
+import Beans.CorrecaoFinal;
 import Dao.AvaliacaoDao;
 import Dao.CorrecaoDao;
 import Dao.CorrecaoFinalDao;
@@ -16,6 +17,7 @@ import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
+import javax.servlet.http.HttpSession;
 
 /**
  *
@@ -30,11 +32,13 @@ public class CorrecaoFinalController extends HttpServlet {
     private CorrecaoFinalDao  daoCorrecaoFinal;
     private CorrecaoDao       daoCorrecao;
     private AvaliacaoDao      daoAvaliacao;
+    private CorrecaoFinal     correcaoFinal;
     
     public CorrecaoFinalController(){
         daoCorrecaoFinal = new CorrecaoFinalDao();
         daoCorrecao      = new CorrecaoDao();
         daoAvaliacao     = new AvaliacaoDao();
+        correcaoFinal    = new CorrecaoFinal();
     }
     
     
@@ -43,10 +47,13 @@ public class CorrecaoFinalController extends HttpServlet {
             throws ServletException, IOException {
         String forward      = "";
         String action       = request.getParameter("action");
+        HttpSession session = request.getSession();
         
         if (action.equalsIgnoreCase("avaliarAlunos")) {
             int idTurma     = Integer.parseInt(request.getParameter("idTurma"));
             int idAvaliacao = Integer.parseInt(request.getParameter("idAvaliacao"));
+            session.setAttribute("idTurma",request.getParameter("idTurma"));
+            session.setAttribute("idAvaliacao",request.getParameter("idAvaliacao"));
             
             request.setAttribute("correcoesfinais",daoCorrecaoFinal.getCorrecoesFinalByAvaliacao(idTurma,idAvaliacao));
             request.setAttribute("avaliacao",daoAvaliacao.getAvaliacaoById(idAvaliacao));
@@ -61,6 +68,31 @@ public class CorrecaoFinalController extends HttpServlet {
     @Override
     protected void doPost(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
+        String idCorrecaoFinal = request.getParameter("idCorrecaoFinal");
+        String feedback        = request.getParameter("feedback");
+        String notaProf        = request.getParameter("notaProf");
+        HttpSession session = request.getSession();
+        
+        String idTurma = (String) session.getAttribute("idTurma");
+        String idAvaliacao = (String) session.getAttribute("idAvaliacao");
+        
+        
+        correcaoFinal.setFeedback(feedback);
+        correcaoFinal.setNota_final(Double.parseDouble(notaProf));
+        if (!idCorrecaoFinal.equals("0") ) {
+           //update
+           //correcaoFinal.set
+           correcaoFinal.setId(Integer.parseInt(idCorrecaoFinal));
+           daoCorrecaoFinal.update(correcaoFinal);
+        }
+        else{
+            //Inserir nova correcao_final
+            String idAluno = request.getParameter("idAluno");
+            correcaoFinal.getAluno().getUser().setId(Integer.parseInt(idAluno));
+            correcaoFinal.getAvaliacao().setId(Integer.parseInt(idAvaliacao));
+            daoCorrecaoFinal.insert(correcaoFinal);
+        }
+        response.sendRedirect("CorrecaoFinalController?action=avaliarAlunos&idTurma=" +idTurma +"&idAvaliacao=" + idAvaliacao);
     }
     
     @Override

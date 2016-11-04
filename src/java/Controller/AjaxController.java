@@ -9,6 +9,7 @@ import Beans.Aluno;
 import Beans.Curso;
 import Beans.Disciplina;
 import Dao.AlunoDao;
+import Dao.CorrecaoFinalDao;
 import Dao.CursoDao;
 import Dao.DisciplinaDao;
 import com.google.gson.Gson;
@@ -40,6 +41,7 @@ public class AjaxController extends HttpServlet {
         String idInst = request.getParameter("instituicaoId");
         String idCurs = request.getParameter("cursoId");
         String autocomplete = request.getParameter("autocomplete");
+        String idAvaliacao = request.getParameter("idAvaliacao");
         
         //Requisição AJAX para o combobox de cursos 
         if(idInst!=null){
@@ -89,6 +91,26 @@ public class AjaxController extends HttpServlet {
                 response.getWriter().write(json);
             }
         }
+        
+        //Requisição AJAX para atualizar a visibilidade da correcao_final pelo
+        //id da avaliação
+        if(idAvaliacao!=null){
+            String isCorrecaoVisible = request.getParameter("isCorrecaoVisible");
+            if(!idAvaliacao.equals("")){
+                boolean visible;
+                int id = Integer.parseInt(idAvaliacao);
+                if(isCorrecaoVisible.equalsIgnoreCase("true")){
+                    visible = true;
+                }
+                else{
+                    visible = false;
+                }
+                CorrecaoFinalDao daoCorrecaoFinal = new CorrecaoFinalDao();
+                daoCorrecaoFinal.updateVisibilidadeCorrecao(id,visible);
+            }
+            out.write("ok");
+        }
+        
     }
     @Override
     protected void doPost(HttpServletRequest request, HttpServletResponse response)

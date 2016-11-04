@@ -9,8 +9,9 @@
     <br>
     <h2> Avaliar Estudantes  - ${avaliacao.nome}</h2>
     <hr>
-    <button class="btn btn-info"> Liberar notas </button>
-    <button class="btn btn-danger" disabled> Bloquear notas </button>
+    <div class="checkbox">
+        <label><input type="checkbox" name="liberarNotas" id="liberarNotas" value="${avaliacao.id}" ${correcoesfinais[0].correcao_visivel eq 'true' ? 'checked' : ''}><b>Liberar notas?</b></label>
+    </div>
     <hr>
     <div class="table-responsive">
         <table class="table table-striped">
@@ -39,7 +40,8 @@
                             <td>
                                 <a href="#" class="btn btn-info open-Dialog" data-toggle="modal" data-target="#myModal" 
                                    data-nome="${correcao.aluno.user.nome}" data-mediasystem="${mediaSystem}" data-feedback="${correcao.feedback}"
-                                   data-profnota="${correcao.nota_final eq 0.0 ? '' : correcao.nota_final}" data-idcorrecao="${correcao.id}">
+                                   data-profnota="${correcao.nota_final eq 0.0 ? '' : correcao.nota_final}" data-idcorrecao="${correcao.id}"
+                                   data-idaluno="${correcao.aluno.user.id}">
                                     <span class="fa fa-check" style="font-size: 25px;" title="Corrigir solução"></span>
                                 </a>
                             </td>
@@ -53,11 +55,9 @@
             </c:choose>
         </table>
     </div>
-<!-- Button trigger modal -->
-<!--<button type="button" class="btn btn-primary btn-lg" data-toggle="modal" data-target="#myModal">
-  Launch demo modal
-</button>
-</div>-->
+</div>
+
+    
 <!-- Modal -->
 <div class="modal fade" id="myModal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
     <div class="modal-dialog" role="document">
@@ -69,8 +69,9 @@
                 <h4 class="modal-title" id="nomeAluno"></h4>
             </div>
             <div class="modal-body">
-                <form action="feedback.jsp" method="post">
+                <form method="POST" action="${pageContext.request.contextPath}/CorrecaoFinalController">
                     <input type="hidden" name="idCorrecaoFinal" id="idCorrecaoFinal">
+                    <input type="hidden" name="idAluno" id="idAluno">
                     <div class="form-group ">
                         <label class="control-label " for="name"><b>Média do sistema:</b> </label>
                         <input class="form-control" name="avgSystem" id="avgSystem" type="text" disabled/>
@@ -81,11 +82,11 @@
                     </div>
                     <div class="form-group ">
                         <label class="control-label " for="name"><b>Média final Professor:</b> </label>
-                        <input class="form-control" id="notaProf" name="notaProf" type="number"/>
+                        <input class="form-control" id="notaProf" name="notaProf" type="number" required/>
                     </div>
                     <div class="form-group ">
                         <label class="control-label " for="subject"><b>FeedBack do Professor:</b></label>
-                        <textarea class="form-control" cols="40" id="feedback" name="feedback" rows="5"></textarea>
+                        <textarea class="form-control" cols="40" id="feedback" name="feedback" rows="5" required></textarea>
                     </div>
                     <div class="modal-footer">
                         <button type="button" class="btn btn-secondary" data-dismiss="modal">Fechar</button>
@@ -104,10 +105,42 @@ $(document).on("click", ".open-Dialog", function () {
     var feedback         = $(this).data('feedback');
     var notaProf         = $(this).data('profnota');
     var idcorrecao       = $(this).data('idcorrecao');
+    var idaluno          = $(this).data('idaluno');
+    
     $(".modal-body #avgSystem").val( mediaSystem  );
     $(".modal-body #feedback").val( feedback  );
     $(".modal-body #notaProf").val( notaProf  );
     $(".modal-body #idCorrecaoFinal").val( idcorrecao  );
+    $(".modal-body #idAluno").val( idaluno  );
     $("#nomeAluno").html(nome);
+});
+
+$(document).ready(function() {
+    $('#liberarNotas').change(function() {
+        var idAvaliacao = $(this).val();
+        var isCorrecaoVisible;
+        if($(this).is(":checked")) {
+            isCorrecaoVisible = 'true';
+        }
+        else{
+            isCorrecaoVisible = 'false';
+        }
+        $.ajax({
+            type: 'GET',
+            url: 'AjaxController',
+            data : {
+                idAvaliacao: idAvaliacao,
+                isCorrecaoVisible : isCorrecaoVisible
+            },
+            statusCode: {
+                404: function() {
+                    console.log('Pagina não encontrada');
+                },
+                500: function(){
+                    console.log('Erro no servidor');
+                }
+            }
+        }); 
+    });
 });
 </script>

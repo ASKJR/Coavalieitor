@@ -5,12 +5,14 @@
  */
 package Dao;
 
+import Beans.Avaliacao;
 import Beans.Correcao;
 import Beans.CorrecaoFinal;
 import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
+import java.sql.Timestamp;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -25,6 +27,16 @@ public class CorrecaoFinalDao {
     "INSERT INTO correcao_final "
    +"(feedback,nota_final,avaliacao_id,aluno_usuario_id,correcao_final_data) "
    +"VALUES (?,?,?,?,NOW()) ";
+    
+    private final static String UPDATE =
+    "UPDATE correcao_final "
+   +"SET feedback=?, nota_final=?,correcao_final_data=NOW() "
+   +"WHERE id = ?";
+    
+    private final static String UPDATE_VISIBILIDADE_CORRECAO =
+    "UPDATE correcao_final "
+   +"SET correcao_visivel = ? "
+   +"WHERE avaliacao_id = ? ";
     
     private final static String SELECT_CORRECAO_FINAL_BY_AVALIACAO = 
     "SELECT mat.*,us.nome,cf.* " 
@@ -58,6 +70,38 @@ public class CorrecaoFinalDao {
             try { if (con  != null) con.close();  } catch (Exception e) {};
         }
     }
+    
+    public void update(CorrecaoFinal correcaoFinal){
+        try{
+            con  = new ConnectionFactory().getConnection();
+            stmt = con.prepareStatement(UPDATE);	
+            stmt.setString(1,correcaoFinal.getFeedback());
+            stmt.setDouble(2,correcaoFinal.getNota_final());
+            stmt.setInt(3,correcaoFinal.getId());
+            stmt.execute();
+        }catch(SQLException e){
+                 throw new RuntimeException(e);
+        }finally{
+                 try { if (stmt != null) stmt.close(); } catch (Exception e) {};
+                 try { if (con  != null) con.close();  } catch (Exception e) {};
+        }
+    }
+    
+    public void updateVisibilidadeCorrecao(int idAvaliacao, boolean isCorrecaoVisible){
+        try{
+            con  = new ConnectionFactory().getConnection();
+            stmt = con.prepareStatement(UPDATE_VISIBILIDADE_CORRECAO);	
+            stmt.setBoolean(1, isCorrecaoVisible);
+            stmt.setInt(2, idAvaliacao);
+            stmt.execute();
+        }catch(SQLException e){
+                 throw new RuntimeException(e);
+        }finally{
+                 try { if (stmt != null) stmt.close(); } catch (Exception e) {};
+                 try { if (con  != null) con.close();  } catch (Exception e) {};
+        }
+    }
+    
     public List<CorrecaoFinal> getCorrecoesFinalByAvaliacao(int idTurma,int idAvaliacao) {
         try {
             con  = new ConnectionFactory().getConnection();
