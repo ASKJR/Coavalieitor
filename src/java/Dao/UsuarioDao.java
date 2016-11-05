@@ -217,6 +217,7 @@ public class UsuarioDao {
                 returnUsuario.setTelefone(rs.getString("telefone"));
                 returnUsuario.setNascimento(rs.getDate("nascimento"));
                 returnUsuario.setSexo(rs.getString("sexo"));
+                returnUsuario.setPerfil_id(rs.getInt("perfil_id"));
             }
             return returnUsuario;   
         }catch (SQLException e) {
