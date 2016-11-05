@@ -14,8 +14,6 @@
     <form class="form-horizontal" method="GET" action="${pageContext.request.contextPath}/CursoController">
         <input type="hidden" name="action" value="listarCursoPorInst">
         <fieldset>
-        <!-- Form Name -->
-        <!-- Text input-->
         <div class="form-group">
             <label class="col-md-3 control-label" for="textinput"><b>Nome da instituição:</b></label>  
             <div class="col-md-6">
@@ -26,7 +24,6 @@
                 </select>
             </div>
         </div><br><br>
-        <!-- Button -->
         <div class="form-group">
             <label class="col-md-3 control-label" for=""></label>
             <div class="col-md-6">
@@ -41,8 +38,7 @@
         <table class="table table-striped">
             <thead class="thead-inverse">
                 <tr>
-                    <th>#ID</th>
-                    <th>Nome</th>
+                    <th>Curso</th>
                     <th>Ações</th>
                 </tr>
             </thead>
@@ -50,7 +46,6 @@
                 <c:when test="${!empty cursos}">
                     <c:forEach items="${cursos}" var="curso">
                         <tr>
-                            <td>${curso.id}</td>
                             <td>${curso.nome}</td>
                             <td>
                                 <a class="btn btn-info" href="${pageContext.request.contextPath}/CursoController?action=edit&idCurso=${curso.id}&idInstituicao=${curso.instituicao.id}">Editar</a>&nbsp
@@ -60,7 +55,7 @@
                     </c:forEach>
                 </c:when>
                 <c:otherwise>
-                    <tr><td colspan="3" align="center"><b>Nenhum registro encontrado, ou o botão listar cursos não foi pressionado.</b></td></tr>
+                    <tr><td colspan="2" align="center"><b>Nenhum registro encontrado, ou o botão listar cursos não foi pressionado.</b></td></tr>
                 </c:otherwise>
             </c:choose>        
         </table>

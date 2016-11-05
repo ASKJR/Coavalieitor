@@ -62,7 +62,6 @@
         <table class="table table-striped">
             <thead class="thead-inverse">
                 <tr>
-                    <th>#ID</th>
                     <th>Turma</th>
                     <th>Ações</th>
                 </tr>
@@ -71,7 +70,6 @@
                 <c:when test="${!empty turmas}">
                     <c:forEach items="${turmas}" var="turma">
                         <tr>
-                            <td>${turma.id}</td>
                             <td>${turma.nome}</td>
                             <td>
                                 <a class="btn btn-info" href="${pageContext.request.contextPath}/TurmaController?action=edit&idInstituicao=${instituicao.id}&idCurso=${disciplina.curso.id}&idDisciplina=${turma.disciplina.id}&idTurma=${turma.id}">Editar</a>&nbsp
@@ -84,7 +82,7 @@
                     </c:forEach>
                 </c:when>
                 <c:otherwise>
-                    <tr><td colspan="3" align="center"><b>Nenhum registro encontrado, ou o botão listar turmas não foi pressionado.</b></td></tr>
+                    <tr><td colspan="2" align="center"><b>Nenhum registro encontrado, ou o botão listar turmas não foi pressionado.</b></td></tr>
                 </c:otherwise>
             </c:choose> 
         </table>

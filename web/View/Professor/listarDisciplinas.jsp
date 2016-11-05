@@ -14,7 +14,6 @@
     <form class="form-horizontal" method="GET" action="${pageContext.request.contextPath}/DisciplinaController">
         <input type="hidden" name="action" value="listarDisciplinaPorCurso">
         <fieldset>
-        <!-- Text input-->
         <div class="form-group">
             <label class="col-md-3 control-label" for="nomeInstituicao"><b>Nome da instituição:</b></label>  
             <div class="col-md-6">
@@ -26,8 +25,6 @@
                 </select>
             </div>
         </div><br><br>
-        
-        <!-- Text input-->
         <div class="form-group">
             <label class="col-md-3 control-label" for="nomeCurso"><b>Nome do curso:</b></label>  
             <div class="col-md-6">
@@ -36,7 +33,6 @@
                 </select>
             </div>
         </div><br><br>
-        <!-- Button -->
         <div class="form-group">
             <label class="col-md-3 control-label" for=""></label>
             <div class="col-md-6">
@@ -54,8 +50,7 @@
         <table class="table table-striped">
             <thead class="thead-inverse">
                 <tr>
-                    <th>#ID</th>
-                    <th>Nome</th>
+                    <th>Disciplina</th>
                     <th>Ações</th>
                 </tr>
             </thead>
@@ -63,7 +58,6 @@
                 <c:when test="${!empty disciplinas}">
                     <c:forEach items="${disciplinas}" var="disciplina">
                         <tr>
-                            <td>${disciplina.id}</td>
                             <td>${disciplina.nome}</td>
                             <td>
                                 <a class="btn btn-info" href="${pageContext.request.contextPath}/DisciplinaController?action=edit&idDisciplina=${disciplina.id}&idCurso=${disciplina.curso.id}&idInstituicao=${idInstituicao}">Editar</a>&nbsp
@@ -73,7 +67,7 @@
                     </c:forEach>
                 </c:when>
                 <c:otherwise>
-                    <tr><td colspan="3" align="center"><b>Nenhum registro encontrado, ou o botão listar disciplinas não foi pressionado.</b></td></tr>
+                    <tr><td colspan="2" align="center"><b>Nenhum registro encontrado, ou o botão listar disciplinas não foi pressionado.</b></td></tr>
                 </c:otherwise>
             </c:choose>    
         </table>

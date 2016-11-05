@@ -15,14 +15,12 @@
         <table class="table table-striped">
             <thead class="thead-inverse">
                 <tr>
-                    <th>#ID</th>
-                    <th>Nome</th>
+                    <th>Instiuição</th>
                     <th align="center">Ações</th>
                 </tr>
             </thead>
             <c:forEach items="${instituicoes}" var="instituicao"> 
                 <tr>
-                    <td>${instituicao.id}</td>
                     <td>${instituicao.nome}</td>
                     <td>
                         <a class="btn btn-info" href="${pageContext.request.contextPath}/InstituicaoController?action=edit&id=${instituicao.id}">Editar</a>
