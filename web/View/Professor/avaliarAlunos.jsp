@@ -9,8 +9,15 @@
     <br>
     <h2> Avaliar Estudantes  - ${avaliacao.nome}</h2>
     <hr>
+    <a href="${pageContext.request.contextPath}/AvaliacaoController?action=listarAvaliacoesPorTurma&idInstituicao=${sessionScope.idInstituicao}&idCurso=${sessionScope.idCurso}&idDisciplina=${sessionScope.idDisciplina}&idTurma=${sessionScope.idTurma}" class="btn btn-info">Voltar</a>
+    <hr>
     <div class="checkbox">
-        <label><input type="checkbox" name="liberarNotas" id="liberarNotas" value="${avaliacao.id}" ${correcoesfinais[0].correcao_visivel eq 'true' ? 'checked' : ''}><b>Liberar notas?</b></label>
+        <label>
+            <input type="checkbox" name="liberarNotas" id="liberarNotas" value="${avaliacao.id}" ${correcoesfinais[0].correcao_visivel eq 'true' ? 'checked' : ''}><b>Liberar notas</b>           
+        </label>
+            <a href="#" data-toggle="tooltip" data-placement="top" title="Marque essa opção somente quando todas as notas forem lançadas. (Nota final professor) !">
+                <i class="fa fa-question-circle" aria-hidden="true"></i>
+            </a>
     </div>
     <hr>
     <div class="table-responsive">
@@ -18,8 +25,8 @@
             <thead class="thead-inverse">
                 <tr>
                     <th>Aluno</th>
-                    <th style="text-align:center;">Média do sistema</th>
-                    <th style="text-align:center;">Média final Professor</th>
+                    <th style="text-align:center;">Média das correções</th>
+                    <th style="text-align:center;">Nota final do Professor</th>
                     <th>Seu feedback</th>
                     <th>Avaliar</th>
                 </tr>
@@ -27,6 +34,7 @@
             <c:choose>
                 <c:when test="${!empty correcoesfinais}">
                     <c:forEach items="${correcoesfinais}" var="correcao">
+                        <c:set var="mediaSystem" value="0"/>
                         <c:forEach items="${medias}" var="media">
                             <c:if test="${media.aluno.user.id eq correcao.aluno.user.id}">
                                 <c:set var="mediaSystem" value="${media.nota}"/>
@@ -34,8 +42,21 @@
                         </c:forEach>
                         <tr>
                             <td> ${correcao.aluno.user.nome}</td>
-                            <td  style="text-align:center;">${mediaSystem}</td>
-                            <td  style="text-align:center;"><b>${correcao.nota_final eq 0.0 ? '' : correcao.nota_final}</b></td>
+                            <td  style="text-align:center;">
+                                <fmt:formatNumber type="number"maxFractionDigits="2" value="${mediaSystem}"/>
+                            </td>
+                            <td  style="text-align:center;">
+                                <b>
+                                    <c:choose>
+                                        <c:when test="${correcao.nota_final eq 0.0}">
+                                            ${''}
+                                        </c:when>
+                                        <c:otherwise>
+                                            <fmt:formatNumber type="number" maxFractionDigits="2" value="${correcao.nota_final}" />
+                                        </c:otherwise>
+                                    </c:choose>
+                                </b>
+                            </td>
                             <td>${correcao.feedback}</td>
                             <td>
                                 <a href="#" class="btn btn-info open-Dialog" data-toggle="modal" data-target="#myModal" 
@@ -46,7 +67,6 @@
                                 </a>
                             </td>
                         </tr>
-                        <c:set var="mediaSystem" value=""/>
                     </c:forEach>
                 </c:when>
                 <c:otherwise>
@@ -73,19 +93,33 @@
                     <input type="hidden" name="idCorrecaoFinal" id="idCorrecaoFinal">
                     <input type="hidden" name="idAluno" id="idAluno">
                     <div class="form-group ">
-                        <label class="control-label " for="name"><b>Média do sistema:</b> </label>
-                        <input class="form-control" name="avgSystem" id="avgSystem" type="text" disabled/>
+                        <label class="control-label " for="lblMedia"><b>Média das correções:</b> </label>
+                        <a href="#" data-toggle="tooltip" data-placement="top" title="Média aritmética simples das correções efetuadas pelos alunos. Caso o valor seja 0, o aluno em questão não foi avaliado por nenhum outro aluno até o momento.">
+                            <i class="fa fa-question-circle" aria-hidden="true"></i>
+                        </a>
+                        <input class="form-control" name="avgSystem" id="avgSystem" type="text" readonly/>
                     </div>
                     <div class="form-group ">
-                        <label class="control-label " for="name"><b>Peso da média do sistema no calculo da média final: (0-100)%</b> </label>
-                        <input class="form-control" type="number" step="1" min="0" max="100" required>                
+                        <label class="control-label " for="lblPeso"><b>Peso da Média das Correções [0% - 100%] :</b> </label>
+                        <a href="#" data-toggle="tooltip" data-placement="top" title="Peso da média das correções utilizado no cálculo da nota final.">
+                            <i class="fa fa-question-circle" aria-hidden="true"></i>
+                        </a>
+                        <input class="form-control" name="peso" type="number" step="1" min="0" max="100" required>                
                     </div>
                     <div class="form-group ">
-                        <label class="control-label " for="name"><b>Média final Professor:</b> </label>
-                        <input class="form-control" id="notaProf" name="notaProf" type="number" required/>
+                        <label class="control-label " for="lblnotaProf"><b>Nota final do Professor:</b> </label>
+                        <a href="#" data-toggle="tooltip" data-placement="top" class="htmlTooltip"
+                           title=''>
+                            <i class="fa fa-question-circle" aria-hidden="true"></i>
+                        </a>
+                        <input class="form-control" id="notaProf" name="notaProf" type="number" min="0" step="any" required/>
                     </div>
                     <div class="form-group ">
-                        <label class="control-label " for="subject"><b>FeedBack do Professor:</b></label>
+                        <label class="control-label " for="lblFeedback"><b>Seu Feedback:</b></label>
+                        <a href="#" data-toggle="tooltip" data-placement="top"
+                           title='Comentário sobre o desempenho geral do aluno. Tanto no processo de submissões como de correções.'>
+                            <i class="fa fa-question-circle" aria-hidden="true"></i>
+                        </a>
                         <textarea class="form-control" cols="40" id="feedback" name="feedback" rows="5" required></textarea>
                     </div>
                     <div class="modal-footer">
@@ -142,5 +176,8 @@ $(document).ready(function() {
             }
         }); 
     });
+});
+$( ".htmlTooltip" ).tooltip({
+   content: "Fórmula utilizada:<br>((MC*P)+(NP*(100-P)))/100<br> MC = Média correções<br> P  = % inserida no campo Peso<br>NP = Nota inserida no campo abaixo"
 });
 </script>

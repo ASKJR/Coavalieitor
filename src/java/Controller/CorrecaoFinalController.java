@@ -71,14 +71,22 @@ public class CorrecaoFinalController extends HttpServlet {
         String idCorrecaoFinal = request.getParameter("idCorrecaoFinal");
         String feedback        = request.getParameter("feedback");
         String notaProf        = request.getParameter("notaProf");
-        HttpSession session = request.getSession();
+        String avgSystem       = request.getParameter("avgSystem");
+        String peso            = request.getParameter("peso");
         
+        
+        HttpSession session = request.getSession();
         String idTurma = (String) session.getAttribute("idTurma");
         String idAvaliacao = (String) session.getAttribute("idAvaliacao");
         
         
+        Double pesoD      = Double.parseDouble(peso);
+        Double avgSystemD = Double.parseDouble(avgSystem);
+        Double notaProfD  = Double.parseDouble(notaProf);
+        
+        
         correcaoFinal.setFeedback(feedback);
-        correcaoFinal.setNota_final(Double.parseDouble(notaProf));
+        correcaoFinal.setNota_final(((avgSystemD*pesoD)+(notaProfD*(100-pesoD)))/100);
         if (!idCorrecaoFinal.equals("0") ) {
            //update
            //correcaoFinal.set
