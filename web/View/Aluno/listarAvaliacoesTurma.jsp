@@ -97,18 +97,24 @@
             <thead class="thead-inverse">
                 <tr>
                     <th>Avaliação</th>
-                    <th>Nota Prof.</th>
+                    <th style="text-align: center;">Nota Prof.</th>
                     <th>FeedBack Prof.</th>
+                    <th>Corrigido em:</th>
                     
                 </tr>
             </thead>
             <c:choose>
-                <c:when test="${!empty avaliacoesEncerrado}">
-                    <c:forEach items="${avaliacoesEncerrado}" var="avaliacao">
+                <c:when test="${!empty correcoesFinais}">
+                    <c:forEach items="${correcoesFinais}" var="correcaoFinal">
                         <tr>
-                            <td><a href="#" data-toggle="tooltip" title="${avaliacao.descricao}">${avaliacao.nome}</a></td>
-                            <td></td>
-                            <td></td>
+                            <td><a href="#" data-toggle="tooltip" title="${correcaoFinal.avaliacao.descricao}">${correcaoFinal.avaliacao.nome}</a></td>
+                            <td style="text-align: center;">
+                                <b> 
+                                    <fmt:formatNumber type="number" minFractionDigits="2" value="${correcaoFinal.nota_final}"/>
+                                </b
+                            </td>
+                            <td>${correcaoFinal.feedback}</td>
+                            <td><b>${correcaoFinal.CF}</b></td>
                         <tr>
                     </c:forEach>
                 </c:when>

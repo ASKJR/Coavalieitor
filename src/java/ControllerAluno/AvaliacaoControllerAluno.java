@@ -9,6 +9,7 @@ import Beans.Matricula;
 import Beans.Turma;
 import Beans.Usuario;
 import Dao.AvaliacaoDao;
+import Dao.CorrecaoFinalDao;
 import Dao.MatriculaDao;
 import Dao.SolucaoDao;
 import Dao.TurmaDao;
@@ -32,20 +33,22 @@ public class AvaliacaoControllerAluno extends HttpServlet {
     private static String BUSCAR    = "View/Aluno/buscarAvaliacoes.jsp";
     private static String LIST      = "View/Aluno/listarAvaliacoesTurma.jsp";
     
-    private TurmaDao       daoTurma;
-    private Turma          turma;
-    private MatriculaDao   daoMatricula;
-    private Matricula      matricula;
-    private AvaliacaoDao   daoAvaliacao;
-    private SolucaoDao     daoSolucao;
+    private TurmaDao            daoTurma;
+    private Turma               turma;
+    private MatriculaDao        daoMatricula;
+    private Matricula           matricula;
+    private AvaliacaoDao        daoAvaliacao;
+    private SolucaoDao          daoSolucao;
+    private CorrecaoFinalDao    daoCorrecaoFinal;
     
     public AvaliacaoControllerAluno(){
-        daoTurma      = new TurmaDao();
-        daoMatricula  = new MatriculaDao();
-        turma         = new Turma();
-        matricula     = new Matricula();
-        daoAvaliacao  = new AvaliacaoDao();
-        daoSolucao    = new SolucaoDao();
+        daoTurma            = new TurmaDao();
+        daoMatricula        = new MatriculaDao();
+        turma               = new Turma();
+        matricula           = new Matricula();
+        daoAvaliacao        = new AvaliacaoDao();
+        daoSolucao          = new SolucaoDao();
+        daoCorrecaoFinal    = new CorrecaoFinalDao();
     }
     
     
@@ -73,7 +76,7 @@ public class AvaliacaoControllerAluno extends HttpServlet {
             request.setAttribute("turma",daoTurma.getTurmaById(id));
             request.setAttribute("avaliacoesSubmissao",daoAvaliacao.getAvaliacoesByTurmaByPhase(id,"SUBMISSAO"));
             request.setAttribute("avaliacoesCorrecao",daoAvaliacao.getAvaliacoesByTurmaByPhase(id,"CORRECAO"));
-            request.setAttribute("avaliacoesEncerrado",daoAvaliacao.getAvaliacoesByTurmaByPhase(id,"ENCERRADO"));
+            request.setAttribute("correcoesFinais",daoCorrecaoFinal.getCorrecoesFinalByAluno(id,idAluno,true));
             forward = LIST;       
         }
         RequestDispatcher view = request.getRequestDispatcher(forward);
