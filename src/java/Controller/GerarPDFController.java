@@ -44,6 +44,7 @@ public class GerarPDFController extends HttpServlet {
     
     public GerarPDFController(){
         params      = new HashMap();
+        con         = new ConnectionFactory().getConnection();
         jasper      = "";
         redirect    = "";
         erroMessage = "";
@@ -51,7 +52,7 @@ public class GerarPDFController extends HttpServlet {
     
     @Override
     protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-        con         = new ConnectionFactory().getConnection();
+        
         HttpSession session = request.getSession();
         String pdf = request.getParameter("getPDF");
         
