@@ -9,9 +9,11 @@
 <div class="col-md-9 col-lg-10 main">
     <br>
     <h2>Notas:</h2>
+    <%@include file="../../include/mensagem.jsp" %>
     <hr>
     <br>
-    <form class="form-horizontal" action="avaliacoesTurma.jsp">
+    <form class="form-horizontal" method="GET" action="${pageContext.request.contextPath}/GerarPDFController">
+        <input type="hidden" name="getPDF" value="notaByAlunoTurma">
         <fieldset>
         <div class="form-group">
             <label class="col-md-3 control-label" for="nomeTurma>">
@@ -23,10 +25,10 @@
                 </b>
             </label>  
             <div class="col-md-6">
-                <select class="form-control" id="selectTurma" required>
+                <select class="form-control" id="selectTurma" name="selectTurma" required>
                     <option></option>
                     <c:forEach items="${matriculas}" var="matricula">
-                        <option id="${matricula.turma.id}">
+                        <option value="${matricula.turma.id}">
                             Professor: ${matricula.turma.professor.user.nome} - 
                             ${matricula.turma.disciplina.nome} -
                             ${matricula.turma.nome}
