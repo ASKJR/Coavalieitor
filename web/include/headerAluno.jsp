@@ -4,6 +4,10 @@
     Author     : Kato
 --%>
 <%@ include file="config.jsp" %>
+<!--Checando permissões - Segurança-->
+<c:if test="${sessionScope.usuarioLogado == null || sessionScope.usuarioLogado.perfil_id == 1 || sessionScope.usuarioLogado.perfil_id == 3 }">
+    <c:redirect url="LogoutController"/>
+</c:if>
 <body class="body-after-login">
 <nav class="navbar navbar-fixed-top navbar-dark bg-primary">
     <a class="navbar-brand" href="#">Coavalieitor - Aluno</a>

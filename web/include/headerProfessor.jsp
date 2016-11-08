@@ -3,7 +3,12 @@
     Created on : 10/09/2016, 14:20:02
     Author     : Kato
 --%>
+
 <%@ include file="config.jsp" %>
+<!--Checando permissões - Segurança-->
+<c:if test="${sessionScope.usuarioLogado == null || sessionScope.usuarioLogado.perfil_id == 2 }">
+    <c:redirect url="LogoutController"/>
+</c:if>
 <body class="body-after-login">
 <nav class="navbar navbar-fixed-top navbar-dark bg-primary">
     <a class="navbar-brand" href="#">Coavalieitor - Professor</a>
