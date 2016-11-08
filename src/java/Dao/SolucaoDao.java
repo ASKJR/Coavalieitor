@@ -47,7 +47,8 @@ public class SolucaoDao {
   + "aval.nome,aval.descricao,aval.requisito_adicional "
   + "FROM solucao sol "
   + "INNER JOIN avaliacao aval ON (sol.avaliacao_id = aval.id) "
-  + "WHERE aval.id =? ";          
+  + "WHERE aval.id =? "
+  + "ORDER BY RAND() ";          
     
     //Módulo Aluno
     private final static String SELECT_SOLUCAO_BY_ID =

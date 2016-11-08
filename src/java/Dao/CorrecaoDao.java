@@ -6,6 +6,7 @@
 package Dao;
 
 import Beans.Correcao;
+import Beans.Usuario;
 import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
@@ -25,6 +26,14 @@ public class CorrecaoDao {
    +"(comentario,nota,solucao_id,aluno_usuario_id,correcao_data) "
    +"VALUES (?,?,?,?,NOW())";
     
+    
+    private final static String SELECT_CORRECOES_BY_ALUNO = 
+    "SELECT * "
+  + "FROM correcao "
+  + "WHERE aluno_usuario_id = ? ";
+    
+    
+    
     private final static String SELECT_CORRECOES_BY_AVALIACAO = 
     "SELECT corr.comentario,corr.nota,corr.correcao_data ,us.nome AS corrigidoPor,"
   + "sol.resposta,us1.nome AS submetidoPor "
@@ -43,6 +52,15 @@ public class CorrecaoDao {
   + "JOIN solucao sol ON (sol.id = corr.solucao_id) "
   + "WHERE sol.avaliacao_id = ? "
   + "GROUP BY submetidoPor ";
+    
+    
+    
+    private final static String COUNT_NUM_CORRECOES_BY_ALUNO = 
+    "SELECT COUNT(*) "
+  + "FROM correcao corr "
+  + "JOIN solucao sol ON (sol.id = corr.solucao_id) "
+  + "WHERE corr.aluno_usuario_id = ? "
+  + "AND sol.avaliacao_id = ? ";
    
     /*DB variables*/
     private Connection con         = null;
@@ -68,6 +86,34 @@ public class CorrecaoDao {
             try { if (con  != null) con.close();  } catch (Exception e) {};
         }
     }
+    
+     public List<Correcao> getCorrecoesByAluno(int idAluno) {
+        try {
+            con  = new ConnectionFactory().getConnection();
+            stmt = con.prepareStatement(SELECT_CORRECOES_BY_ALUNO);
+            stmt.setInt(1,idAluno);
+            List<Correcao> correcoes = new ArrayList<>();
+            rs = stmt.executeQuery();
+            while (rs.next()) {
+                Correcao correcao = new Correcao();
+                correcao.setId(rs.getInt("id"));
+                correcao.setComentario(rs.getString("comentario"));
+                correcao.setNota(rs.getDouble("nota"));
+                correcao.getSolucao().setId(rs.getInt("solucao_id"));
+                correcao.getAluno().setId(rs.getInt("aluno_usuario_id"));
+                correcao.setCorrecao_data(rs.getTimestamp("correcao_data"));
+                correcoes.add(correcao);
+            }
+            return correcoes;
+        } catch (SQLException e) {
+            throw new RuntimeException(e);
+        }finally{
+            try { if (rs   != null) stmt.close();   } catch (Exception e) {};
+            try { if (stmt != null) stmt.close();   } catch (Exception e) {};
+            try { if (con  != null) con.close();    } catch (Exception e) {};
+        }
+    }
+    
     public List<Correcao> getCorrecoesByAvaliacao(int idAvaliacao) {
         try {
             con  = new ConnectionFactory().getConnection();
@@ -115,5 +161,24 @@ public class CorrecaoDao {
             try { if (stmt != null) stmt.close();   } catch (Exception e) {};
             try { if (con  != null) con.close();    } catch (Exception e) {};
         }
-    }
+    }    
+    
+    public int numCorrecoesByAluno(int idAluno, int idAvaliacao){
+        try {
+            con  = new ConnectionFactory().getConnection();
+            stmt = con.prepareStatement(COUNT_NUM_CORRECOES_BY_ALUNO);
+            stmt.setInt(1, idAluno);
+            stmt.setInt(2, idAvaliacao);
+            rs = stmt.executeQuery();       
+            rs.next();
+            int count = rs.getInt(1);
+            return count;
+        } catch (SQLException e) {
+            throw new RuntimeException(e);
+        }finally{
+            try { if (rs   != null) stmt.close();   } catch (Exception e) {};
+            try { if (stmt != null) stmt.close();   } catch (Exception e) {};
+            try { if (con  != null) con.close();    } catch (Exception e) {};
+        }
+    } 
 }

@@ -8,6 +8,7 @@ package ControllerAluno;
 import Beans.Solucao;
 import Beans.Usuario;
 import Dao.AvaliacaoDao;
+import Dao.CorrecaoDao;
 import Dao.SolucaoDao;
 import java.io.IOException;
 import java.io.PrintWriter;
@@ -30,16 +31,21 @@ public class SolucaoControllerAluno extends HttpServlet {
     
     private AvaliacaoDao   daoAvaliacao;
     private SolucaoDao     daoSolucao;
+    private CorrecaoDao    daoCorrecao; 
     private Solucao        solucao;
+   
     public SolucaoControllerAluno(){
         daoAvaliacao = new AvaliacaoDao();
         daoSolucao   = new SolucaoDao();
+        daoCorrecao  = new CorrecaoDao();
         solucao      = new Solucao();
     }
     
     @Override
     protected void doGet(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
+        HttpSession session = request.getSession();
+        Usuario aluno = (Usuario) session.getAttribute("usuarioLogado");
         String forward = "";
         String action = request.getParameter("action");
         if (action.equalsIgnoreCase("insert")) {
@@ -51,6 +57,8 @@ public class SolucaoControllerAluno extends HttpServlet {
             int idAvaliacao = Integer.parseInt(request.getParameter("idAvaliacao"));
             request.setAttribute("avaliacao",daoAvaliacao.getAvaliacaoById(idAvaliacao));
             request.setAttribute("solucoes",daoSolucao.getSolucoesForAluno(idAvaliacao));
+            request.setAttribute("numCorrecoesRealizadas",daoCorrecao.numCorrecoesByAluno(aluno.getId(), idAvaliacao));
+            request.setAttribute("correcoes",daoCorrecao.getCorrecoesByAluno(aluno.getId()));
             forward = LIST;
         } 
         RequestDispatcher view = request.getRequestDispatcher(forward);

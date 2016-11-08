@@ -68,7 +68,6 @@
                 <tr>
                     <th>Avaliação</th>
                     <th style="text-align: center;">Corrigir até:</th>
-                    <th style="text-align: center;">Corrigido em:</th>
                     <th style="text-align: center;">Opção</th>
                 </tr>
             </thead>
@@ -78,13 +77,12 @@
                         <tr>
                             <td><a href="#" data-toggle="tooltip" title="${avaliacao.descricao}">${avaliacao.nome}</a></td>
                             <td style="text-align: center;"><a href="#" data-toggle="tooltip" title="${avaliacao.CF}">  <span class="fa fa-clock-o glyphicon glyphicon-time" style="color: black; font-size: 25px;"></span></a></td>
-                            <td style="text-align: center;"></td>
                             <td style="text-align: center;"><a class="btn btn-warning" href="${pageContext.request.contextPath}/SolucaoControllerAluno?action=listarSolucoes&idAvaliacao=${avaliacao.id}">Corrigir</a></td>
                         </tr>
                     </c:forEach>
                 </c:when>
                 <c:otherwise>
-                    <td style="text-align: center;" colspan="4">Nenhuma avaliacão no período de correções disponível no momento...</td>                            
+                    <td style="text-align: center;" colspan="3">Nenhuma avaliacão no período de correções disponível no momento...</td>                            
                 </c:otherwise>
             </c:choose>
         </table>
