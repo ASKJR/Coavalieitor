@@ -8,6 +8,7 @@
 <div class="col-md-9 col-lg-10 main">
     <form class="form-horizontal" method="post" action="${pageContext.request.contextPath}/InstituicaoController">
         <fieldset>
+        <br>
         <h2>${empty instituicao.id ? "Nova" : "Editar"} Instituição:</h2>
         <hr>
         <div class="form-group">

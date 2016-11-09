@@ -6,6 +6,7 @@
 <%@include file="../../include/headerProfessor.jsp" %>
 <%@include file="../../include/sidebarLeftProfessor.jsp" %>
 <div class="col-md-9 col-lg-10 main">
+    <br>
     <h2>${action == 'edit' ? "Editar" : "Novo"} Curso:</h2>
     <hr>
     <form class="form-horizontal" method="POST" action="${pageContext.request.contextPath}/CursoController">
@@ -36,5 +37,6 @@
         </div>
         </fieldset>
     </form>
+    <hr>
 </div>
 <%@include file="../../include/footerProfessor.jsp" %>

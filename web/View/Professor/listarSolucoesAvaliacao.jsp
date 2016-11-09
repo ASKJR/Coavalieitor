@@ -8,7 +8,7 @@
 <%@include file="../../include/sidebarLeftProfessor.jsp" %>
 <div class="col-md-9 col-lg-10 main">
     <br>
-    <h2>Listar submissões - ${avaliacao.nome}</h2> 
+    <h2>Listar soluções - ${avaliacao.nome}</h2> 
     <hr>
     <button class="btn btn-info"  onclick="window.history.back()">Voltar</button>
     <hr>

@@ -36,7 +36,7 @@
                                 <a class="btn btn-info" href="${pageContext.request.contextPath}/AvaliacaoController?action=edit&idTurma=${turma.id}&idAvaliacao=${avaliacao.id}">Editar</a>&nbsp
                                 <a class="btn btn-danger" href="${pageContext.request.contextPath}/AvaliacaoController?action=delete&idTurma=${turma.id}&idAvaliacao=${avaliacao.id}"
                                      onclick="return confirm('Tem certeza que deseja excluir essa avaliação?')">Deletar</a>&nbsp
-                                <a class="btn btn-success" href="${pageContext.request.contextPath}/SolucaoController?action=listarSolucoesPorAvaliacao&idTurma=${turma.id}&idAvaliacao=${avaliacao.id}">Listar submissões</a>&nbsp
+                                <a class="btn btn-success" href="${pageContext.request.contextPath}/SolucaoController?action=listarSolucoesPorAvaliacao&idTurma=${turma.id}&idAvaliacao=${avaliacao.id}">Listar soluções</a>&nbsp
                                 <a class="btn btn-primary" href="${pageContext.request.contextPath}/CorrecaoController?action=listarCorrecoesPorAvaliacao&idTurma=${turma.id}&idAvaliacao=${avaliacao.id}">Listar correções</a>&nbsp
                                 <a class="btn btn-warning" href="${pageContext.request.contextPath}/CorrecaoFinalController?action=avaliarAlunos&idTurma=${turma.id}&idAvaliacao=${avaliacao.id}">Avaliar</a>
                             </td>
