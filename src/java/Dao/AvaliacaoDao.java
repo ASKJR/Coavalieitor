@@ -49,6 +49,11 @@ public class AvaliacaoDao {
     private final static String PHASE_ENCERRADO =
     " AND NOW() > correcao_final ";         
     
+    private final static String COUNT_NUM_AVALIACOES_ABERTAS_BY_PROF =
+    "select count(*) from usuario p inner join turma t on t.professor_usuario_id = p.id " +
+    "inner join avaliacao a on a.turma_id = t.id and now() between a.submissao_inicial and a.submissao_final "+
+    "WHERE p.id=?";
+           
     /*DB variables*/
     private Connection con         = null;
     private ResultSet rs           = null;
@@ -99,9 +104,7 @@ public class AvaliacaoDao {
                  try { if (stmt != null) stmt.close(); } catch (Exception e) {};
                  try { if (con  != null) con.close();  } catch (Exception e) {};
         }
-    }
-    
-    
+    }   
     public void delete(Avaliacao avaliacao) {
         try {
             con = new ConnectionFactory().getConnection();
@@ -114,8 +117,7 @@ public class AvaliacaoDao {
             try { if (stmt != null) stmt.close(); } catch (Exception e) {};
             try { if (con  != null) con.close();  } catch (Exception e) {};
         }
-    }
-    
+    }    
     public List<Avaliacao> getAvaliacoesByTurma(int idTurma){
         try {
             con  = new ConnectionFactory().getConnection();
@@ -148,7 +150,6 @@ public class AvaliacaoDao {
             try { if (con  != null) con.close();    } catch (Exception e) {};
         }
     }
-    
     public Avaliacao getAvaliacaoById(int idAvaliacao){
         try{
             Avaliacao avaliacao = new Avaliacao();
@@ -179,8 +180,7 @@ public class AvaliacaoDao {
             try { if (stmt != null) stmt.close();   } catch (Exception e) {};
             try { if (con  != null) con.close();    } catch (Exception e) {};
         }
-    }
-    
+    } 
     public List<Avaliacao> getAvaliacoesByTurmaByPhase(int idTurma,String phase){
         try {
             String PHASE = "";
@@ -224,5 +224,25 @@ public class AvaliacaoDao {
             try { if (stmt != null) stmt.close();   } catch (Exception e) {};
             try { if (con  != null) con.close();    } catch (Exception e) {};
         }
+    }
+
+    public int numAvaliacoesAbertasByProfessor(int idProfessor) {
+        try {
+            int count = 0;
+            con  = new ConnectionFactory().getConnection();
+            stmt = con.prepareStatement(COUNT_NUM_AVALIACOES_ABERTAS_BY_PROF);
+            stmt.setInt(1, idProfessor);
+            rs = stmt.executeQuery();  
+            if(rs.next()) {
+                count = rs.getInt(1);
+            }
+            return count;
+        } catch (SQLException e) {
+            throw new RuntimeException(e);
+        }finally{
+            try { if (rs   != null) stmt.close();   } catch (Exception e) {};
+            try { if (stmt != null) stmt.close();   } catch (Exception e) {};
+            try { if (con  != null) con.close();    } catch (Exception e) {};
+        }        
     }
 }

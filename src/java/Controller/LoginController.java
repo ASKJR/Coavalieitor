@@ -6,6 +6,8 @@
 package Controller;
 
 import Beans.Usuario;
+import Dao.AvaliacaoDao;
+import Dao.CorrecaoDao;
 import Dao.ProfessorDao;
 import Dao.UsuarioDao;
 import java.io.IOException;
@@ -58,6 +60,8 @@ public class LoginController extends HttpServlet {
                     //Busca por professor pelo ID,se encotrar o usuário é professor
                     if(professorDao.getProfessorById(userId)!=null){
                         session.setAttribute("tipoUsuario","professor");
+                        //Carrega Dashboard do Professor
+                        carregarDashboard(userId, request);
                         RequestDispatcher rd=request.getRequestDispatcher("View/Professor/indexProfessor.jsp");  
                         rd.forward(request, response);  
                     }
@@ -115,4 +119,15 @@ public class LoginController extends HttpServlet {
     public String getServletInfo() {
         return "Short description";
     }// </editor-fold>
+
+    private void carregarDashboard(int userId, HttpServletRequest request) {
+        
+        AvaliacaoDao daoAvaliacao = new AvaliacaoDao();
+        CorrecaoDao daoCorrecao = new CorrecaoDao();
+        int qtdAvaliacoes = daoAvaliacao.numAvaliacoesAbertasByProfessor(userId);
+        int qtdCorrecoes = daoCorrecao.numCorrecoesAbertasByProfessor(userId);
+        request.setAttribute("avaliacoes",qtdAvaliacoes);
+        request.setAttribute("correcoes",qtdCorrecoes);
+
+    }
 }
