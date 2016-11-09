@@ -27,13 +27,13 @@
                         <tr>
                             <td>${correcao.solucao.aluno.user.nome}</td>
                             <td  style="text-align:center;">
-                                <button class="open-Solucao" data-toggle="modal" data-target="#myModalSolucao" data-solution="${correcao.solucao.resposta}" data-nome="${correcao.solucao.aluno.user.nome}">
+                                <button class="btn btn-primary open-Solucao" data-toggle="modal" data-target="#myModalSolucao" data-solution="${correcao.solucao.resposta}" data-nome="${correcao.solucao.aluno.user.nome}">
                                     <span class="fa fa-eye" style="font-size: 25px;"></span>
                                 </button>
                             </td>
                             <td>${correcao.aluno.user.nome}</td>
                             <td style="text-align:center;">
-                                <button  class=" open-Correcao" data-toggle="modal" data-target="#myModalCorrecao" data-nome="${correcao.aluno.user.nome}" data-data="${correcao.CD}" data-comentario="${correcao.comentario}" data-nota="${correcao.nota}" >
+                                <button  class="btn btn-success open-Correcao" data-toggle="modal" data-target="#myModalCorrecao" data-nome="${correcao.aluno.user.nome}" data-data="${correcao.CD}" data-comentario="${correcao.comentario}" data-nota="${correcao.nota}" >
                                     <span class="fa fa-eye" style="font-size: 25px;"></span>
                                 </button>
                             </td>

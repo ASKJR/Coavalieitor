@@ -30,7 +30,7 @@
                             <td  style="text-align:center;">
                                 <c:choose>
                                     <c:when test="${!empty solucao.solucao_data}">
-                                        <button class=" open-Dialog"  data-toggle="modal" data-target="#myModal" data-solution="${solucao.resposta}" data-nome="${solucao.aluno.user.nome}">
+                                        <button class="btn btn-primary open-Dialog"  data-toggle="modal" data-target="#myModal" data-solution="${solucao.resposta}" data-nome="${solucao.aluno.user.nome}">
                                             <span class="fa fa-eye" style="font-size: 25px;"></span>
                                         </button>
                                     </c:when>
