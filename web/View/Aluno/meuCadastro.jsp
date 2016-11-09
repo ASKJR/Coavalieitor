@@ -6,6 +6,7 @@
 <%@include file="../../include/headerAluno.jsp" %>
 <%@include file="../../include/sidebarLeftAluno.jsp" %>
 <div class="col-md-9 col-lg-10 main">
+    <br>
     <h2>Configurações da conta</h2>
     <hr>
     <%@include file="../../include/mensagem.jsp"%>
@@ -90,6 +91,7 @@
         </div>
         </fieldset>
     </form>
+    <hr>
 </div>
 <%@include file="../../include/footerAluno.jsp" %>
 <script>
