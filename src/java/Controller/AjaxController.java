@@ -44,6 +44,7 @@ public class AjaxController extends HttpServlet {
         String idAvaliacao = request.getParameter("idAvaliacao");
         
         //Requisição AJAX para o combobox de cursos 
+        System.out.println("alo");
         if(idInst!=null){
             if (!idInst.equals("")) {
                 int instituicaoId = Integer.parseInt(idInst);
@@ -55,6 +56,7 @@ public class AjaxController extends HttpServlet {
                     sb.append(cr.getId()+ "-" + cr.getNome()+ ":");    
                 }
                 out.write(sb.toString());
+                System.out.println(sb.toString());
             }
         }
         //Requisição AJAX para o combobox de disciplinas 

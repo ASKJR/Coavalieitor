@@ -33,7 +33,8 @@ public class GerarPDFController extends HttpServlet {
     
     //Caso o PDF retorne NULL, redirecionar de volta para view que chamou esse Servelt com mensagem de erro
     private static final String REDIRECT_BACK_NOTAS = "NotaControllerAluno?action=buscarNotas";
-    
+    private static final String REDIRECT_BACK_RELATORIOS = "RelatorioController?action=carregarRelatorios\"";
+
     private HashMap    params;
     private Connection con;
     private String     jasper;
@@ -66,13 +67,25 @@ public class GerarPDFController extends HttpServlet {
                 redirect = REDIRECT_BACK_NOTAS;
                 erroMessage = "Sua nota não foi lançada até o momento, tente mais tarde :(";
             }
+            else if(pdf.equalsIgnoreCase("relatorioProfessor")) {                
+                jasper = request.getContextPath() + "/PDF/alunosByTurma.jasper";
+                String idDisciplina = request.getParameter("selectDisciplina");
+                Usuario professor = (Usuario) session.getAttribute("usuarioLogado");
+                params.put("disc_id",Integer.parseInt(idDisciplina));
+                params.put("prof_id",professor.getId());
+                redirect = REDIRECT_BACK_RELATORIOS;
+                erroMessage = "Sem dados disponíveis :(";
+                System.out.println("Teste");
+                
+            }
 
             // Host onde o servlet esta executando
             String host = "http://" + request.getServerName() + ":" + request.getServerPort();
             
             // URL para acesso ao relatório
             URL jasperURL = new URL(host + jasper);
-            
+                System.out.println(params);
+                System.out.println(con);
             byte[] bytes =JasperRunManager.runReportToPdf(jasperURL.openStream(), params, con);
             
             if (bytes != null) {

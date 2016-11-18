@@ -14,9 +14,8 @@
                     <li class="nav-item"><a class="nav-link" href="${pageContext.request.contextPath}/InstituicaoController?action=listarInstituicoes">Instituições</a></li>
                     <li class="nav-item"><a class="nav-link" href="${pageContext.request.contextPath}/CursoController?action=pesquisarCursos">Cursos</a></li>
                     <li class="nav-item"><a class="nav-link" href="${pageContext.request.contextPath}/DisciplinaController?action=pesquisarDisciplinas">Disciplinas</a></li>
-                </c:if>
-                
+                </c:if> 
                 <li class="nav-item"><a class="nav-link" href="${pageContext.request.contextPath}/TurmaController?action=pesquisarTurmas">Turmas</a></li>
-                <li class="nav-item"><a class="nav-link" href="${pageContext.request.contextPath}/View/Professor/relatorios.jsp">Relatórios</a></li>
+                <li class="nav-item"><a class="nav-link" href="${pageContext.request.contextPath}/RelatorioController?action=carregarRelatorios">Relatórios</a></li>
             </ul>
         </div>
