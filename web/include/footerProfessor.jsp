@@ -22,6 +22,8 @@
     <script src="${pageContext.request.contextPath}/resource/js/jquery.validationEngine-pt_BR.js" type="text/javascript" charset="utf-8"></script>
     <script src="${pageContext.request.contextPath}/resource/js/jquery.validationEngine.js" type="text/javascript" charset="utf-8"></script>
     <script src="${pageContext.request.contextPath}/resource/js/jquery-ui.js" type="text/javascript" charset="utf-8"></script>
+    <script src="${pageContext.request.contextPath}/resource/js/highcharts.js" type="text/javascript"></script>
+    <script src="${pageContext.request.contextPath}/resource/js/highcharts-more.js" type="text/javascript"></script>    
     <script>
         $(function () {
             $('[data-toggle="tooltip"]').tooltip();

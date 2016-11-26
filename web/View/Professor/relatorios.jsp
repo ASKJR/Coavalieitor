@@ -17,9 +17,9 @@
             <label class="col-md-3 control-label" for="nomeTipoRelatorio"><b>Tipo de relatório:</b></label>  
             <div class="col-md-6">
                 <select class="form-control" id="selectTipoRelatorio">
-                    <option>Alunos ordenados por média</option>
-                    <option>Alunos que mais efetuaram correções</option>
-                    <option>Alunos agrupados por turmas</option>
+                    <option value="alunosByMedia">Alunos ordenados por média</option>
+                    <option value="alunosByCorrecoes">Alunos que mais efetuaram correções</option>
+                    <option value="alunosByTurma">Alunos agrupados por turmas</option>
                 </select>
             </div>
         </div><br><br>
@@ -29,18 +29,19 @@
         
         <!-- Text input-->
         <div class="form-group">
-            <label class="col-md-3 control-label" for="textinput"><b>Período:</b></label>  
+            <label class="col-md-3 control-label" id="periodoRelatorio" for="periodoRelatorio"><b>Período:</b></label>  
             <div class="col-md-6">
-                <input id="textinput" name="rangedateonly" id="rangedateonly" type="text" class="form-control input-md">
+                <input class="form-control daterange" id="periodoRelatorio" name="periodoRelatorio" type="text" required readonly/>
             </div>
         </div><br><br><br>
+        <!--<input type="hidden" name="getPDF" value="relatorioProfessor">-->
         
         <input type="hidden" name="getPDF" value="relatorioProfessor">
 
         <input type="hidden" name="action" value="listarTurmasPorProfessor">
         <fieldset>
         <div class="form-group">
-            <label class="col-md-3 control-label" for="labelInstituicao"><b>Nome da instituição:</b></label>  
+            <label class="col-md-3 control-label" id="labelInstituicao" for="labelInstituicao"><b>Nome da instituição:</b></label>  
             <div class="col-md-6">
                 <select class="form-control" name="selectInstituicao" id="selectInstituicao" required>
                     <option value="0"></option>
@@ -52,7 +53,7 @@
         </div><br><br>       
         
         <div class="form-group">
-            <label class="col-md-3 control-label" for="labelCurso"><b>Nome do curso:</b></label>  
+            <label class="col-md-3 control-label" id="labelCurso" for="labelCurso"><b>Nome do curso:</b></label>  
             <div class="col-md-6">
                 <select class="form-control" name="selectCurso" id="selectCurso" required>
                     <option></option>
@@ -61,7 +62,7 @@
         </div><br><br>
         
         <div class="form-group">
-            <label class="col-md-3 control-label" for="labelDisciplina"><b>Nome da disciplina:</b></label>  
+            <label class="col-md-3 control-label" id="labelDisciplina" for="labelDisciplina"><b>Nome da disciplina:</b></label>  
             <div class="col-md-6">
                 <select class="form-control" name="selectDisciplina" id="selectDisciplina" required>
                     <option></option>
@@ -82,6 +83,31 @@
 <script>
 $(document).ready(function() {
 
+    $('#selectTipoRelatorio').change(function(event) {
+         function removerselects(){
+            $('#selectCurso').hide();
+            $('#selectDisciplina').hide();
+            $('#selectInstituicao').hide();
+            $('#labelCurso').hide();
+            $('#labelDisciplina').hide();
+            $('#labelInstituicao').hide(); 
+        }
+
+        function adicionarselects(){
+            $('#selectCurso').show();
+            $('#selectDisciplina').show();
+            $('#selectInstituicao').show();
+            $('#labelCurso').show();
+            $('#labelDisciplina').show();
+            $('#labelInstituicao').show(); 
+        }  
+        if($('#selectTipoRelatorio').val() == ('alunosByCorrecoes')) {
+           removerselects();
+        }
+        else
+            adicionarselects();
+    });
+    
     $('#selectInstituicao').change(function(event) {
         if($('#selectInstituicao').val()==='0'){
             $('#selectCurso option').remove();
@@ -152,7 +178,7 @@ $(document).ready(function() {
         }); 
         function limparselect(){
             $('#selectDisciplina option').remove();
-        }
+        }             
     });
 });
 </script>

@@ -3,9 +3,12 @@
     Created on : 21/09/2016, 22:26:19
     Author     : Kato
 --%>
-    <link rel="stylesheet" href="${pageContext.request.contextPath}/resource/css/dash.css" type="text/css"/>
+
+<link rel="stylesheet" href="${pageContext.request.contextPath}/resource/css/dash.css" type="text/css"/>
 <%@include file="../../include/headerProfessor.jsp" %>
 <%@include file="../../include/sidebarLeftProfessor.jsp" %>
+
+
 <div class="col-md-9 col-lg-10 main">
     <br>
     <h2>Dashboard</h2>
@@ -67,9 +70,22 @@
 				</div>
 			</div>                                                        
 		</div><!--/.row-->
+		<div class="row">
+			<div class="col-lg-12">
+			</div>
+		</div><!--/.row-->                
+
+
                 <div class="row">
                     <br/>
                 </div>
+		<div class="row">
+			<div class="col-lg-12">
+				<div class="panel panel-default">
+                                    <div id="container3" style="min-width: 310px; height: 400px; max-width: 600px; margin: 0 auto"></div>
+				</div>
+			</div>
+		</div><!--/.row-->                
 		<div class="row">
 			<div class="col-lg-12">
 				<div class="panel panel-default">
@@ -90,3 +106,52 @@
 	<script src="${pageContext.request.contextPath}/resource/js/easypiechart-data.js"></script>
 
 <%@include file="../../include/footerProfessor.jsp" %>
+
+<script type="text/javascript">
+$(function () {
+    $('#container3').highcharts({
+       alert('<c:out value="${finalizadas}"/>');
+       chart: {
+            plotBackgroundColor: null,
+            plotBorderWidth: null,
+            plotShadow: false,
+            type: 'pie'
+        },
+        title: {
+            text: 'Avaliações por Fases'
+        },
+        tooltip: {
+            pointFormat: '{series.name}: <b>{point.percentage:.1f}%</b>'
+        },
+        plotOptions: {
+            pie: {
+                allowPointSelect: true,
+                cursor: 'pointer',
+                dataLabels: {
+                    enabled: true,
+                    format: '<b>{point.name}</b>: {point.percentage:.1f} %',
+                    style: {
+                        color: (Highcharts.theme && Highcharts.theme.contrastTextColor) || 'black'
+                    }
+                }
+            }
+        },
+        series: [{
+            name: 'Brands',
+            colorByPoint: true,
+            data: [{
+                name: 'Não Iniciadas',
+                y: '<c:out value="${naoIniciadas}"/>'; 
+            }, {
+                name: 'Em Andamento',
+                y: '<c:out value="${emAndamento}"/>',
+                sliced: true,
+                selected: true
+            }, {
+                name: 'Finalizadas',
+                y: '<c:out value="${finalizadas}"/>'
+            }]
+        }]
+    });
+});
+</script>
