@@ -95,8 +95,6 @@ public class GerarPDFController extends HttpServlet {
             
             // URL para acesso ao relatório
             URL jasperURL = new URL(host + jasper);
-                System.out.println(params);
-                System.out.println(con);
             byte[] bytes =JasperRunManager.runReportToPdf(jasperURL.openStream(), params, con);
             
             if (bytes != null) {

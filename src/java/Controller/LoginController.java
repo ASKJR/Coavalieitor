@@ -5,9 +5,11 @@
  */
 package Controller;
 
+import Beans.GraficoFasesAvaliacao;
 import Beans.Usuario;
 import Dao.AvaliacaoDao;
 import Dao.CorrecaoDao;
+import Dao.DashboardDao;
 import Dao.ProfessorDao;
 import Dao.UsuarioDao;
 import java.io.IOException;
@@ -61,6 +63,8 @@ public class LoginController extends HttpServlet {
                     if(professorDao.getProfessorById(userId)!=null){
                         session.setAttribute("tipoUsuario","professor");
                         //Carrega Dashboard do Professor
+                        //ajustar a chamada do dashboard - retirar do login o carregamento dos dados
+                        //Foi mal Kato...
                         carregarDashboard(userId, request);
                         RequestDispatcher rd=request.getRequestDispatcher("View/Professor/indexProfessor.jsp");  
                         rd.forward(request, response);  
@@ -121,13 +125,20 @@ public class LoginController extends HttpServlet {
     }// </editor-fold>
 
     private void carregarDashboard(int userId, HttpServletRequest request) {
-        
+               
         AvaliacaoDao daoAvaliacao = new AvaliacaoDao();
         CorrecaoDao daoCorrecao = new CorrecaoDao();
+        DashboardDao daoDashboard = new DashboardDao();
         int qtdAvaliacoes = daoAvaliacao.numAvaliacoesAbertasByProfessor(userId);
         int qtdCorrecoes = daoCorrecao.numCorrecoesAbertasByProfessor(userId);
         request.setAttribute("avaliacoes",qtdAvaliacoes);
         request.setAttribute("correcoes",qtdCorrecoes);
-
+        GraficoFasesAvaliacao grafFasesAval = daoDashboard.getDadosGraficoFasesAvaliacao();
+        request.setAttribute("avalNaoIniciadas", grafFasesAval.getNaoIniciadas());
+        request.setAttribute("avalEmAndamento", grafFasesAval.getEmAndamento());            
+        request.setAttribute("avalFinalizadas", grafFasesAval.getFinalizadas());   
+        request.setAttribute("listaTopCorretores", daoDashboard.obterListaCorretores());
+        request.setAttribute("listaMenoresNotas", daoDashboard.obterListaMenoresNotas()); 
+//        System.out.println(daoDashboard.obterListaMenoresNotas().get(0).getNome());
     }
 }

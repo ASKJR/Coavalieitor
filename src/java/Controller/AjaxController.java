@@ -44,7 +44,6 @@ public class AjaxController extends HttpServlet {
         String idAvaliacao = request.getParameter("idAvaliacao");
         
         //Requisição AJAX para o combobox de cursos 
-        System.out.println("alo");
         if(idInst!=null){
             if (!idInst.equals("")) {
                 int instituicaoId = Integer.parseInt(idInst);

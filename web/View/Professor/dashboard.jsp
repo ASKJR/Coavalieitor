@@ -1,7 +1,7 @@
 <%-- 
-    Document   : indexProfessor
-    Created on : 21/09/2016, 22:26:19
-    Author     : Kato
+    Document   : dashboard
+    Created on : 28/11/2016, 22:26:19
+    Author     : Welyngton
 --%>
 
 <link rel="stylesheet" href="${pageContext.request.contextPath}/resource/css/dash.css" type="text/css"/>
@@ -118,9 +118,9 @@
 					<div class="panel-body">
 						<div class="canvas-wrapper">
                                                     <ul class="list-group">
-                                                        <li class="list-group-item active">Menores Notas (Última Avaliação)</li>
-                                                        <c:forEach items="${listaMenoresNotas}" var="menorNota"> 
-                                                            <li class="list-group-item">${menorNota.nome} <b> ${menorNota.nota}</b></li>
+                                                        <li class="list-group-item active">Alunos Com Pior Nota (Última Avaliação)</li>
+                                                        <c:forEach items="${listaPiorMedia}" var="piorMedia"> 
+                                                            <li class="list-group-item">${piorMedia.nome} <b> ${piorMedia.nota}</b></li>
                                                         </c:forEach>
                                                      </ul>
                                                 </div>

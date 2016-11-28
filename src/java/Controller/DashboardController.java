@@ -9,6 +9,8 @@ import Beans.GraficoFasesAvaliacao;
 import Beans.Turma;
 import ControllerAluno.*;
 import Beans.Usuario;
+import Dao.AvaliacaoDao;
+import Dao.CorrecaoDao;
 import Dao.CursoDao;
 import Dao.DashboardDao;
 import Dao.DisciplinaDao;
@@ -66,7 +68,7 @@ public class DashboardController extends HttpServlet {
         professor = (Usuario) session.getAttribute("usuarioLogado");
         int idProfessor = professor.getId();        
         
-        String forward = "";
+        String forward = FWD;
         String action = request.getParameter("action");
         
         GraficoFasesAvaliacao grafFasesAval = dashboardDao.getDadosGraficoFasesAvaliacao();
@@ -87,5 +89,17 @@ public class DashboardController extends HttpServlet {
     public String getServletInfo() {
         return "Short description";
     }// </editor-fold>
+    
+    private void carregarDashboard(int userId, HttpServletRequest request) {
+        
+        AvaliacaoDao daoAvaliacao = new AvaliacaoDao();
+        CorrecaoDao daoCorrecao = new CorrecaoDao();
+        int qtdAvaliacoes = daoAvaliacao.numAvaliacoesAbertasByProfessor(userId);
+        int qtdCorrecoes = daoCorrecao.numCorrecoesAbertasByProfessor(userId);
+        request.setAttribute("avaliacoes",qtdAvaliacoes);
+        request.setAttribute("correcoes",qtdCorrecoes);
+        
+
+    }
 
 }
