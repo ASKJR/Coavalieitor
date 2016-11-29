@@ -80,12 +80,17 @@
                     <br/>
                 </div>
 		<div class="row">
-			<div class="col-lg-12">
+			<div class="col-lg-6">
 				<div class="panel panel-default">
-                                    <div id="container3" style="min-width: 310px; height: 400px; max-width: 600px; margin: 0 auto"></div>
+                                    <div id="container1" style="min-width: 310px; height: 400px; max-width: 600px; margin: 0 auto"></div>
 				</div>
 			</div>
-		</div><!--/.row-->                
+			<div class="col-lg-6">
+				<div class="panel panel-default">
+                                    <div id="container2" style="min-width: 310px; height: 400px; max-width: 600px; margin: 0 auto"></div>
+				</div>
+			</div>
+		</div><!--/.row-->                 
 		<div class="row">
 			<div class="col-lg-12">
 				<div class="panel panel-default">
@@ -97,6 +102,7 @@
 				</div>
 			</div>
 		</div><!--/.row-->
+                <br/>
 		<div class="row">
 			<div class="col-lg-6">
 				<div class="panel panel-default">
@@ -112,8 +118,7 @@
 					</div>
 				</div>
                         </div>
-                        			<div class="col-lg-6">
-
+                        <div class="col-lg-6">
 				<div class="panel panel-default">
 					<div class="panel-body">
 						<div class="canvas-wrapper">
@@ -144,7 +149,7 @@ $(function () {
     var emAndamento = "<c:out value='${emAndamento}'/>";
     var finalizadas = "<c:out value='${finalizadas}'/>";
         
-    $('#container3').highcharts({
+    $('#container1').highcharts({
         chart: {
             plotBackgroundColor: null,
             plotBorderWidth: null,
@@ -185,6 +190,78 @@ $(function () {
                 name: 'Finalizadas',
                 y: <c:out value='${avalFinalizadas}'/>  
             }]
+        }]
+    });
+});
+$(function () {
+    $('#container2').highcharts({
+        chart: {
+            zoomType: 'xy'
+        },
+        title: {
+            text: 'Quantidade de Avaliações x Correções / Mês'
+        },        
+        xAxis: [{
+            categories: ['Jan', 'Fev', 'Mar', 'Abr', 'Mai', 'Jun',
+                'Jul', 'Ago', 'Set', 'Out', 'Nov', 'Dez'],
+            crosshair: true
+        }],
+        yAxis: [{ // Primary yAxis
+            labels: {
+                format: '{value}',
+                style: {
+                    color: Highcharts.getOptions().colors[1]
+                }
+            },
+            title: {
+                text: 'Correções',
+                style: {
+                    color: Highcharts.getOptions().colors[1]
+                }
+            }
+        }, { // Secondary yAxis
+            title: {
+                text: 'Avalições',
+                style: {
+                    color: Highcharts.getOptions().colors[0]
+                }
+            },
+            labels: {
+                format: '{value}',
+                style: {
+                    color: Highcharts.getOptions().colors[0]
+                }
+            },
+            opposite: true
+        }],
+        tooltip: {
+            shared: true
+        },
+        legend: {
+            layout: 'vertical',
+            align: 'left',
+            x: 120,
+            verticalAlign: 'top',
+            y: 100,
+            floating: true,
+            backgroundColor: (Highcharts.theme && Highcharts.theme.legendBackgroundColor) || '#FFFFFF'
+        },
+        series: [{
+            name: 'Avaliações',
+            type: 'column',
+            yAxis: 1,
+            data: [<c:out value='${avalFinalizadas}'/>3, 5, 6, 129.2, 144.0, 176.0, 135.6, 148.5, 216.4, 194.1, 95.6, 54.4],
+            tooltip: {
+                valueSuffix: ' '
+            }
+
+        }, {
+            name: 'Correções',
+            type: 'spline',
+            data: [70, 120, 95, 14.5, 18.2, 21.5, 25.2, 26.5, 23.3, 18.3, 13.9, 9.6],
+            tooltip: {
+                valueSuffix: '°C'
+            }
         }]
     });
 });

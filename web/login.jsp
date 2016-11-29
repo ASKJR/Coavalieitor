@@ -5,6 +5,7 @@
 --%>
 
 <%@include file="include/header.jsp" %>
+<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css">
 
     <div class="wrapper">
         <form class="form-signin" action="LoginController?logar=true" method="POST">
@@ -15,7 +16,7 @@
             <%@include file="include/mensagem.jsp"%> 
             <input type="text" class="form-control" name="email" placeholder="Email" required="" autofocus="" />
             <input type="password" class="form-control" name="senha" placeholder="Senha" required=""/>      
-            <button  class="btn btn-lg btn-primary btn-block" type="submit">Login</button><br>
+            <button  class="btn btn-lg btn-primary btn-block" type="submit"><span class="glyphicon glyphicon-log-in"></span> Login </button><br>
             <a href="alterarSenha.jsp">Esqueceu sua senha?</a><br>
              <a href="cadastrarUsuario.jsp">Ainda não possui uma conta? Cadastre-se já</a> 
         </form>

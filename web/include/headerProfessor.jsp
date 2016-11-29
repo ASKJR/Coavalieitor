@@ -11,14 +11,14 @@
 </c:if>
 <body class="body-after-login">
 <nav class="navbar navbar-fixed-top navbar-dark bg-primary">
-    <a class="navbar-brand" href="#">Coavalieitor - Professor</a>
+    <a class="navbar-brand" href="#"><span class="glyphicon glyphicon-education"></span> Coavalieitor - Professor</a>
     <div class="collapse navbar-toggleable-xs" id="collapsingNavbar">
         <ul class="nav navbar-nav pull-right">
             <li class="nav-item">
-                <a class="nav-link" href="${pageContext.request.contextPath}/View/Professor/meuCadastro.jsp">${sessionScope.usuarioLogado.nome}</a>
+                <a class="nav-link" href="${pageContext.request.contextPath}/View/Professor/meuCadastro.jsp"><span class="glyphicon glyphicon-cog"></span> ${sessionScope.usuarioLogado.nome}</a>
             </li>
             <li class="nav-item">
-                <a class="nav-link" href="${pageContext.request.contextPath}/LogoutController">Logout</a>
+                <a class="nav-link" href="${pageContext.request.contextPath}/LogoutController"><span class="glyphicon glyphicon-log-out"></span> Logout</a>
             </li>
         </ul>
     </div>

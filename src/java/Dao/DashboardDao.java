@@ -7,6 +7,7 @@ package Dao;
 
 import Beans.CorrecaoFinal;
 import Beans.GraficoFasesAvaliacao;
+import Beans.ItemListaAvaliacoesMes;
 import Beans.ItemListaCorretor;
 import Beans.ItemListaMenoresNotas;
 import java.sql.Connection;
@@ -53,6 +54,12 @@ public class DashboardDao {
     +"WHERE ((SELECT id FROM coavalieitor_db.avaliacao ORDER BY id DESC LIMIT 1) = cf.avaliacao_id) " 
     +"ORDER BY nota";
     
+    private final static String LISTA_AVALIACOES_MES =         
+    "SELECT  MONTH(aval.submissao_final), COUNT(*) "
+    +"FROM      coavalieitor_db.avaliacao aval "
+    +"#WHERE  Professor id = ... "
+    +"GROUP BY  MONTH(aval.submissao_final) "
+    +"LIMIT 12";
     /*DB variables*/
     private Connection con         = null;
     private ResultSet rs           = null;
@@ -126,5 +133,29 @@ public class DashboardDao {
             try { if (con  != null) con.close();    } catch (Exception e) {};
         }
         return listaRetorno;
-    }         
+    }
+
+    public ArrayList<ItemListaAvaliacoesMes> obterListaAvaliacoes () {
+        ArrayList<ItemListaAvaliacoesMes> listaRetorno = new ArrayList<ItemListaAvaliacoesMes>();
+        try {
+            con  = new ConnectionFactory().getConnection();
+            stmt = con.prepareStatement(LISTA_AVALIACOES_MES);
+            rs = stmt.executeQuery();
+            while (rs.next()) {
+                System.out.println("alo2");
+                ItemListaAvaliacoesMes item = new ItemListaAvaliacoesMes();
+                item.setMes(rs.getString("mes"));
+                item.setQtdAvaliacoes(rs.getInt("qtdAvaliacoes"));
+                listaRetorno.add(item);
+                //System.out.println(item.getNome());
+            }
+        } catch (SQLException ex) {
+            Logger.getLogger(DashboardDao.class.getName()).log(Level.SEVERE, null, ex);        
+        }finally{
+            try { if (rs   != null) stmt.close();   } catch (Exception e) {};
+            try { if (stmt != null) stmt.close();   } catch (Exception e) {};
+            try { if (con  != null) con.close();    } catch (Exception e) {};
+        }
+        return listaRetorno;
+    }    
 }
