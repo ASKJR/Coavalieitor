@@ -8,6 +8,7 @@ package Dao;
 import Beans.CorrecaoFinal;
 import Beans.GraficoFasesAvaliacao;
 import Beans.ItemListaAvaliacoesMes;
+import Beans.ItemListaCorrecoesMes;
 import Beans.ItemListaCorretor;
 import Beans.ItemListaMenoresNotas;
 import java.sql.Connection;
@@ -55,11 +56,20 @@ public class DashboardDao {
     +"ORDER BY nota";
     
     private final static String LISTA_AVALIACOES_MES =         
-    "SELECT  MONTH(aval.submissao_final), COUNT(*) "
-    +"FROM      coavalieitor_db.avaliacao aval "
-    +"#WHERE  Professor id = ... "
+    "SELECT  MONTH(aval.submissao_final) AS mes, YEAR(aval.submissao_final) as ano,  COUNT(*) as qtdAvaliacoes "
+    +"FROM      coavalieitor_db.avaliacao aval " 
+    //+"#WHERE     YEAR(aval.submissao_final) = '2016'\n" +
     +"GROUP BY  MONTH(aval.submissao_final) "
     +"LIMIT 12";
+    
+    private final static String LISTA_CORRECOES_MES =
+    "SELECT  MONTH(sol.solucao_data) AS mes, YEAR(sol.solucao_data) as ano,  COUNT(*) as qtdCorrecoes "
+    +"FROM      coavalieitor_db.avaliacao aval "
+    +"JOIN solucao sol ON (sol.avaliacao_id = aval.id) "
+    +"JOIN correcao cor ON (cor.solucao_id = sol.id) "
+    +"GROUP BY  MONTH(sol.solucao_data) "
+    +"LIMIT 12";
+    
     /*DB variables*/
     private Connection con         = null;
     private ResultSet rs           = null;
@@ -118,7 +128,6 @@ public class DashboardDao {
             stmt = con.prepareStatement(LISTA_MENORES_NOTAS);
             rs = stmt.executeQuery();
             while (rs.next()) {
-                System.out.println("alo2");
                 ItemListaMenoresNotas item = new ItemListaMenoresNotas();
                 item.setNome(rs.getString("nome"));
                 item.setNota(rs.getInt("nota"));
@@ -135,19 +144,18 @@ public class DashboardDao {
         return listaRetorno;
     }
 
-    public ArrayList<ItemListaAvaliacoesMes> obterListaAvaliacoes () {
+    public ArrayList<ItemListaAvaliacoesMes> obterListaAvaliacoesMes () {
         ArrayList<ItemListaAvaliacoesMes> listaRetorno = new ArrayList<ItemListaAvaliacoesMes>();
         try {
             con  = new ConnectionFactory().getConnection();
             stmt = con.prepareStatement(LISTA_AVALIACOES_MES);
             rs = stmt.executeQuery();
             while (rs.next()) {
-                System.out.println("alo2");
                 ItemListaAvaliacoesMes item = new ItemListaAvaliacoesMes();
                 item.setMes(rs.getString("mes"));
+                item.setAno(rs.getString("ano"));                
                 item.setQtdAvaliacoes(rs.getInt("qtdAvaliacoes"));
                 listaRetorno.add(item);
-                //System.out.println(item.getNome());
             }
         } catch (SQLException ex) {
             Logger.getLogger(DashboardDao.class.getName()).log(Level.SEVERE, null, ex);        
@@ -157,5 +165,28 @@ public class DashboardDao {
             try { if (con  != null) con.close();    } catch (Exception e) {};
         }
         return listaRetorno;
-    }    
+    }  
+    
+    public ArrayList<ItemListaCorrecoesMes> obterListaCorrecoesMes () {
+        ArrayList<ItemListaCorrecoesMes> listaRetorno = new ArrayList<ItemListaCorrecoesMes>();
+        try {
+            con  = new ConnectionFactory().getConnection();
+            stmt = con.prepareStatement(LISTA_CORRECOES_MES);
+            rs = stmt.executeQuery();
+            while (rs.next()) {
+                ItemListaCorrecoesMes item = new ItemListaCorrecoesMes();
+                item.setMes(rs.getString("mes"));
+                item.setAno(rs.getString("ano"));                
+                item.setQtdCorrecoes(rs.getInt("qtdCorrecoes"));
+                listaRetorno.add(item);
+            }
+        } catch (SQLException ex) {
+            Logger.getLogger(DashboardDao.class.getName()).log(Level.SEVERE, null, ex);        
+        }finally{
+            try { if (rs   != null) stmt.close();   } catch (Exception e) {};
+            try { if (stmt != null) stmt.close();   } catch (Exception e) {};
+            try { if (con  != null) con.close();    } catch (Exception e) {};
+        }
+        return listaRetorno;
+    }      
 }

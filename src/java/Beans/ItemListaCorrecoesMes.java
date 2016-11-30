@@ -8,11 +8,11 @@ package Beans;
 /**
  * @author Welyngton
  */
-public class ItemListaAvaliacoesMes {
+public class ItemListaCorrecoesMes {
     
     private String mes;
     private String ano;
-    private int qtdAvaliacoes;
+    private int qtdCorrecoes;
 
     public String getData() {
         
@@ -53,14 +53,6 @@ public class ItemListaAvaliacoesMes {
         this.mes = mes;
     }
 
-    public int getAvaliacoes() {
-        return getQtdAvaliacoes();
-    }
-
-    public void setQtdAvaliacoes(int qtdAvaliacoes) {
-        this.qtdAvaliacoes = qtdAvaliacoes;
-    }
-
     public String getAno() {
         return ano;
     }
@@ -69,11 +61,15 @@ public class ItemListaAvaliacoesMes {
         this.ano = ano;
     }
 
-    public int getQtdAvaliacoes() {
-        return qtdAvaliacoes;
-    }
-    
     public String getMes(){
         return mes;
     }    
+
+    public int getQtdCorrecoes() {
+        return qtdCorrecoes;
+    }
+
+    public void setQtdCorrecoes(int qtdCorrecoes) {
+        this.qtdCorrecoes = qtdCorrecoes;
+    }
 }

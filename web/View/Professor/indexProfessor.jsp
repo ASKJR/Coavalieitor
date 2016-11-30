@@ -109,7 +109,7 @@
 					<div class="panel-body">
 						<div class="canvas-wrapper">
                                                     <ul class="list-group">
-                                                        <li class="list-group-item active">Alunos Que Mais Corrijiram</li>
+                                                        <li class="list-group-item active">Alunos Que Mais Fizeram Correções</li>
                                                         <c:forEach items="${listaTopCorretores}" var="topCorretor"> 
                                                             <li class="list-group-item">${topCorretor.nome} <b> ${topCorretor.qtdCorrecoes}</b></li>
                                                         </c:forEach>
@@ -134,7 +134,11 @@
                                                 </div>
 			</div>
 		</div><!--/.row-->                                             	
+<c:forEach items="${listaAvaliacoesMes}" var="itemAval">
+                        <c:out value="${itemAval.mes} "/>
+                   </c:forEach>
 </div>
+
  <script src="${pageContext.request.contextPath}/resource/js/dash_img.js" type="text/javascript" charset="utf-8"></script>
  	<script src="${pageContext.request.contextPath}/resource/js/chart.min.js"></script>
 	<script src="${pageContext.request.contextPath}/resource/js/chart-data.js"></script>
@@ -156,6 +160,9 @@ $(function () {
             plotShadow: false,
             type: 'pie'
         },
+        credits: {
+            enabled: false
+        },        
         title: {
             text: 'Avaliações por Fase'
         },
@@ -202,9 +209,17 @@ $(function () {
             text: 'Quantidade de Avaliações x Correções / Mês'
         },        
         xAxis: [{
-            categories: ['Jan', 'Fev', 'Mar', 'Abr', 'Mai', 'Jun',
-                'Jul', 'Ago', 'Set', 'Out', 'Nov', 'Dez'],
-            crosshair: true
+            categories: [<c:forEach items="${listaAvaliacoesMes}" var="itemAval">
+                            <c:out value="${itemAval.mes}, "/>
+                        </c:forEach>],
+            crosshair: true,
+            title: {
+                enabled: true,
+                text: "Mês",
+                style: {
+                    fontWeight: 'normal'
+                }
+            }            
         }],
         yAxis: [{ // Primary yAxis
             labels: {
@@ -250,7 +265,9 @@ $(function () {
             name: 'Avaliações',
             type: 'column',
             yAxis: 1,
-            data: [<c:out value='${avalFinalizadas}'/>3, 5, 6, 129.2, 144.0, 176.0, 135.6, 148.5, 216.4, 194.1, 95.6, 54.4],
+            data: [<c:forEach items="${listaAvaliacoesMes}" var="itemAval">
+                        <c:out value="${itemAval.qtdAvaliacoes}, "/>
+                   </c:forEach>],
             tooltip: {
                 valueSuffix: ' '
             }
@@ -258,9 +275,11 @@ $(function () {
         }, {
             name: 'Correções',
             type: 'spline',
-            data: [70, 120, 95, 14.5, 18.2, 21.5, 25.2, 26.5, 23.3, 18.3, 13.9, 9.6],
+            data: [<c:forEach items="${listaCorrecoesMes}" var="itemCorr">
+                       <c:out value="${itemCorr.qtdCorrecoes}, "/>
+                   </c:forEach>],
             tooltip: {
-                valueSuffix: '°C'
+                valueSuffix: ''
             }
         }]
     });

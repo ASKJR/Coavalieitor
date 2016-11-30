@@ -169,4 +169,8 @@ body.modal-open {
 
 .thead-inverse th{
     background-color:#999 !important;
+}    
+.nav-item a:hover {        
+    background-color:#337ab7 !important;
+    color:rgb(255,255,255) !important;
 }

@@ -65,6 +65,7 @@ public class LoginController extends HttpServlet {
                         //Carrega Dashboard do Professor
                         //ajustar a chamada do dashboard - retirar do login o carregamento dos dados
                         //Foi mal Kato...
+                        //Kato, no próximo commit eu arrumo, juro!
                         carregarDashboard(userId, request);
                         RequestDispatcher rd=request.getRequestDispatcher("View/Professor/indexProfessor.jsp");  
                         rd.forward(request, response);  
@@ -138,7 +139,9 @@ public class LoginController extends HttpServlet {
         request.setAttribute("avalEmAndamento", grafFasesAval.getEmAndamento());            
         request.setAttribute("avalFinalizadas", grafFasesAval.getFinalizadas());   
         request.setAttribute("listaTopCorretores", daoDashboard.obterListaCorretores());
-        request.setAttribute("listaMenoresNotas", daoDashboard.obterListaMenoresNotas()); 
+        request.setAttribute("listaMenoresNotas", daoDashboard.obterListaMenoresNotas());
+        request.setAttribute("listaAvaliacoesMes", daoDashboard.obterListaAvaliacoesMes());
+        request.setAttribute("listaCorrecoesMes", daoDashboard.obterListaCorrecoesMes());
 //        System.out.println(daoDashboard.obterListaMenoresNotas().get(0).getNome());
     }
 }

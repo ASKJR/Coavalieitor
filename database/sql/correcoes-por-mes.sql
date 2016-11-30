@@ -1,6 +1,6 @@
-#SELECT * FROM coavalieitor_db.avaliacao 
-SELECT  MONTH(aval.submissao_final), COUNT(*) 
+SELECT  MONTH(sol.solucao_data) AS mes, YEAR(sol.solucao_data) as ano,  COUNT(*) as qtdCorrecoes
 FROM      coavalieitor_db.avaliacao aval
-#WHERE     YEAR(aval.submissao_final) = '2016'
-GROUP BY  MONTH(aval.submissao_final)
+JOIN solucao sol ON (sol.avaliacao_id = aval.id)
+JOIN correcao cor ON (cor.solucao_id = sol.id)
+GROUP BY  MONTH(sol.solucao_data)
  LIMIT 12
