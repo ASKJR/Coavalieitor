@@ -10,6 +10,7 @@ import Beans.GraficoFasesAvaliacao;
 import Beans.ItemListaAvaliacoesMes;
 import Beans.ItemListaCorrecoesMes;
 import Beans.ItemListaCorretor;
+import Beans.ItemListaMediaMes;
 import Beans.ItemListaMenoresNotas;
 import java.sql.Connection;
 import java.sql.PreparedStatement;
@@ -69,6 +70,19 @@ public class DashboardDao {
     +"JOIN correcao cor ON (cor.solucao_id = sol.id) "
     +"GROUP BY  MONTH(sol.solucao_data) "
     +"LIMIT 12";
+    
+    private final static String LISTA_MEDIA_MES =
+    "SELECT AVG(cf.nota_final), aval.nota_maxima AS nota, (AVG(cf.nota_final) / aval.nota_maxima) AS media, "
+    +"MONTH(sol.solucao_data) AS mes, YEAR(sol.solucao_data) as ano, COUNT(*) as qtdCorrecoes, tur.nome AS turma "
+    +"FROM coavalieitor_db.avaliacao aval "
+    +"JOIN solucao sol ON (sol.avaliacao_id = aval.id) "
+    +"JOIN correcao cor ON (cor.solucao_id = sol.id) "
+    +"JOIN correcao_final cf ON (cf.avaliacao_id = aval.id) "
+    +"JOIN turma tur ON (tur.id = aval.turma_id) "
+    +"JOIN usuario us ON (us.id = tur.professor_usuario_id) "
+    +"GROUP BY  MONTH(sol.solucao_data), tur.nome "
+    +"ORDER BY tur.nome "
+    +"LIMIT 12 ";
     
     /*DB variables*/
     private Connection con         = null;
@@ -155,7 +169,7 @@ public class DashboardDao {
                 item.setMes(rs.getString("mes"));
                 item.setAno(rs.getString("ano"));                
                 item.setQtdAvaliacoes(rs.getInt("qtdAvaliacoes"));
-                listaRetorno.add(item);
+                listaRetorno.add(item);                
             }
         } catch (SQLException ex) {
             Logger.getLogger(DashboardDao.class.getName()).log(Level.SEVERE, null, ex);        
@@ -188,5 +202,31 @@ public class DashboardDao {
             try { if (con  != null) con.close();    } catch (Exception e) {};
         }
         return listaRetorno;
-    }      
+    }     
+    
+    public ArrayList<ItemListaMediaMes> obterListaMediaMes () {
+        ArrayList<ItemListaMediaMes> listaRetorno = new ArrayList<ItemListaMediaMes>();
+        try {
+            con  = new ConnectionFactory().getConnection();
+            stmt = con.prepareStatement(LISTA_MEDIA_MES);
+            rs = stmt.executeQuery();
+            while (rs.next()) {
+                ItemListaMediaMes item = new ItemListaMediaMes();
+                item.setMes(rs.getString("mes"));
+                item.setAno(rs.getString("ano"));                
+                item.setMedia(rs.getString("media"));                
+                item.setTurma(rs.getString("turma"));
+                listaRetorno.add(item);
+                System.out.println("teste"+item.getMedia()+","+item.getTurma());
+            }
+        } catch (SQLException ex) {
+            Logger.getLogger(DashboardDao.class.getName()).log(Level.SEVERE, null, ex);        
+        }finally{
+            try { if (rs   != null) stmt.close();   } catch (Exception e) {};
+            try { if (stmt != null) stmt.close();   } catch (Exception e) {};
+            try { if (con  != null) con.close();    } catch (Exception e) {};
+        }
+        //Criar uma lista de listas / Turmas / Mês
+        return listaRetorno;
+    }        
 }

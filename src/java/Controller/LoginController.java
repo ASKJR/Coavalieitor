@@ -142,6 +142,7 @@ public class LoginController extends HttpServlet {
         request.setAttribute("listaMenoresNotas", daoDashboard.obterListaMenoresNotas());
         request.setAttribute("listaAvaliacoesMes", daoDashboard.obterListaAvaliacoesMes());
         request.setAttribute("listaCorrecoesMes", daoDashboard.obterListaCorrecoesMes());
+        request.setAttribute("listaMediaMes", daoDashboard.obterListaMediaMes());
 //        System.out.println(daoDashboard.obterListaMenoresNotas().get(0).getNome());
     }
 }

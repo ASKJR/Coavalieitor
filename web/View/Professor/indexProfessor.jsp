@@ -16,33 +16,7 @@
     <div class="row">
 		</div><!--/.row-->
 		
-		<div class="row">
-			<div class="col-xs-12 col-md-6 col-lg-3">
-				<div class="panel panel-blue panel-widget ">
-					<div class="row no-padding">
-						<div class="col-sm-3 col-lg-5 widget-left">
-							<svg class="glyph stroked bag"><use xlink:href="#stroked-bag"></use></svg>
-						</div>
-						<div class="col-sm-9 col-lg-7 widget-right">
-							<div class="large">120</div>
-							<div class="text-muted">New Orders</div>
-						</div>
-					</div>
-				</div>
-			</div>
-			<div class="col-xs-12 col-md-6 col-lg-3">
-				<div class="panel panel-orange panel-widget">
-					<div class="row no-padding">
-						<div class="col-sm-3 col-lg-5 widget-left">
-							<svg class="glyph stroked empty-message"><use xlink:href="#stroked-empty-message"></use></svg>
-						</div>
-						<div class="col-sm-9 col-lg-7 widget-right">
-							<div class="large">52</div>
-							<div class="text-muted">Comments</div>
-						</div>
-					</div>
-				</div>
-			</div>
+		<div class="row">			
 			<div class="col-xs-12 col-md-6 col-lg-3">
 				<div class="panel panel-red panel-widget">
 					<div class="row no-padding">
@@ -65,6 +39,32 @@
 						<div class="col-sm-9 col-lg-7 widget-right">
 							<div class="large">${correcoes}</div>
 							<div class="text-muted">Correções Abertas</div>
+						</div>
+					</div>
+				</div>
+			</div> 
+<div class="col-xs-12 col-md-6 col-lg-3">
+				<div class="panel panel-blue panel-widget ">
+					<div class="row no-padding">
+						<div class="col-sm-3 col-lg-5 widget-left">
+							<svg class="glyph stroked bag"><use xlink:href="#stroked-bag"></use></svg>
+						</div>
+						<div class="col-sm-9 col-lg-7 widget-right">
+							<div class="large">${correcoes}</div>
+							<div class="text-muted">Alunos Abaixo da Média (70%)</div>
+						</div>
+					</div>
+				</div>
+			</div>
+			<div class="col-xs-12 col-md-6 col-lg-3">
+				<div class="panel panel-orange panel-widget">
+					<div class="row no-padding">
+						<div class="col-sm-3 col-lg-5 widget-left">
+							<svg class="glyph stroked empty-message"><use xlink:href="#stroked-empty-message"></use></svg>
+						</div>
+						<div class="col-sm-9 col-lg-7 widget-right">
+							<div class="large">${correcoes}</div>
+							<div class="text-muted">Feedbacks Pendentes</div>
 						</div>
 					</div>
 				</div>
@@ -95,9 +95,7 @@
 			<div class="col-lg-12">
 				<div class="panel panel-default">
 					<div class="panel-body">
-						<div class="canvas-wrapper">
-							<canvas class="main-chart" id="line-chart" height="200" width="600"></canvas>
-						</div>
+                                            <div id="container3" style="min-width: 310px; height: 400px; max-width: 900px; margin: 0 auto"></div>
 					</div>
 				</div>
 			</div>
@@ -134,9 +132,12 @@
                                                 </div>
 			</div>
 		</div><!--/.row-->                                             	
-<c:forEach items="${listaAvaliacoesMes}" var="itemAval">
-                        <c:out value="${itemAval.mes} "/>
-                   </c:forEach>
+                <c:forEach items="${listaMediaMes}" var="itemMedia">
+                        <c:out value="${itemAval.media}, "/>
+                  </c:forEach>
+                <c:forEach items="${listaMediaMes}" var="itemMedia">
+                        <c:out value="${itemAval.turma}, "/>
+                  </c:forEach>
 </div>
 
  <script src="${pageContext.request.contextPath}/resource/js/dash_img.js" type="text/javascript" charset="utf-8"></script>
@@ -281,6 +282,53 @@ $(function () {
             tooltip: {
                 valueSuffix: ''
             }
+        }]
+    });
+});
+$(function () {
+    $('#container3').highcharts({
+        title: {
+            text: 'Média de notas / Mês',
+            x: -20 //center
+        },        
+        xAxis: {
+            categories: [<c:forEach items="${listaMediaMes}" var="itemMedia">
+                            <c:out value="${itemAval.mes}, "/>
+                        </c:forEach>]
+        },
+        yAxis: {
+            title: {
+                text: 'Média (%)'
+            },
+            plotLines: [{
+                value: 0,
+                width: 1,
+                color: '#808080'
+            }]
+        },
+        tooltip: {
+            valueSuffix: '%'
+        },
+        legend: {
+            layout: 'vertical',
+            align: 'right',
+            verticalAlign: 'middle',
+            borderWidth: 0
+        },
+        series: [{
+            name: 'Análise de Requisitos - A',
+            data: [7.0, 6.9, 9.5, 14.5, 18.2, 21.5, 25.2, 26.5, 23.3, 18.3, 13.9, 9.6]
+        }, {
+            name: 'Algoritmos I - A',
+            data: [-0.2, 0.8, 5.7, 11.3, 17.0, 22.0, 24.8, 24.1, 20.1, 14.1, 8.6, 2.5]
+        }, {
+            name: 'Algoritmos II - A',
+            data: [-0.9, 0.6, 3.5, 8.4, 13.5, 17.0, 18.6, 17.9, 14.3, 9.0, 3.9, 1.0]
+        }, {
+            name: 'Banco de dados - A',
+            data: [<c:forEach items="${listaMediaMes}" var="itemMedia">
+                        <c:out value="${itemMedia.media}, "/>
+                  </c:forEach>]
         }]
     });
 });
