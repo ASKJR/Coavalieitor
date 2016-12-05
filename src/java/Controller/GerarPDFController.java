@@ -55,10 +55,12 @@ public class GerarPDFController extends HttpServlet {
         con         = new ConnectionFactory().getConnection();
         HttpSession session = request.getSession();
         String pdf = request.getParameter("getPDF");
+        System.out.println("GET PDF");
         
         try {      
             //Relatório PDF de notas do aluno por turma
             if (pdf.equalsIgnoreCase("notaByAlunoTurma")) {
+                System.out.println("nota by aluno");
                 jasper = request.getContextPath() + "/PDF/notaByAlunoTurma.jasper";
                 String idTurma = request.getParameter("selectTurma");
                 Usuario aluno = (Usuario) session.getAttribute("usuarioLogado");
@@ -67,14 +69,20 @@ public class GerarPDFController extends HttpServlet {
                 redirect = REDIRECT_BACK_NOTAS;
                 erroMessage = "Sua nota não foi lançada até o momento, tente mais tarde :(";
             }
-            else if(pdf.equalsIgnoreCase("relatorioProfessor")) { 
+            else {
+                if(pdf.equalsIgnoreCase("relatorioProfessor")) { 
+                System.out.println("select tipo relatorio");
                 String tipoRelatorio = request.getParameter("selectTipoRelatorio");
-                if(tipoRelatorio == "alunosByTurma") {
-                    jasper = request.getContextPath() + "/PDF/alunosByTurma.jasper";
+                System.out.println(request.getParameter("selectTipoRelatorio"));
+                System.out.println(tipoRelatorio);
+                if(tipoRelatorio.equals("alunosByTurma")) {
+                    System.out.println("alo");
                     String idDisciplina = request.getParameter("selectDisciplina");
-                    Usuario professor = (Usuario) session.getAttribute("usuarioLogado");
+                    Usuario professor = (Usuario) session.getAttribute("usuarioLogado");                    
+                    System.out.println("teste - relatorio:"+idDisciplina+" , "+professor.getId());
                     params.put("disc_id",Integer.parseInt(idDisciplina));
                     params.put("prof_id",professor.getId());
+                    jasper = request.getContextPath() + "/PDF/alunosByTurma2.jasper";                    
                     redirect = REDIRECT_BACK_RELATORIOS;
                     erroMessage = "Sem dados disponíveis :(";
                 }
@@ -88,6 +96,8 @@ public class GerarPDFController extends HttpServlet {
                     redirect = REDIRECT_BACK_RELATORIOS;
                     erroMessage = "Sem dados disponíveis :(";
                 }
+            }
+                
             }
 
             // Host onde o servlet esta executando

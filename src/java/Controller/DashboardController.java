@@ -69,12 +69,10 @@ public class DashboardController extends HttpServlet {
         int idProfessor = professor.getId();        
         
         String forward = FWD;
-        String action = request.getParameter("action");
-        
-        GraficoFasesAvaliacao grafFasesAval = dashboardDao.getDadosGraficoFasesAvaliacao();
-        request.setAttribute("avalNaoIniciadas", grafFasesAval.getNaoIniciadas());
-        request.setAttribute("avalEmAndamento", grafFasesAval.getEmAndamento());            
-        request.setAttribute("avalFinalizadas", grafFasesAval.getFinalizadas());
+        String action = request.getParameter("action");   
+        if(action.equalsIgnoreCase("carregarDashBoard")){
+            carregarDashboard(idProfessor, request);
+        }       
      
         RequestDispatcher view = request.getRequestDispatcher(forward);
         view.forward(request, response);
@@ -91,15 +89,24 @@ public class DashboardController extends HttpServlet {
     }// </editor-fold>
     
     private void carregarDashboard(int userId, HttpServletRequest request) {
-        
+               
         AvaliacaoDao daoAvaliacao = new AvaliacaoDao();
         CorrecaoDao daoCorrecao = new CorrecaoDao();
+        DashboardDao daoDashboard = new DashboardDao();
         int qtdAvaliacoes = daoAvaliacao.numAvaliacoesAbertasByProfessor(userId);
         int qtdCorrecoes = daoCorrecao.numCorrecoesAbertasByProfessor(userId);
         request.setAttribute("avaliacoes",qtdAvaliacoes);
         request.setAttribute("correcoes",qtdCorrecoes);
-        
-
+        GraficoFasesAvaliacao grafFasesAval = daoDashboard.getDadosGraficoFasesAvaliacao();
+        request.setAttribute("avalNaoIniciadas", grafFasesAval.getNaoIniciadas());
+        request.setAttribute("avalEmAndamento", grafFasesAval.getEmAndamento());            
+        request.setAttribute("avalFinalizadas", grafFasesAval.getFinalizadas());   
+        request.setAttribute("listaTopCorretores", daoDashboard.obterListaCorretores());
+        request.setAttribute("listaMenoresNotas", daoDashboard.obterListaMenoresNotas());
+        request.setAttribute("listaAvaliacoesMes", daoDashboard.obterListaAvaliacoesMes());
+        request.setAttribute("listaCorrecoesMes", daoDashboard.obterListaCorrecoesMes());
+        request.setAttribute("listaMediaMes", daoDashboard.obterListaMediaMes());
+//        System.out.println(daoDashboard.obterListaMenoresNotas().get(0).getNome());
     }
 
 }

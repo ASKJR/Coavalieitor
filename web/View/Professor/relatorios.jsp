@@ -16,7 +16,7 @@
         <div class="form-group">
             <label class="col-md-3 control-label" for="nomeTipoRelatorio"><b>Tipo de relatório:</b></label>  
             <div class="col-md-6">
-                <select class="form-control" id="selectTipoRelatorio">
+                <select class="form-control" name="selectTipoRelatorio" id="selectTipoRelatorio">
                     <option value="alunosByMedia">Alunos ordenados por média</option>
                     <option value="alunosByCorrecoes">Alunos que mais efetuaram correções</option>
                     <option value="alunosByTurma">Alunos agrupados por turmas</option>
@@ -31,7 +31,7 @@
         <div class="form-group">
             <label class="col-md-3 control-label" id="periodoRelatorio" for="periodoRelatorio"><b>Período:</b></label>  
             <div class="col-md-6">
-                <input class="form-control daterange" id="periodoRelatorio" name="periodoRelatorio" type="text" required readonly/>
+                <input class="form-control daterange" id="periodoRelatorio" name="periodoRelatorio" type="text" />
             </div>
         </div><br><br><br>
         <!--<input type="hidden" name="getPDF" value="relatorioProfessor">-->
@@ -43,7 +43,7 @@
         <div class="form-group">
             <label class="col-md-3 control-label" id="labelInstituicao" for="labelInstituicao"><b>Nome da instituição:</b></label>  
             <div class="col-md-6">
-                <select class="form-control" name="selectInstituicao" id="selectInstituicao" required>
+                <select class="form-control" name="selectInstituicao" id="selectInstituicao">
                     <option value="0"></option>
                     <c:forEach items="${instituicoes}" var="instituicao"> 
                         <option value="${instituicao.id}">${instituicao.nome}</option>
@@ -55,7 +55,7 @@
         <div class="form-group">
             <label class="col-md-3 control-label" id="labelCurso" for="labelCurso"><b>Nome do curso:</b></label>  
             <div class="col-md-6">
-                <select class="form-control" name="selectCurso" id="selectCurso" required>
+                <select class="form-control" name="selectCurso" id="selectCurso">
                     <option></option>
                 </select>
             </div>
@@ -64,7 +64,7 @@
         <div class="form-group">
             <label class="col-md-3 control-label" id="labelDisciplina" for="labelDisciplina"><b>Nome da disciplina:</b></label>  
             <div class="col-md-6">
-                <select class="form-control" name="selectDisciplina" id="selectDisciplina" required>
+                <select class="form-control" name="selectDisciplina" id="selectDisciplina">
                     <option></option>
                 </select>
             </div>

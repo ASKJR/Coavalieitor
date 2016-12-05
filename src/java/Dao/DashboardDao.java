@@ -217,7 +217,7 @@ public class DashboardDao {
                 item.setMedia(rs.getString("media"));                
                 item.setTurma(rs.getString("turma"));
                 listaRetorno.add(item);
-                System.out.println("teste"+item.getMedia()+","+item.getTurma());
+                //System.out.println("teste"+item.getMedia()+","+item.getTurma());
             }
         } catch (SQLException ex) {
             Logger.getLogger(DashboardDao.class.getName()).log(Level.SEVERE, null, ex);        
