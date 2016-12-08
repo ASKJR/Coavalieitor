@@ -18,7 +18,7 @@
             <div class="col-md-6">
                 <select class="form-control" name="selectTipoRelatorio" id="selectTipoRelatorio">
                     <option value="alunosByMedia">Alunos ordenados por média</option>
-                    <option value="alunosByCorrecoes">Alunos que mais efetuaram correções</option>
+                    <option value="correcoesByAluno">Alunos que mais efetuaram correções</option>
                     <option value="alunosByTurma">Alunos agrupados por turmas</option>
                 </select>
             </div>
@@ -95,7 +95,7 @@ $(document).ready(function() {
             $('#labelDisciplina').show();
             $('#labelInstituicao').show(); 
         }  
-        if($('#selectTipoRelatorio').val() == ('alunosByCorrecoes')) {
+        if($('#selectTipoRelatorio').val() == ('correcoesByAluno')) {
            removerselects();
         }
         else
