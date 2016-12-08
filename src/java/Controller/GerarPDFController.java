@@ -86,13 +86,14 @@ public class GerarPDFController extends HttpServlet {
                     redirect = REDIRECT_BACK_RELATORIOS;
                     erroMessage = "Sem dados disponíveis :(";
                 }
-                else if(tipoRelatorio == "correcoesByAluno") {
+                else if(tipoRelatorio.equals("correcoesByAluno")) {
+                    System.out.println("correcoes relatorio");
+                    Usuario professor = (Usuario) session.getAttribute("usuarioLogado");                    
+                    params.put("prof_id",professor.getId());
                     jasper = request.getContextPath() + "/PDF/correcoesByAluno.jasper";                    
-                    Usuario professor = (Usuario) session.getAttribute("usuarioLogado");
                     //verificar se haverá parametros mais tarde
                     //String idDisciplina = request.getParameter("selectDisciplina");                    
                     //params.put("disc_id",Integer.parseInt(idDisciplina));
-                    //params.put("prof_id",professor.getId());
                     redirect = REDIRECT_BACK_RELATORIOS;
                     erroMessage = "Sem dados disponíveis :(";
                 }
@@ -105,6 +106,7 @@ public class GerarPDFController extends HttpServlet {
             
             // URL para acesso ao relatório
             URL jasperURL = new URL(host + jasper);
+            
             byte[] bytes =JasperRunManager.runReportToPdf(jasperURL.openStream(), params, con);
             
             if (bytes != null) {

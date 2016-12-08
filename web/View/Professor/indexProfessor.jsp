@@ -190,11 +190,14 @@ $(function () {
                 name: 'Não Iniciadas',
                 y: <c:out value='${avalNaoIniciadas}'/>
             }, {
-                name: 'Em Andamento',
-                y: <c:out value='${avalEmAndamento}'/>,
+                name: 'Em Submissão',
+                y: <c:out value='${avalEmSubmissao}'/>,
+            }, {
+                name: 'Em Correção',
+                y: <c:out value='${avalEmCorrecao}'/>,
                 sliced: true,
                 selected: true
-            }, {
+            },                    {
                 name: 'Finalizadas',
                 y: <c:out value='${avalFinalizadas}'/>  
             }]

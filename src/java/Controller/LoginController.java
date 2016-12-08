@@ -136,8 +136,9 @@ public class LoginController extends HttpServlet {
         request.setAttribute("correcoes",qtdCorrecoes);
         GraficoFasesAvaliacao grafFasesAval = daoDashboard.getDadosGraficoFasesAvaliacao();
         request.setAttribute("avalNaoIniciadas", grafFasesAval.getNaoIniciadas());
-        request.setAttribute("avalEmAndamento", grafFasesAval.getEmAndamento());            
-        request.setAttribute("avalFinalizadas", grafFasesAval.getFinalizadas());   
+        request.setAttribute("avalEmSubmissao", grafFasesAval.getEmSubmissão());            
+        request.setAttribute("avalEmCorrecao", grafFasesAval.getEmCorrecao());           
+        request.setAttribute("avalFinalizadas", grafFasesAval.getFinalizadas());  
         request.setAttribute("listaTopCorretores", daoDashboard.obterListaCorretores());
         request.setAttribute("listaMenoresNotas", daoDashboard.obterListaMenoresNotas());
         request.setAttribute("listaAvaliacoesMes", daoDashboard.obterListaAvaliacoesMes());

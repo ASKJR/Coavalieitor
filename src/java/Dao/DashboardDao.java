@@ -38,11 +38,12 @@ public class DashboardDao {
     "SELECT count(*) as emAndamento FROM avaliacao Where submissao_inicial < now() submissao_final > now()";
  
     private final static String GRAFICO_FASES_AVALIACAO = 
-    "SELECT "
-    +" (SELECT COUNT(*) AS naoIniciadas FROM avaliacao WHERE submissao_inicial > NOW()) AS NaoIniciadas,"
-    +" (SELECT COUNT(*) AS finalizadas FROM avaliacao WHERE submissao_final < NOW()) AS finalizadas,"
-    +" (SELECT COUNT(*) AS emAndamento FROM avaliacao WHERE submissao_inicial < NOW() AND submissao_final > NOW()) AS emAndamento";
-    
+    "SELECT"
+    +"(SELECT COUNT(*) AS naoIniciadas FROM avaliacao WHERE submissao_inicial > NOW()) AS NaoIniciadas,"
+    +"(SELECT COUNT(*) AS emSubmissao FROM avaliacao WHERE submissao_inicial >= NOW() AND submissao_final <= NOW()) AS emSubmissao,"
+    +"(SELECT COUNT(*) AS emCorrecao FROM avaliacao WHERE correcao_inicial >= NOW() AND correcao_final <= NOW()) AS emCorrecao,"
+    +"(SELECT COUNT(*) AS finalizadas FROM avaliacao WHERE NOW() > correcao_final) AS finalizadas";
+            
     private final static String TOP_CORRETORES = 
     "SELECT  usAluno.nome, count(*) AS qtdCorrecoes FROM coavalieitor_db.correcao cor "
     +"JOIN usuario usAluno ON (usAluno.id = cor.aluno_usuario_id) "
@@ -100,8 +101,9 @@ public class DashboardDao {
             rs = stmt.executeQuery();
             while (rs.next()) {
                 grafFasesAval.setNaoIniciadas(rs.getInt("naoIniciadas"));
-                grafFasesAval.setNaoIniciadas(rs.getInt("emAndamento"));
-                grafFasesAval.setNaoIniciadas(rs.getInt("finalizadas"));
+                grafFasesAval.setEmSubmissão(rs.getInt("emSubmissao"));
+                grafFasesAval.setEmCorrecao(rs.getInt("emCorrecao"));
+                grafFasesAval.setFinalizadas(rs.getInt("finalizadas"));
             }
             return grafFasesAval;
         } catch (SQLException e) {

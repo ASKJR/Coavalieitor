@@ -1,4 +1,5 @@
-SELECT AVG(cf.nota_final) AS media, aval.nota_maxima AS nota, 
+use coavalieitor_db;
+SELECT AVG(cf.nota_final), aval.nota_maxima AS nota, (AVG(cf.nota_final) / aval.nota_maxima) AS media,
 MONTH(sol.solucao_data) AS mes, YEAR(sol.solucao_data) as ano, COUNT(*) as qtdCorrecoes, tur.nome AS turma
 FROM coavalieitor_db.avaliacao aval
 JOIN solucao sol ON (sol.avaliacao_id = aval.id)

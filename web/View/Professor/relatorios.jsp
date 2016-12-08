@@ -22,18 +22,12 @@
                     <option value="alunosByTurma">Alunos agrupados por turmas</option>
                 </select>
             </div>
-        </div><br><br>
+        </div><br>
         
         <h3>Filtros</h3>
         <hr>     
         
         <!-- Text input-->
-        <div class="form-group">
-            <label class="col-md-3 control-label" id="periodoRelatorio" for="periodoRelatorio"><b>Período:</b></label>  
-            <div class="col-md-6">
-                <input class="form-control daterange" id="periodoRelatorio" name="periodoRelatorio" type="text" />
-            </div>
-        </div><br><br><br>
         <!--<input type="hidden" name="getPDF" value="relatorioProfessor">-->
         
         <input type="hidden" name="getPDF" value="relatorioProfessor">
@@ -50,7 +44,7 @@
                     </c:forEach>
                 </select>
             </div>
-        </div><br><br>       
+        </div><br>       
         
         <div class="form-group">
             <label class="col-md-3 control-label" id="labelCurso" for="labelCurso"><b>Nome do curso:</b></label>  
@@ -59,7 +53,7 @@
                     <option></option>
                 </select>
             </div>
-        </div><br><br>
+        </div><br>
         
         <div class="form-group">
             <label class="col-md-3 control-label" id="labelDisciplina" for="labelDisciplina"><b>Nome da disciplina:</b></label>  
@@ -68,7 +62,7 @@
                     <option></option>
                 </select>
             </div>
-        </div><br><br>
+        </div><br>
    
         <div class="form-group">
                 <label class="col-md-3 control-label" for=""></label>

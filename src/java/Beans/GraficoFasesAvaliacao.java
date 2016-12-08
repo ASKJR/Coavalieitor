@@ -15,12 +15,10 @@ import java.io.Serializable;
 public class GraficoFasesAvaliacao implements Serializable{
     
     private int naoIniciadas;        
-    private int emAndamento;
+    private int emSubmissão;
+    private int emCorrecao;
     private int finalizadas;
 
-    /**
-     * @return the naoIniciadas
-     */
     public int getNaoIniciadas() {
         return naoIniciadas;
     }
@@ -29,12 +27,20 @@ public class GraficoFasesAvaliacao implements Serializable{
         this.naoIniciadas = naoIniciadas;
     }
 
-    public int getEmAndamento() {
-        return emAndamento;
+    public int getEmSubmissão() {
+        return emSubmissão;
     }
 
-    public void setEmAndamento(int emAndamento) {
-        this.emAndamento = emAndamento;
+    public void setEmSubmissão(int emSubmissão) {
+        this.emSubmissão = emSubmissão;
+    }
+
+    public int getEmCorrecao() {
+        return emCorrecao;
+    }
+
+    public void setEmCorrecao(int emCorrecao) {
+        this.emCorrecao = emCorrecao;
     }
 
     public int getFinalizadas() {
@@ -44,6 +50,5 @@ public class GraficoFasesAvaliacao implements Serializable{
     public void setFinalizadas(int finalizadas) {
         this.finalizadas = finalizadas;
     }
-    
     
 }
