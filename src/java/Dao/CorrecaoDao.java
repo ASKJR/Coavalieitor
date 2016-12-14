@@ -61,11 +61,19 @@ public class CorrecaoDao {
   + "AND sol.avaliacao_id = ? ";
    
     private final static String COUNT_NUM_CORRECOES_ABERTAS_BY_PROF =
-    "select * from usuario p inner join turma t on t.professor_usuario_id = p.id " +
-    "inner join avaliacao a on a.turma_id = t.id " +
+    "select count(*) from avaliacao a "+
+    "join turma t on t.id = a.turma_id "+
     "inner join solucao s on s.avaliacao_id = a.id " +
-    "inner join correcao c on c.solucao_id = s.id "
-    + "where p.id = ?";
+    "inner join correcao c on c.solucao_id = s.id " +
+    "where t.professor_usuario_id = ? and (a.correcao_inicial <= now() and a.correcao_final > now())";
+    
+    private final static String COUNT_NUM_FEEDBACKS_ABERTOS_BY_PROF =
+    "select count(*) from avaliacao a "
+    +"join turma t on a.turma_id = t.id " 
+    +"inner join solucao s on s.avaliacao_id = a.id " 
+    +"inner join correcao c on c.solucao_id = s.id "
+    +"left join correcao_final cf on cf.avaliacao_id = a.id "
+    +"where t.professor_usuario_id = ? and cf.feedback is null";
     
     /*DB variables*/
     private Connection con         = null;
@@ -195,7 +203,7 @@ public class CorrecaoDao {
             stmt.setInt(1, idProfessor);
             rs = stmt.executeQuery(); 
             if(rs.next()) {
-                rs.next();
+                //rs.next();
                 count = rs.getInt(1);
             }
             return count;
@@ -207,4 +215,25 @@ public class CorrecaoDao {
             try { if (con  != null) con.close();    } catch (Exception e) {};
         }        
     }
+    
+    public int numFeedbacksAbertosByProfessor(int idProfessor) {
+        try {
+            int count = 0;
+            con  = new ConnectionFactory().getConnection();
+            stmt = con.prepareStatement(COUNT_NUM_FEEDBACKS_ABERTOS_BY_PROF);
+            stmt.setInt(1, idProfessor);
+            rs = stmt.executeQuery(); 
+            if(rs.next()) {
+                //rs.next();
+                count = rs.getInt(1);
+            }
+            return count;
+        } catch (SQLException e) {
+            throw new RuntimeException(e);
+        }finally{
+            try { if (rs   != null) stmt.close();   } catch (Exception e) {};
+            try { if (stmt != null) stmt.close();   } catch (Exception e) {};
+            try { if (con  != null) con.close();    } catch (Exception e) {};
+        }        
+    }    
 }

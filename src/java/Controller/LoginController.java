@@ -66,8 +66,8 @@ public class LoginController extends HttpServlet {
                         //ajustar a chamada do dashboard - retirar do login o carregamento dos dados
                         //Foi mal Kato...
                         //Kato, no próximo commit eu arrumo, juro!
-                        carregarDashboard(userId, request);
-                        RequestDispatcher rd=request.getRequestDispatcher("View/Professor/indexProfessor.jsp");  
+                        //carregarDashboard(userId, request);
+                        RequestDispatcher rd=request.getRequestDispatcher("/DashboardController?action=carregarDashboard");  
                         rd.forward(request, response);  
                     }
                     //Senão encontrar o usuário é aluno
@@ -125,7 +125,7 @@ public class LoginController extends HttpServlet {
         return "Short description";
     }// </editor-fold>
 
-    private void carregarDashboard(int userId, HttpServletRequest request) {
+    /*private void carregarDashboard(int userId, HttpServletRequest request) {
                
         AvaliacaoDao daoAvaliacao = new AvaliacaoDao();
         CorrecaoDao daoCorrecao = new CorrecaoDao();
@@ -145,5 +145,5 @@ public class LoginController extends HttpServlet {
         request.setAttribute("listaCorrecoesMes", daoDashboard.obterListaCorrecoesMes());
         request.setAttribute("listaMediaMes", daoDashboard.obterListaMediaMes());
 //        System.out.println(daoDashboard.obterListaMenoresNotas().get(0).getNome());
-    }
+    }*/
 }

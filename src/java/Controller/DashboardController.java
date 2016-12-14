@@ -27,10 +27,11 @@ import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
+import javax.xml.ws.spi.http.HttpContext;
 
 /**
  *
- * @author Kato
+ * @author Welyngton
  */
 @WebServlet(name = "DashboardController", urlPatterns = {"/DashboardController"})
 public class DashboardController extends HttpServlet {
@@ -52,14 +53,26 @@ public class DashboardController extends HttpServlet {
         turma          = new Turma();
     }    
     
-    private static String FWD    = "View/Professor/dashboard.jsp";
+    private static String FWD    = "View/Professor/indexProfessor.jsp";
     
     private RelatorioDao daoRelatorio;
         
     @Override
     protected void doGet(HttpServletRequest request, HttpServletResponse response)
+            throws ServletException, IOException {        
+        processRequest(request,response);        
+    }
+    
+    @Override
+    protected void doPost(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
-        //Pegando as informações do aluno na sessão
+        processRequest(request,response);
+    }
+    
+    public void processRequest(HttpServletRequest request, HttpServletResponse response)
+            throws ServletException, IOException {
+
+         //Pegando as informações do aluno na sessão
         HttpSession session = request.getSession();
         Usuario aluno = (Usuario) session.getAttribute("usuarioLogado");
 //        int idAluno = aluno.getId();
@@ -71,6 +84,7 @@ public class DashboardController extends HttpServlet {
         String forward = FWD;
         String action = request.getParameter("action");   
         if(action.equalsIgnoreCase("carregarDashBoard")){
+            System.out.println("carregar dash");
             carregarDashboard(idProfessor, request);
         }       
      
@@ -79,33 +93,30 @@ public class DashboardController extends HttpServlet {
     }
 
     @Override
-    protected void doPost(HttpServletRequest request, HttpServletResponse response)
-            throws ServletException, IOException {
-    }
-
-    @Override
     public String getServletInfo() {
         return "Short description";
     }// </editor-fold>
     
-    private void carregarDashboard(int userId, HttpServletRequest request) {
+    private void carregarDashboard(int idProfessor, HttpServletRequest request) {
                
         AvaliacaoDao daoAvaliacao = new AvaliacaoDao();
         CorrecaoDao daoCorrecao = new CorrecaoDao();
         DashboardDao daoDashboard = new DashboardDao();
-        int qtdAvaliacoes = daoAvaliacao.numAvaliacoesAbertasByProfessor(userId);
-        int qtdCorrecoes = daoCorrecao.numCorrecoesAbertasByProfessor(userId);
+        int qtdAvaliacoes = daoAvaliacao.numAvaliacoesAbertasByProfessor(idProfessor);
+        int qtdCorrecoes = daoCorrecao.numCorrecoesAbertasByProfessor(idProfessor);
+        int qtdFeedbacks = daoCorrecao.numFeedbacksAbertosByProfessor(idProfessor);       
         request.setAttribute("avaliacoes",qtdAvaliacoes);
         request.setAttribute("correcoes",qtdCorrecoes);
-        GraficoFasesAvaliacao grafFasesAval = daoDashboard.getDadosGraficoFasesAvaliacao();
+        request.setAttribute("feedbacks",qtdFeedbacks);        
+        GraficoFasesAvaliacao grafFasesAval = daoDashboard.getDadosGraficoFasesAvaliacao(idProfessor);
         request.setAttribute("avalNaoIniciadas", grafFasesAval.getNaoIniciadas());
         request.setAttribute("avalEmSubmissao", grafFasesAval.getEmSubmissão());            
         request.setAttribute("avalEmCorrecao", grafFasesAval.getEmCorrecao());           
         request.setAttribute("avalFinalizadas", grafFasesAval.getFinalizadas());   
-        request.setAttribute("listaTopCorretores", daoDashboard.obterListaCorretores());
-        request.setAttribute("listaMenoresNotas", daoDashboard.obterListaMenoresNotas());
-        request.setAttribute("listaAvaliacoesMes", daoDashboard.obterListaAvaliacoesMes());
-        request.setAttribute("listaCorrecoesMes", daoDashboard.obterListaCorrecoesMes());
+        request.setAttribute("listaTopCorretores", daoDashboard.obterListaCorretores(idProfessor));
+        request.setAttribute("listaMenoresNotas", daoDashboard.obterListaMenoresNotas(idProfessor));
+        request.setAttribute("listaAvaliacoesMes", daoDashboard.obterListaAvaliacoesMes(idProfessor));
+        request.setAttribute("listaCorrecoesMes", daoDashboard.obterListaCorrecoesMes(idProfessor));
         request.setAttribute("listaMediaMes", daoDashboard.obterListaMediaMes());
 //        System.out.println(daoDashboard.obterListaMenoresNotas().get(0).getNome());
     }

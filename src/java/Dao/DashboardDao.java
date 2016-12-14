@@ -38,15 +38,19 @@ public class DashboardDao {
     "SELECT count(*) as emAndamento FROM avaliacao Where submissao_inicial < now() submissao_final > now()";
  
     private final static String GRAFICO_FASES_AVALIACAO = 
-    "SELECT"
-    +"(SELECT COUNT(*) AS naoIniciadas FROM avaliacao WHERE submissao_inicial > NOW()) AS NaoIniciadas,"
-    +"(SELECT COUNT(*) AS emSubmissao FROM avaliacao WHERE submissao_inicial >= NOW() AND submissao_final <= NOW()) AS emSubmissao,"
-    +"(SELECT COUNT(*) AS emCorrecao FROM avaliacao WHERE correcao_inicial >= NOW() AND correcao_final <= NOW()) AS emCorrecao,"
-    +"(SELECT COUNT(*) AS finalizadas FROM avaliacao WHERE NOW() > correcao_final) AS finalizadas";
+    "SELECT "
+    +"(SELECT COUNT(*) AS naoIniciadas FROM avaliacao aval JOIN turma tur ON (aval.turma_id = tur.id) WHERE submissao_inicial > NOW() AND tur.professor_usuario_id =?) AS NaoIniciadas, "
+    +"(SELECT COUNT(*) AS emSubmissao FROM avaliacao aval JOIN turma tur ON (aval.turma_id = tur.id) WHERE NOW() >= submissao_inicial AND NOW() < submissao_final AND tur.professor_usuario_id =?) AS emSubmissao, "
+    +"(SELECT COUNT(*) AS emCorrecao FROM avaliacao aval JOIN turma tur ON (aval.turma_id = tur.id) WHERE NOW() >= correcao_inicial AND NOW() < correcao_final AND tur.professor_usuario_id =?) AS emCorrecao, "
+    +"(SELECT COUNT(*) AS finalizadas FROM avaliacao aval JOIN turma tur ON (aval.turma_id = tur.id) WHERE NOW() > correcao_final AND tur.professor_usuario_id =?) AS finalizadas; ";
             
     private final static String TOP_CORRETORES = 
-    "SELECT  usAluno.nome, count(*) AS qtdCorrecoes FROM coavalieitor_db.correcao cor "
-    +"JOIN usuario usAluno ON (usAluno.id = cor.aluno_usuario_id) "
+    "SELECT  usAluno.nome, count(*) AS qtdCorrecoes FROM coavalieitor_db.correcao cor " 
+    +"JOIN solucao sol on sol.id = cor.solucao_id " 
+    +"JOIN avaliacao aval on aval.id = sol.avaliacao_id " 
+    +"JOIN turma tur ON aval.turma_id = tur.id " 
+    +"JOIN usuario usAluno ON (usAluno.id = cor.aluno_usuario_id) " 
+    +"WHERE tur.professor_usuario_id = ? " 
     +"GROUP BY usAluno.id LIMIT 5";
     
     private final static String LISTA_MENORES_NOTAS =     
@@ -54,22 +58,28 @@ public class DashboardDao {
     +"FROM correcao_final cf " 
     +"JOIN usuario usAluno ON (cf.aluno_usuario_id = usAluno.id) " 
     +"JOIN avaliacao aval ON (aval.id = cf.avaliacao_id) " 
-    +"WHERE ((SELECT id FROM coavalieitor_db.avaliacao ORDER BY id DESC LIMIT 1) = cf.avaliacao_id) " 
-    +"ORDER BY nota";
+    +"JOIN turma tur ON aval.turma_id = tur.id "             
+    +"WHERE ((SELECT id FROM coavalieitor_db.avaliacao ORDER BY id DESC LIMIT 1) = cf.avaliacao_id AND tur.professor_usuario_id = ?) " 
+    +"ORDER BY nota LIMIT 10" ;
     
     private final static String LISTA_AVALIACOES_MES =         
     "SELECT  MONTH(aval.submissao_final) AS mes, YEAR(aval.submissao_final) as ano,  COUNT(*) as qtdAvaliacoes "
-    +"FROM      coavalieitor_db.avaliacao aval " 
-    //+"#WHERE     YEAR(aval.submissao_final) = '2016'\n" +
-    +"GROUP BY  MONTH(aval.submissao_final) "
+    +"FROM      coavalieitor_db.avaliacao aval "    
+    +"JOIN turma tur on (tur.id = aval.turma_id) "            
+    +"WHERE tur.professor_usuario_id = ? "
+    +"GROUP BY YEAR(aval.submissao_final), MONTH(aval.submissao_final) "
+    +"ORDER BY YEAR(aval.submissao_final), MONTH(aval.submissao_final) "
     +"LIMIT 12";
     
     private final static String LISTA_CORRECOES_MES =
     "SELECT  MONTH(sol.solucao_data) AS mes, YEAR(sol.solucao_data) as ano,  COUNT(*) as qtdCorrecoes "
-    +"FROM      coavalieitor_db.avaliacao aval "
+    +"FROM coavalieitor_db.avaliacao aval "
     +"JOIN solucao sol ON (sol.avaliacao_id = aval.id) "
     +"JOIN correcao cor ON (cor.solucao_id = sol.id) "
-    +"GROUP BY  MONTH(sol.solucao_data) "
+    +"JOIN turma tur on (tur.id = aval.turma_id) "            
+    +"WHERE tur.professor_usuario_id = ? "            
+    +"GROUP BY YEAR(cor.correcao_data), MONTH(cor.correcao_data) "
+    +"ORDER BY YEAR(cor.correcao_data), MONTH(cor.correcao_data) "
     +"LIMIT 12";
     
     private final static String LISTA_MEDIA_MES =
@@ -93,11 +103,15 @@ public class DashboardDao {
     public DashboardDao(){
     }
      
-    public GraficoFasesAvaliacao getDadosGraficoFasesAvaliacao() {
+    public GraficoFasesAvaliacao getDadosGraficoFasesAvaliacao(int idProfessor) {
         try {
             GraficoFasesAvaliacao grafFasesAval = new GraficoFasesAvaliacao();
             con  = new ConnectionFactory().getConnection();
             stmt = con.prepareStatement(GRAFICO_FASES_AVALIACAO);
+            stmt.setInt(1,idProfessor);
+            stmt.setInt(2,idProfessor);
+            stmt.setInt(3,idProfessor);            
+            stmt.setInt(4,idProfessor);                      
             rs = stmt.executeQuery();
             while (rs.next()) {
                 grafFasesAval.setNaoIniciadas(rs.getInt("naoIniciadas"));
@@ -115,11 +129,12 @@ public class DashboardDao {
         }
     }
     
-    public ArrayList<ItemListaCorretor> obterListaCorretores () {
+    public ArrayList<ItemListaCorretor> obterListaCorretores (int idProfessor) {
         ArrayList<ItemListaCorretor> listaRetorno = new ArrayList<ItemListaCorretor>();
         try {
             con  = new ConnectionFactory().getConnection();
             stmt = con.prepareStatement(TOP_CORRETORES);
+            stmt.setInt(1, idProfessor);
             rs = stmt.executeQuery();
             while (rs.next()) {
                 ItemListaCorretor item = new ItemListaCorretor();
@@ -137,11 +152,12 @@ public class DashboardDao {
         return listaRetorno;
     }
     
-    public ArrayList<ItemListaMenoresNotas> obterListaMenoresNotas () {
+    public ArrayList<ItemListaMenoresNotas> obterListaMenoresNotas (int idProfessor) {
         ArrayList<ItemListaMenoresNotas> listaRetorno = new ArrayList<ItemListaMenoresNotas>();
         try {
             con  = new ConnectionFactory().getConnection();
             stmt = con.prepareStatement(LISTA_MENORES_NOTAS);
+            stmt.setInt(1, idProfessor);            
             rs = stmt.executeQuery();
             while (rs.next()) {
                 ItemListaMenoresNotas item = new ItemListaMenoresNotas();
@@ -160,11 +176,12 @@ public class DashboardDao {
         return listaRetorno;
     }
 
-    public ArrayList<ItemListaAvaliacoesMes> obterListaAvaliacoesMes () {
+    public ArrayList<ItemListaAvaliacoesMes> obterListaAvaliacoesMes (int idProfessor) {
         ArrayList<ItemListaAvaliacoesMes> listaRetorno = new ArrayList<ItemListaAvaliacoesMes>();
         try {
             con  = new ConnectionFactory().getConnection();
             stmt = con.prepareStatement(LISTA_AVALIACOES_MES);
+            stmt.setInt(1,idProfessor);                        
             rs = stmt.executeQuery();
             while (rs.next()) {
                 ItemListaAvaliacoesMes item = new ItemListaAvaliacoesMes();
@@ -183,11 +200,12 @@ public class DashboardDao {
         return listaRetorno;
     }  
     
-    public ArrayList<ItemListaCorrecoesMes> obterListaCorrecoesMes () {
+    public ArrayList<ItemListaCorrecoesMes> obterListaCorrecoesMes (int idProfessor) {
         ArrayList<ItemListaCorrecoesMes> listaRetorno = new ArrayList<ItemListaCorrecoesMes>();
         try {
             con  = new ConnectionFactory().getConnection();
             stmt = con.prepareStatement(LISTA_CORRECOES_MES);
+            stmt.setInt(1,idProfessor);                        
             rs = stmt.executeQuery();
             while (rs.next()) {
                 ItemListaCorrecoesMes item = new ItemListaCorrecoesMes();

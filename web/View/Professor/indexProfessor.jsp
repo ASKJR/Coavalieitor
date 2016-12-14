@@ -25,7 +25,7 @@
 						</div>
 						<div class="col-sm-9 col-lg-7 widget-right">
 							<div class="large">${avaliacoes}</div>
-							<div class="text-muted">Avaliações Abertas</div>
+							<div class="text-muted">Avaliações em Andamento</div>
 						</div>
 					</div>
 				</div>
@@ -63,7 +63,7 @@
 							<svg class="glyph stroked empty-message"><use xlink:href="#stroked-empty-message"></use></svg>
 						</div>
 						<div class="col-sm-9 col-lg-7 widget-right">
-							<div class="large">${correcoes}</div>
+							<div class="large">${feedbacks}</div>
 							<div class="text-muted">Feedbacks Pendentes</div>
 						</div>
 					</div>
