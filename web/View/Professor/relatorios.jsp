@@ -17,7 +17,7 @@
             <label class="col-md-3 control-label" for="nomeTipoRelatorio"><b>Tipo de relatório:</b></label>  
             <div class="col-md-6">
                 <select class="form-control" name="selectTipoRelatorio" id="selectTipoRelatorio">
-                    <option value="alunosByMedia">Alunos ordenados por média</option>
+                    <option value="alunosByMedia">Média de notas de alunos</option>
                     <option value="correcoesByAluno">Alunos que mais efetuaram correções</option>
                     <option value="alunosByTurma">Alunos agrupados por turmas</option>
                 </select>

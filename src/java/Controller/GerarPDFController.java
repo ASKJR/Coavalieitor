@@ -33,7 +33,7 @@ public class GerarPDFController extends HttpServlet {
     
     //Caso o PDF retorne NULL, redirecionar de volta para view que chamou esse Servelt com mensagem de erro
     private static final String REDIRECT_BACK_NOTAS = "NotaControllerAluno?action=buscarNotas";
-    private static final String REDIRECT_BACK_RELATORIOS = "RelatorioController?action=carregarRelatorios\"";
+    private static final String REDIRECT_BACK_RELATORIOS = "RelatorioController?action=carregarRelatorios";
 
     private HashMap    params;
     private Connection con;
@@ -76,7 +76,6 @@ public class GerarPDFController extends HttpServlet {
                 System.out.println(request.getParameter("selectTipoRelatorio"));
                 System.out.println(tipoRelatorio);
                 if(tipoRelatorio.equals("alunosByTurma")) {
-                    System.out.println("alo");
                     String idDisciplina = request.getParameter("selectDisciplina");
                     Usuario professor = (Usuario) session.getAttribute("usuarioLogado");                    
                     System.out.println("teste - relatorio:"+idDisciplina+" , "+professor.getId());
@@ -97,6 +96,16 @@ public class GerarPDFController extends HttpServlet {
                     redirect = REDIRECT_BACK_RELATORIOS;
                     erroMessage = "Sem dados disponíveis :(";
                 }
+                else if(tipoRelatorio.equals("alunosByMedia")) {
+                    String idDisciplina = request.getParameter("selectDisciplina");
+                    Usuario professor = (Usuario) session.getAttribute("usuarioLogado");                    
+                    System.out.println("teste - relatorio:"+idDisciplina+" , "+professor.getId());
+                    params.put("disc_id",Integer.parseInt(idDisciplina));
+                    params.put("prof_id",professor.getId());
+                    jasper = request.getContextPath() + "/PDF/notaByAlunoTurma_4.jasper";                    
+                    redirect = REDIRECT_BACK_RELATORIOS;
+                    erroMessage = "Sem dados disponíveis :(";
+                }                
             }
                 
             }

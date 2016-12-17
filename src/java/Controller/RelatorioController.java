@@ -26,7 +26,7 @@ import javax.servlet.http.HttpSession;
 
 /**
  *
- * @author Kato
+ * @author Welyngton
  */
 @WebServlet(name = "RelatorioController", urlPatterns = {"/RelatorioController"})
 public class RelatorioController extends HttpServlet {

@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <!-- Created with Jaspersoft Studio version 6.3.1.final using JasperReports Library version 6.3.1  -->
-<!-- 2016-11-24T19:41:43 -->
+<!-- 2016-12-14T09:47:01 -->
 <jasperReport xmlns="http://jasperreports.sourceforge.net/jasperreports" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://jasperreports.sourceforge.net/jasperreports http://jasperreports.sourceforge.net/xsd/jasperreport.xsd" name="notaByAlunoTurma" pageWidth="595" pageHeight="842" columnWidth="535" leftMargin="20" rightMargin="20" topMargin="20" bottomMargin="20" uuid="a4ada2a4-960f-475c-a039-072f69530d07">
 	<property name="com.jaspersoft.studio.data.sql.tables" value=""/>
 	<property name="com.jaspersoft.studio.data.defaultdataadapter" value="MYSQL-Coavalieitor"/>
@@ -18,7 +18,8 @@ JOIN aluno usAluno ON (usAluno.usuario_id = cor.aluno_usuario_id)
 JOIN usuario us ON (us.id = cor.aluno_usuario_id)
 JOIN usuario usProf ON (usProf.id = tur.professor_usuario_id)
 #WHERE  tur.professor_usuario_id = 3 AND dis.id = 3
-group by us.nome]]>
+group by us.nome
+ORDER BY qtdCorrecoes DESC, Aluno]]>
 	</queryString>
 	<field name="aluno" class="java.lang.String"/>
 	<field name="qtdCorrecoes" class="java.lang.String"/>
@@ -29,6 +30,20 @@ group by us.nome]]>
 		<band height="72">
 			<frame>
 				<reportElement mode="Opaque" x="-20" y="-20" width="595" height="92" backcolor="#006699" uuid="e9b74055-d586-402b-9b96-35d84d1630e5"/>
+				<staticText>
+					<reportElement mode="Transparent" x="19" y="20" width="241" height="40" forecolor="#FFFFFF" backcolor="#E6E6E6" uuid="88ca7d47-b439-456d-ab40-59a61f7d84d2"/>
+					<textElement textAlignment="Left">
+						<font size="26" isBold="true"/>
+					</textElement>
+					<text><![CDATA[Coavalieitor]]></text>
+				</staticText>
+				<staticText>
+					<reportElement mode="Transparent" x="339" y="60" width="235" height="20" forecolor="#FFFFFF" backcolor="#E6E6E6" uuid="7f03cc2f-39cd-46af-81bc-ab17d4ac8a15"/>
+					<textElement textAlignment="Left">
+						<font size="14" isBold="true"/>
+					</textElement>
+					<text><![CDATA[Relatório de Correções]]></text>
+				</staticText>
 			</frame>
 		</band>
 	</title>
@@ -48,7 +63,7 @@ group by us.nome]]>
 				<text><![CDATA[Aluno]]></text>
 			</staticText>
 			<staticText>
-				<reportElement mode="Opaque" x="320" y="2" width="235" height="20" forecolor="#006699" backcolor="#E6E6E6" uuid="3497565d-0833-44e4-be6d-a4ea57c83c2a"/>
+				<reportElement mode="Opaque" x="320" y="0" width="235" height="20" forecolor="#006699" backcolor="#E6E6E6" uuid="3497565d-0833-44e4-be6d-a4ea57c83c2a"/>
 				<textElement textAlignment="Left">
 					<font size="14" isBold="true"/>
 				</textElement>
@@ -58,9 +73,6 @@ group by us.nome]]>
 	</columnHeader>
 	<detail>
 		<band height="25">
-			<line>
-				<reportElement positionType="FixRelativeToBottom" x="0" y="19" width="555" height="1" uuid="813eaa31-e502-47ec-b7c1-4e9934f659ae"/>
-			</line>
 			<textField isStretchWithOverflow="true" isBlankWhenNull="true">
 				<reportElement x="0" y="0" width="160" height="20" uuid="f0329de0-c33e-4e0b-aa58-45769869b7a5"/>
 				<textElement>
@@ -81,20 +93,7 @@ group by us.nome]]>
 		<band/>
 	</columnFooter>
 	<pageFooter>
-		<band height="17">
-			<textField>
-				<reportElement mode="Opaque" x="0" y="4" width="555" height="13" backcolor="#E6E6E6" uuid="da6c1a98-6e25-4cca-88af-60673210bd29"/>
-				<textElement textAlignment="Right"/>
-			</textField>
-			<textField evaluationTime="Report">
-				<reportElement mode="Opaque" x="515" y="4" width="40" height="13" backcolor="#E6E6E6" uuid="4011dda3-6cd1-4122-9861-2636324a9384"/>
-				<textFieldExpression><![CDATA[$V{PAGE_NUMBER}]]></textFieldExpression>
-			</textField>
-			<textField pattern="dd/MM/YYYY hh:mm">
-				<reportElement x="0" y="4" width="100" height="13" uuid="76e7c7d6-e983-4e88-ab0b-f48907a076ef"/>
-				<textFieldExpression><![CDATA[new java.util.Date()]]></textFieldExpression>
-			</textField>
-		</band>
+		<band height="17"/>
 	</pageFooter>
 	<summary>
 		<band/>

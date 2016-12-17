@@ -91,15 +91,7 @@
 				</div>
 			</div>
 		</div><!--/.row-->                 
-		<div class="row">
-			<div class="col-lg-12">
-				<div class="panel panel-default">
-					<div class="panel-body">
-                                            <div id="container3" style="min-width: 310px; height: 400px; max-width: 900px; margin: 0 auto"></div>
-					</div>
-				</div>
-			</div>
-		</div><!--/.row-->
+
                 <br/>
 		<div class="row">
 			<div class="col-lg-6">
@@ -285,44 +277,6 @@ $(function () {
             tooltip: {
                 valueSuffix: ''
             }
-        }]
-    });
-});
-$(function () {
-    $('#container3').highcharts({
-        title: {
-            text: 'Média de notas / Mês',
-            x: -20 //center
-        },        
-        xAxis: {
-            categories: [<c:forEach items="${listaMediaMes}" var="itemMedia">
-                            <c:out value="${itemAval.mes}, "/>
-                        </c:forEach>]
-        },
-        yAxis: {
-            title: {
-                text: 'Média (%)'
-            },
-            plotLines: [{
-                value: 0,
-                width: 1,
-                color: '#808080'
-            }]
-        },
-        tooltip: {
-            valueSuffix: '%'
-        },
-        legend: {
-            layout: 'vertical',
-            align: 'right',
-            verticalAlign: 'middle',
-            borderWidth: 0
-        },
-        series: [{           
-            name: 'Turma',
-            data: [<c:forEach items="${listaMediaMes}" var="itemMedia">
-                        <c:out value="${itemMedia.media}, "/>
-                  </c:forEach>]
         }]
     });
 });

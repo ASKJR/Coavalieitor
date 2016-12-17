@@ -9,7 +9,7 @@ import java.io.Serializable;
 import java.util.Date;
 
 /**
- *
+ **
  * @author Kato
  */
 public class Avaliacao implements Serializable{
